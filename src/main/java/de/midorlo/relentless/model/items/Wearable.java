@@ -12,6 +12,6 @@ import lombok.extern.java.Log;
 @Log
 public class Wearable {
     String name;
-    WearableType type;
+    ItemSlot type;
     Element element;
 }

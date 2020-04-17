@@ -2,7 +2,6 @@ package de.midorlo.relentless.model.behemoth;
 
 import de.midorlo.relentless.model.combat.Attack;
 import de.midorlo.relentless.model.combat.AttackResult;
-import de.midorlo.relentless.model.combat.Damage;
 import de.midorlo.relentless.model.combat.IAttackModifier;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -10,7 +9,6 @@ import lombok.ToString;
 import lombok.extern.java.Log;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 /**
