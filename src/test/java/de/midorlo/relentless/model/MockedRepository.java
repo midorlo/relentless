@@ -7,7 +7,7 @@ import de.midorlo.relentless.model.combat.AttackMove;
 import de.midorlo.relentless.model.combat.AttackType;
 import de.midorlo.relentless.model.combat.Hunt;
 import de.midorlo.relentless.model.items.Weapon;
-import de.midorlo.relentless.model.items.WearableType;
+import de.midorlo.relentless.model.items.ItemSlot;
 import de.midorlo.relentless.model.player.Loadout;
 import de.midorlo.relentless.model.player.Player;
 
@@ -49,7 +49,7 @@ public class MockedRepository {
         Weapon weapon = new Weapon();
         weapon.setName("Inferno's Fangs");
         weapon.setElement(Element.Blaze);
-        weapon.setType(WearableType.Chainblades);
+        weapon.setType(ItemSlot.Chainblades);
         weapon.setMoveSets(mockMovesets());
         return weapon;
     }

@@ -4,7 +4,6 @@ import de.midorlo.relentless.model.behemoth.BehemothPartType;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.ToString;
 import lombok.extern.java.Log;
 
 @Data
