@@ -13,6 +13,10 @@ import static de.midorlo.relentless.util.Constants.*;
 @SuppressWarnings("rawtypes")
 public class FileUtillities {
 
+    public static List<LinkedHashMap> getArmorsProtoObjects() {
+        return readYamlFiles(DIR_DAUNTLESS_BUILDER_ARMOR);
+    }
+
     public static List<LinkedHashMap> getPerksProtoObjects() {
         return readYamlFiles(DIR_DAUNTLESS_BUILDER_PERKS);
     }
@@ -52,7 +56,7 @@ public class FileUtillities {
 
     private static List<File> getFiles(String absolutePath) {
         List<File> files = new ArrayList<>();
-        List<File> filesToCheck =  Arrays.asList(Objects.requireNonNull(new File(absolutePath).listFiles()));
+        File[] filesToCheck = Objects.requireNonNull(new File(absolutePath).listFiles());
         for (File file :filesToCheck) {
             if (file.isDirectory()) {
                 files.addAll(getFiles(file.getAbsolutePath()));
@@ -62,4 +66,6 @@ public class FileUtillities {
         }
         return files;
     }
+
+
 }

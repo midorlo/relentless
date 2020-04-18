@@ -69,10 +69,10 @@ public class WeaponImporter extends AbstractImporter<Weapon> {
         return w;
     }
 
-    private List<CellSocket> parseCellSockets(ArrayList<String> arrayList) {
+    private List<CellSocket> parseCellSockets(ArrayList<String> stringList) {
         List<CellSocket> cellSockets = new ArrayList<>();
-        if (arrayList != null) {
-            cellSockets.addAll(arrayList.stream().map(e -> {
+        if (stringList != null) {
+            cellSockets.addAll(stringList.stream().map(e -> {
                 CellSocket cellSocket = new CellSocket();
                 cellSocket.setType(CellType.valueOf(e));
                 return cellSocket;

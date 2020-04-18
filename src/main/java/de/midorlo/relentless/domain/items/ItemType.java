@@ -8,9 +8,9 @@ public enum ItemType {
     WarPike,
     AetherStrikers,
     Repeater,
-    HeadArmor,
-    ChestArmor,
-    ArmsArmor,
-    LegsArmor,
+    Head,
+    Torso,
+    Arms,
+    Legs,
     Lantern
 }
