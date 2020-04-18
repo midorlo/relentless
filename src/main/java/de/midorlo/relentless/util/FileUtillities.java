@@ -8,19 +8,26 @@ import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import static de.midorlo.relentless.util.Constants.DIR_DAUNTLESS_BUILDER;
-import static de.midorlo.relentless.util.Constants.DIR_DAUNTLESS_BUILDER_PERKS;
+import static de.midorlo.relentless.util.Constants.*;
 
 @SuppressWarnings("rawtypes")
 public class FileUtillities {
+
+    public static List<LinkedHashMap> getPerksProtoObjects() {
+        return readYamlFiles(DIR_DAUNTLESS_BUILDER_PERKS);
+    }
+
+    public static List<LinkedHashMap> getWeaponsProtoObjects() {
+        return readYamlFiles(DIR_DAUNTLESS_BUILDER_WEAPONS);
+    }
 
     /**
      * Gives the contents of all .yaml-Files found in <code>DIR_DAUNTLESS_BUILDER_PERKS</code> as LinkedHashMap's.
      *
      * @return List<LinkedHashMap>.
      */
-    public static List<LinkedHashMap> getPerksProtoObjects() {
-        return readYamlFiles(DIR_DAUNTLESS_BUILDER_PERKS);
+    public static List<LinkedHashMap> getCellProtoObjects() {
+        return readYamlFiles(DIR_DAUNTLESS_BUILDER_CELLS);
     }
 
     private static List<LinkedHashMap> readYamlFiles(String directory) {
@@ -44,6 +51,15 @@ public class FileUtillities {
     }
 
     private static List<File> getFiles(String absolutePath) {
-        return Arrays.asList(Objects.requireNonNull(new File(DIR_DAUNTLESS_BUILDER + absolutePath).listFiles()));
+        List<File> files = new ArrayList<>();
+        List<File> filesToCheck =  Arrays.asList(Objects.requireNonNull(new File(absolutePath).listFiles()));
+        for (File file :filesToCheck) {
+            if (file.isDirectory()) {
+                files.addAll(getFiles(file.getAbsolutePath()));
+            } else {
+                files.add(file);
+            }
+        }
+        return files;
     }
 }

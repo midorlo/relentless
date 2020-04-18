@@ -8,7 +8,7 @@ import java.util.stream.Collectors;
 @SuppressWarnings({"rawtypes", "unchecked"})
 public abstract class AbstractImporter<T> {
 
-    private Repository<T> repository;
+    protected Repository<T> repository;
 
     public AbstractImporter(Repository<T> repository) {
         this.repository = repository;
