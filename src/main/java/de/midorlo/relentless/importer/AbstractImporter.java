@@ -17,6 +17,7 @@ public abstract class AbstractImporter<T> {
 
     /**
      * Does all the magic.
+     *
      * @param map sourcemap.
      */
     public void importGameObjects(List<LinkedHashMap> map) {
@@ -74,18 +75,23 @@ public abstract class AbstractImporter<T> {
         }
     }
 
+    /**
+     * Utillity Method. Asserts an Integer/Double/null as Double at compile time.
+     *
+     * @param o Numeric..
+     * @return double
+     */
     protected static Double parseMixedNumerics(Object o) {
         double d = 0d;
         if (o instanceof Integer) {
-            d += ((Integer)o);
-        } else if (o instanceof Double){
-            d += ((Double)o);
+            d += ((Integer) o);
+        } else if (o instanceof Double) {
+            d += ((Double) o);
         } else {
             d = -1d; //todo warn
         }
         return d;
     }
-
 
     /**
      * Utillity Method. Converts a Map(k,v) to an ArrayList, sorted by ((int)k)
@@ -104,6 +110,7 @@ public abstract class AbstractImporter<T> {
 
     /**
      * Utillity Method. Gives (hashcode-)distinct <T>'s of a List.
+     *
      * @param items list of <T>'s
      * @return distinct list of <T>'s
      */

@@ -1,8 +1,9 @@
 package de.midorlo.relentless.domain.behemoth;
 
+import de.midorlo.relentless.domain.Element;
 import de.midorlo.relentless.domain.combat.Attack;
 import de.midorlo.relentless.domain.combat.AttackResult;
-import de.midorlo.relentless.domain.combat.IAttackModifier;
+import de.midorlo.relentless.domain.mutators.IAttackModifier;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
@@ -22,6 +23,7 @@ public class Behemoth implements IAttackModifier {
 
     String name;
     Double health;
+    Element element;
     List<BehemothPart> behemothParts = new ArrayList<>();
 
     public void setHealth(Double health) {
@@ -29,7 +31,7 @@ public class Behemoth implements IAttackModifier {
     }
 
     @Override
-    public Attack modify(Attack attack) {
+    public Attack accountFor(Attack attack) {
         return attack;
     }
 

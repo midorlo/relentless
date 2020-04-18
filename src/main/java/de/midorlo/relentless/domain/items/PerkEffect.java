@@ -1,4 +1,4 @@
-package de.midorlo.relentless.domain.mutators;
+package de.midorlo.relentless.domain.items;
 
 import lombok.Data;
 

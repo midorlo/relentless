@@ -5,8 +5,8 @@ import de.midorlo.relentless.domain.items.Armor;
 import de.midorlo.relentless.domain.items.CellSocket;
 import de.midorlo.relentless.domain.items.CellType;
 import de.midorlo.relentless.domain.items.ItemType;
-import de.midorlo.relentless.domain.mutators.Perk;
-import de.midorlo.relentless.domain.mutators.PerkEffect;
+import de.midorlo.relentless.domain.items.Perk;
+import de.midorlo.relentless.domain.items.PerkEffect;
 import de.midorlo.relentless.repository.Assets;
 import de.midorlo.relentless.repository.Repository;
 

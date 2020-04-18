@@ -3,7 +3,7 @@ package de.midorlo.relentless.domain;
 import de.midorlo.relentless.domain.behemoth.Behemoth;
 import de.midorlo.relentless.domain.behemoth.BehemothPart;
 import de.midorlo.relentless.domain.behemoth.BehemothPartType;
-import de.midorlo.relentless.domain.combat.AttackMove;
+import de.midorlo.relentless.domain.combat.WeaponAttack;
 import de.midorlo.relentless.domain.combat.DamageType;
 import de.midorlo.relentless.domain.combat.Hunt;
 import de.midorlo.relentless.domain.items.Weapon;
@@ -54,15 +54,15 @@ public class MockedRepository {
         return weapon;
     }
 
-    public static List<List<AttackMove>> mockMovesets() {
-        List<List<AttackMove>> moveSets = new ArrayList<>();
+    public static List<List<WeaponAttack>> mockMovesets() {
+        List<List<WeaponAttack>> moveSets = new ArrayList<>();
         moveSets.add(mockMoveset());
         return moveSets;
     }
 
-    public static ArrayList<AttackMove> mockMoveset() {
-        ArrayList<AttackMove> moveset = new ArrayList<>();
-        AttackMove move = AttackMove.builder()
+    public static ArrayList<WeaponAttack> mockMoveset() {
+        ArrayList<WeaponAttack> moveset = new ArrayList<>();
+        WeaponAttack move = WeaponAttack.builder()
                 .name("Bladed 1(L)")
                 .type(DamageType.Slashing)
                 .damage(60d)

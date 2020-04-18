@@ -25,10 +25,10 @@ public class HuntTest {
         while (behemoth.getHealth() > 0) {
             Loadout loadout = player.getLoadout();
             Weapon weapon = loadout.getWeapon();
-            List<List<AttackMove>> moveSets = weapon.getMoveSets();
-            List<AttackMove> attackMoves = moveSets.get(0);
-            AttackMove attackMove = attackMoves.get(0);
-            AttackResult attackResult = player.attack(attackMove, behemoth);
+            List<List<WeaponAttack>> moveSets = weapon.getMoveSets();
+            List<WeaponAttack> weaponAttacks = moveSets.get(0);
+            WeaponAttack weaponAttack = weaponAttacks.get(0);
+            AttackResult attackResult = player.attack(weaponAttack, behemoth);
             log.info(attackResult.toString());
             hunt.addAttackResult(attackResult);
         }

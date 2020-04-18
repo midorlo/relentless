@@ -3,8 +3,8 @@ package de.midorlo.relentless.importer;
 import de.midorlo.relentless.domain.Element;
 import de.midorlo.relentless.domain.combat.DamageType;
 import de.midorlo.relentless.domain.items.*;
-import de.midorlo.relentless.domain.mutators.Perk;
-import de.midorlo.relentless.domain.mutators.PerkEffect;
+import de.midorlo.relentless.domain.items.Perk;
+import de.midorlo.relentless.domain.items.PerkEffect;
 import de.midorlo.relentless.repository.Assets;
 import de.midorlo.relentless.repository.Repository;
 

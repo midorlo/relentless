@@ -1,6 +1,6 @@
 package de.midorlo.relentless.domain.items;
 
-import de.midorlo.relentless.domain.combat.AttackMove;
+import de.midorlo.relentless.domain.combat.WeaponAttack;
 import de.midorlo.relentless.domain.combat.DamageType;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -16,7 +16,7 @@ import java.util.List;
 @Log
 public class Weapon extends Gear {
 
-    List<List<AttackMove>> moveSets = new ArrayList<>();
+    List<List<WeaponAttack>> moveSets = new ArrayList<>();
     DamageType damageType;
 
     /**
