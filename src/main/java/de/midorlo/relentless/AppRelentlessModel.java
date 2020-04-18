@@ -1,9 +1,11 @@
 package de.midorlo.relentless;
 
+import de.midorlo.relentless.domain.items.Armor;
 import de.midorlo.relentless.domain.items.Cell;
 import de.midorlo.relentless.domain.items.Weapon;
 import de.midorlo.relentless.domain.mutators.Perk;
 import de.midorlo.relentless.domain.mutators.PerkEffect;
+import de.midorlo.relentless.importer.ArmorImporter;
 import de.midorlo.relentless.importer.CellImporter;
 import de.midorlo.relentless.importer.PerkImporter;
 import de.midorlo.relentless.importer.WeaponImporter;
@@ -21,6 +23,7 @@ public class AppRelentlessModel {
     Repository<PerkEffect> perkEffectRepository = new Repository<>();
     Repository<Cell> cellRepository = new Repository<>();
     Repository<Weapon> weaponRepository = new Repository<>();
+    Repository<Armor> armorRepository = new Repository<>();
 
     public AppRelentlessModel() {
         importGameObjects();
@@ -35,6 +38,9 @@ public class AppRelentlessModel {
 
         WeaponImporter weaponImporter = new WeaponImporter(weaponRepository, perkRepository, perkEffectRepository);
         weaponImporter.importGameObjects(FileUtillities.getWeaponsProtoObjects());
+
+        ArmorImporter armorImporter = new ArmorImporter(armorRepository, perkRepository, perkEffectRepository);
+        armorImporter.importGameObjects(FileUtillities.getArmorsProtoObjects());
     }
 
     public static void main(String[] args) {
