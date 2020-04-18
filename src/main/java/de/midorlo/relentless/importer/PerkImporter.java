@@ -35,8 +35,10 @@ public class PerkImporter extends AbstractImporter<Perk> {
             PerkEffect effect = effects.get(i);
             effect.setLevel(i + 1);
             effect.setName(perk.getName());
+            if (!perkEffectRepository.contains(effect)) {
+                perkEffectRepository.save(effect);
+            }
         }
-
         perk.setEffects(effects);
         return perk;
     }
@@ -46,25 +48,19 @@ public class PerkImporter extends AbstractImporter<Perk> {
      *
      * @return existing Perk.
      */
-    public Perk parseWeaponPerk(LinkedHashMap map, Object extraData) {
+    public Perk parseWeaponPerk(LinkedHashMap map) {
         List<Perk> searchResults = super.repository.findBy(e -> e.getName().contentEquals((String) map.get("name")));
         return searchResults.get(0);
     }
 
-    public List<Perk> parseWeaponPerks(ArrayList<LinkedHashMap> mapList, Object extraData) {
+    public List<Perk> parseWeaponPerks(ArrayList<LinkedHashMap> mapList) {
         List<Perk> results = new ArrayList<>();
         if (mapList != null) {
             results.addAll(mapList.stream()
-                    .map(e -> parseWeaponPerk(e, extraData))
+                    .map(this::parseWeaponPerk)
                     .collect(Collectors.toList()));
             results = distinct(results);
         }
         return results;
-    }
-
-    private List<Perk> distinct(List<Perk> perks) {
-        Set<Perk> perkSet = new HashSet<>();
-        perks.forEach(perkSet::add);
-        return new ArrayList<>(perkSet);
     }
 }

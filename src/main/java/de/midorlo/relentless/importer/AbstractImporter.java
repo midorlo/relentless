@@ -5,6 +5,7 @@ import de.midorlo.relentless.repository.Repository;
 import java.util.*;
 import java.util.stream.Collectors;
 
+
 @SuppressWarnings({"rawtypes", "unchecked"})
 public abstract class AbstractImporter<T> {
 
@@ -91,5 +92,14 @@ public abstract class AbstractImporter<T> {
             list.add((LinkedHashMap) map.get("" + (index++)));
         }
         return list;
+    }
+
+    /**
+     * Utillity Method. Gives (hashcode-)distinct <T>'s of a List.
+     * @param items list of <T>'s
+     * @return distinct list of <T>'s
+     */
+    protected List<T> distinct(List<T> items) {
+        return new ArrayList<>(new HashSet<>(items));
     }
 }

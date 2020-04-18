@@ -13,6 +13,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@SuppressWarnings({"unchecked", "rawtypes"})
 public class WeaponImporter extends AbstractImporter<Weapon> {
 
     Repository<Perk> perkRepository;
@@ -45,10 +46,9 @@ public class WeaponImporter extends AbstractImporter<Weapon> {
         w.setDamageType(DamageType.valueOf((String) damage));
 
         PerkImporter perkImporter = new PerkImporter(perkRepository, perkEffectRepository);
-        List<Perk> perks = perkImporter.parseWeaponPerks((ArrayList<LinkedHashMap>) perksMap, null);
+        List<Perk> perks = perkImporter.parseWeaponPerks((ArrayList<LinkedHashMap>) perksMap);
         w.setPerks(perks);
         w.setCellSockets(parseCellSockets((ArrayList<String>) cellsMap));
-
 
         Assets.assetsPathMap.put(w, (String) icon);
         return w;
