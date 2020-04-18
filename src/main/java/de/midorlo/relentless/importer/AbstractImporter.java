@@ -5,10 +5,11 @@ import de.midorlo.relentless.repository.Repository;
 import java.util.*;
 import java.util.stream.Collectors;
 
+
 @SuppressWarnings({"rawtypes", "unchecked"})
 public abstract class AbstractImporter<T> {
 
-    private Repository<T> repository;
+    protected Repository<T> repository;
 
     public AbstractImporter(Repository<T> repository) {
         this.repository = repository;
@@ -19,12 +20,7 @@ public abstract class AbstractImporter<T> {
      * @param map sourcemap.
      */
     public void importGameObjects(List<LinkedHashMap> map) {
-        List<T> ts = parseGameObjects(map);
-        for (T t : ts) {
-            if (!repository.contains(t)) {
-                repository.save(t);
-            }
-        }
+        repository.save(parseGameObjects(map));
     }
 
     /**
@@ -78,6 +74,19 @@ public abstract class AbstractImporter<T> {
         }
     }
 
+    protected static Double parseMixedNumerics(Object o) {
+        double d = 0d;
+        if (o instanceof Integer) {
+            d += ((Integer)o);
+        } else if (o instanceof Double){
+            d += ((Double)o);
+        } else {
+            d = -1d; //todo warn
+        }
+        return d;
+    }
+
+
     /**
      * Utillity Method. Converts a Map(k,v) to an ArrayList, sorted by ((int)k)
      *
@@ -91,5 +100,14 @@ public abstract class AbstractImporter<T> {
             list.add((LinkedHashMap) map.get("" + (index++)));
         }
         return list;
+    }
+
+    /**
+     * Utillity Method. Gives (hashcode-)distinct <T>'s of a List.
+     * @param items list of <T>'s
+     * @return distinct list of <T>'s
+     */
+    protected List<T> distinct(List<T> items) {
+        return new ArrayList<>(new HashSet<>(items));
     }
 }

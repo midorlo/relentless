@@ -1,11 +1,11 @@
 package de.midorlo.relentless.importer;
 
-import de.midorlo.relentless.model.Perk;
-import de.midorlo.relentless.model.PerkEffect;
+import de.midorlo.relentless.domain.mutators.Perk;
+import de.midorlo.relentless.domain.mutators.PerkEffect;
 import de.midorlo.relentless.repository.Repository;
 
-import java.util.LinkedHashMap;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @SuppressWarnings({"rawtypes"})
 public class PerkImporter extends AbstractImporter<Perk> {
@@ -35,9 +35,32 @@ public class PerkImporter extends AbstractImporter<Perk> {
             PerkEffect effect = effects.get(i);
             effect.setLevel(i + 1);
             effect.setName(perk.getName());
+            if (!perkEffectRepository.contains(effect)) {
+                perkEffectRepository.save(effect);
+            }
         }
-
         perk.setEffects(effects);
         return perk;
+    }
+
+    /**
+     * Source Data is inconsistent for Weapons :-/
+     *
+     * @return existing Perk.
+     */
+    public Perk parseWeaponPerk(LinkedHashMap map) {
+        List<Perk> searchResults = super.repository.findBy(e -> e.getName().contentEquals((String) map.get("name")));
+        return searchResults.get(0);
+    }
+
+    public List<Perk> parseWeaponPerks(ArrayList<LinkedHashMap> mapList) {
+        List<Perk> results = new ArrayList<>();
+        if (mapList != null) {
+            results.addAll(mapList.stream()
+                    .map(this::parseWeaponPerk)
+                    .collect(Collectors.toList()));
+            results = distinct(results);
+        }
+        return results;
     }
 }
