@@ -1,6 +1,9 @@
 package de.midorlo.relentless.domain.combat;
 
 import de.midorlo.relentless.domain.behemoth.BehemothPartType;
+import de.midorlo.relentless.domain.items.Weapon;
+import de.midorlo.relentless.domain.mutators.AbstractDamageModifier;
+import de.midorlo.relentless.domain.mutators.ElementDamageModifier;
 import de.midorlo.relentless.domain.mutators.IAttackModifier;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -21,11 +24,26 @@ public class WeaponAttack implements IAttackModifier {
 
     String name;
     DamageType damageType;
+
     Damage damage = new Damage();
     Damage baseline = new Damage();
     List<BonusWeaponAttack> bonusAttacks;
 
     protected WeaponAttack() {
+    }
+
+    private WeaponAttack(List<AbstractDamageModifier> damageModifierList) {
+        this.damageModifierList = damageModifierList;
+    }
+
+    Integer weaponDamage;
+    Integer hitsCount;
+    List<AbstractDamageModifier> damageModifierList;
+
+    public WeaponAttack(Weapon parent, String name, Integer weaponDamage, Integer hitsCount) {
+        this.name = name;
+        this.weaponDamage = weaponDamage;
+        this.hitsCount = hitsCount;
     }
 
     public static aName builder() {

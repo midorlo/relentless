@@ -27,6 +27,8 @@ public class MockedRepository {
         Behemoth behemoth = new Behemoth();
         behemoth.setName("Meh-Kel, Holder of the Dark Triangle");
         behemoth.setHealth(2000d);
+        behemoth.setElement(Element.Umbral);
+        behemoth.setThread(24);
         BehemothPart behemothPart = new BehemothPart(BehemothPartType.Head, 1000d);
         behemoth.getBehemothParts().add(behemothPart);
         return behemoth;
