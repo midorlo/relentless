@@ -4,6 +4,7 @@ import de.midorlo.relentless.domain.mutators.Perk;
 import lombok.Data;
 import lombok.extern.java.Log;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -12,5 +13,5 @@ public class Cell {
     String name;
     Integer level;
     CellType cellType;
-    List<Perk> perks;
+    List<Perk> perks = new ArrayList<>();
 }

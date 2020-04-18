@@ -20,7 +20,7 @@ public class Repository<T> {
     }
 
     public boolean contains(T obj) {
-        return findAll().contains(obj);
+        return objects.contains(obj);
     }
 
     public List<T> findBy(Predicate<T> predicate) {
@@ -30,6 +30,12 @@ public class Repository<T> {
     }
 
     public void save(T obj) {
-        findAll().add(obj);
+        if (!contains(obj)) {
+            findAll().add(obj);
+        }
+    }
+
+    public void save(List<T> objs) {
+        objs.forEach(this::save);
     }
 }

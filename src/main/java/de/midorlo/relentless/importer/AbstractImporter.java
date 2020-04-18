@@ -20,12 +20,7 @@ public abstract class AbstractImporter<T> {
      * @param map sourcemap.
      */
     public void importGameObjects(List<LinkedHashMap> map) {
-        List<T> ts = parseGameObjects(map);
-        for (T t : ts) {
-            if (!repository.contains(t)) {
-                repository.save(t);
-            }
-        }
+        repository.save(parseGameObjects(map));
     }
 
     /**
@@ -78,6 +73,19 @@ public abstract class AbstractImporter<T> {
             tar.add(src);
         }
     }
+
+    protected static Double parseMixedNumerics(Object o) {
+        double d = 0d;
+        if (o instanceof Integer) {
+            d += ((Integer)o);
+        } else if (o instanceof Double){
+            d += ((Double)o);
+        } else {
+            d = -1d; //todo warn
+        }
+        return d;
+    }
+
 
     /**
      * Utillity Method. Converts a Map(k,v) to an ArrayList, sorted by ((int)k)

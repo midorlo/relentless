@@ -26,6 +26,15 @@ public class WeaponImporter extends AbstractImporter<Weapon> {
     }
 
     @Override
+    public void importGameObjects(List<LinkedHashMap> map) {
+        super.importGameObjects(map);
+        repository.findAll().forEach(weapon -> {
+            perkRepository.save(weapon.getPerks());
+            perkEffectRepository.save(weapon.getPerkEffects());
+        });
+    }
+
+    @Override
     public Weapon parseGameObject(LinkedHashMap map, Object extraData) {
 
         Object name = map.get("name");
@@ -44,13 +53,19 @@ public class WeaponImporter extends AbstractImporter<Weapon> {
         w.setType(ItemType.valueOf(((String) type).trim().replace(" ", "")));
         w.setElement(((elemental == null) ? Element.Neutral : Element.valueOf((String) elemental)));
         w.setDamageType(DamageType.valueOf((String) damage));
+        Assets.assetsPathMap.put(w, (String) icon);
 
         PerkImporter perkImporter = new PerkImporter(perkRepository, perkEffectRepository);
         List<Perk> perks = perkImporter.parseWeaponPerks((ArrayList<LinkedHashMap>) perksMap);
-        w.setPerks(perks);
-        w.setCellSockets(parseCellSockets((ArrayList<String>) cellsMap));
+        w.getPerks().addAll(perks);
 
-        Assets.assetsPathMap.put(w, (String) icon);
+        List<CellSocket> cellSockets = parseCellSockets((ArrayList<String>) cellsMap);
+        w.getCellSockets().addAll(cellSockets);
+
+        PerkEffectImporter perkEffectImporter = new PerkEffectImporter(perkEffectRepository);
+        List<PerkEffect> perkEffects = perkEffectImporter.parseGameWeaponObjects((ArrayList<LinkedHashMap>) unique_effects, w);
+        w.getPerkEffects().addAll(perkEffects);
+
         return w;
     }
 
@@ -59,7 +74,7 @@ public class WeaponImporter extends AbstractImporter<Weapon> {
         if (arrayList != null) {
             cellSockets.addAll(arrayList.stream().map(e -> {
                 CellSocket cellSocket = new CellSocket();
-                cellSocket.setType(CellType.valueOf((String) e));
+                cellSocket.setType(CellType.valueOf(e));
                 return cellSocket;
             }).collect(Collectors.toList()));
         }

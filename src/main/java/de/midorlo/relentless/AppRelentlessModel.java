@@ -30,7 +30,7 @@ public class AppRelentlessModel {
         PerkImporter perkImporter = new PerkImporter(perkRepository, perkEffectRepository);
         perkImporter.importGameObjects(FileUtillities.getPerksProtoObjects());
 
-        CellImporter cellImporter = new CellImporter(cellRepository, perkRepository);
+        CellImporter cellImporter = new CellImporter(cellRepository, perkRepository, perkEffectRepository);
         cellImporter.importGameObjects(FileUtillities.getCellProtoObjects());
 
         WeaponImporter weaponImporter = new WeaponImporter(weaponRepository, perkRepository, perkEffectRepository);
