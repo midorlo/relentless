@@ -27,7 +27,7 @@ public class ArmorImporter extends AbstractImporter<Armor> {
     }
 
     @Override
-    public void importGameObjects(List<LinkedHashMap> map) {
+    public void importGameObjects(List<LinkedHashMap<Object,Object>> map) {
         super.importGameObjects(map);
         repository.findAll().forEach(armor -> {
             perkRepository.save(armor.getPerks());

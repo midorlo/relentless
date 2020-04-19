@@ -2,7 +2,7 @@ package de.midorlo.relentless.domain.combat;
 
 import de.midorlo.relentless.domain.behemoth.Behemoth;
 import de.midorlo.relentless.domain.behemoth.BehemothPart;
-import de.midorlo.relentless.domain.behemoth.BehemothPartType;
+import de.midorlo.relentless.domain.behemoth.Hitzone;
 import de.midorlo.relentless.domain.mutators.IAttackModifier;
 import de.midorlo.relentless.domain.player.Player;
 import lombok.Data;
@@ -46,7 +46,7 @@ public class Attack {
     }
 
     public interface bPart {
-        bMove targetPart(BehemothPartType behemothPartType);
+        bMove targetPart(Hitzone hitzone);
     }
 
     public interface bMove {
@@ -82,9 +82,9 @@ public class Attack {
         }
 
         @Override
-        public bMove targetPart(BehemothPartType behemothPartType) {
+        public bMove targetPart(Hitzone hitzone) {
             return targetPart(attack.getBehemoth().getBehemothParts().stream()
-                    .filter(behemothPart1 -> behemothPart1.getType().equals(behemothPartType))
+                    .filter(behemothPart1 -> behemothPart1.getType().equals(hitzone))
                     .findFirst().orElse(null));
         }
 

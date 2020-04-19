@@ -1,7 +1,7 @@
 package de.midorlo.relentless.domain.combat;
 
 import de.midorlo.relentless.domain.behemoth.BehemothPart;
-import de.midorlo.relentless.domain.behemoth.BehemothPartType;
+import de.midorlo.relentless.domain.behemoth.Hitzone;
 import de.midorlo.relentless.domain.mutators.IAttackModifier;
 import lombok.Data;
 import lombok.extern.java.Log;
@@ -22,7 +22,7 @@ public class WeaponAttack implements IAttackModifier {
     DamageType type;
     boolean isCleave;
 
-    private List<BonusWeaponAttack> bonusWeaponAttacks = new ArrayList<>();
+    private List<WeaponExtraAttack> weaponExtraAttacks = new ArrayList<>();
 
     public static aName builder() {
         return new WeaponAttackBuilder();
@@ -102,7 +102,7 @@ public class WeaponAttack implements IAttackModifier {
             }
         }
         if (damageType.equals(DamageType.Piercing)
-        && (part.getType().equals(BehemothPartType.Head) || part.getType().equals(BehemothPartType.Horn))) {
+        && (part.getType().equals(Hitzone.head) || part.getType().equals(Hitzone.horn))) {
             damage.setPartDamageFactor(damage.getPartDamageFactor() + 0.25);
         }
         attack.getDamage().add(damage);
@@ -168,7 +168,7 @@ public class WeaponAttack implements IAttackModifier {
         @Override
         public WeaponAttack build() {
             for (int i = 0; i < move.hits; i++) {
-                move.getBonusWeaponAttacks().add(new BonusWeaponAttack(move));
+                move.getWeaponExtraAttacks().add(new WeaponExtraAttack(move));
             }
             return move;
         }

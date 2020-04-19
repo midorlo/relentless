@@ -13,19 +13,19 @@ import static de.midorlo.relentless.util.Constants.*;
 @SuppressWarnings("rawtypes")
 public class FileUtillities {
 
-    public static List<LinkedHashMap> getArmorsProtoObjects() {
+    public static List<LinkedHashMap<Object, Object>> getArmorsProtoObjects() {
         return readYamlFiles(DIR_DAUNTLESS_BUILDER_ARMOR);
     }
 
-    public static List<LinkedHashMap> getPerksProtoObjects() {
+    public static List<LinkedHashMap<Object, Object>> getPerksProtoObjects() {
         return readYamlFiles(DIR_DAUNTLESS_BUILDER_PERKS);
     }
 
-    public static List<LinkedHashMap> getLanternProtoObjects() {
+    public static List<LinkedHashMap<Object, Object>> getLanternProtoObjects() {
         return readYamlFiles(DIR_DAUNTLESS_BUILDER_PERKS);
     }
 
-    public static List<LinkedHashMap> getWeaponsProtoObjects() {
+    public static List<LinkedHashMap<Object, Object>> getWeaponsProtoObjects() {
         return readYamlFiles(DIR_DAUNTLESS_BUILDER_WEAPONS);
     }
 
@@ -34,11 +34,11 @@ public class FileUtillities {
      *
      * @return List<LinkedHashMap>.
      */
-    public static List<LinkedHashMap> getCellProtoObjects() {
+    public static List<LinkedHashMap<Object, Object>> getCellProtoObjects() {
         return readYamlFiles(DIR_DAUNTLESS_BUILDER_CELLS);
     }
 
-    private static List<LinkedHashMap> readYamlFiles(String directory) {
+    private static List<LinkedHashMap<Object, Object>> readYamlFiles(String directory) {
         ObjectMapper mapper = new ObjectMapper(new YAMLFactory());
         mapper.findAndRegisterModules();
         return getFiles(directory)
@@ -47,7 +47,8 @@ public class FileUtillities {
                 .collect(Collectors.toList());
     }
 
-    private static LinkedHashMap readYamlFile(File file, ObjectMapper mapper) {
+    @SuppressWarnings("unchecked")
+    private static LinkedHashMap<Object, Object> readYamlFile(File file, ObjectMapper mapper) {
         LinkedHashMap obj = null;
         try {
             obj = mapper.readValue(file, LinkedHashMap.class);
@@ -55,7 +56,7 @@ public class FileUtillities {
             e.printStackTrace();
             System.exit(1);
         }
-        return obj;
+        return ((LinkedHashMap<Object, Object>)obj);
     }
 
     private static List<File> getFiles(String absolutePath) {

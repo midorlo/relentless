@@ -11,12 +11,12 @@ import lombok.extern.java.Log;
 @Log
 public class BehemothPart {
 
-    BehemothPartType type;
+    Hitzone type;
     Double health;
     Double healthWound;
     boolean wounded;
 
-    public BehemothPart(BehemothPartType type, Double health) {
+    public BehemothPart(Hitzone type, Double health) {
         this.type = type;
         this.health = health;
     }

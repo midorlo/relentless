@@ -1,11 +1,7 @@
 package de.midorlo.relentless;
 
-import de.midorlo.relentless.domain.items.Armor;
-import de.midorlo.relentless.domain.items.Cell;
-import de.midorlo.relentless.domain.items.Lantern;
-import de.midorlo.relentless.domain.items.Weapon;
-import de.midorlo.relentless.domain.items.Perk;
-import de.midorlo.relentless.domain.items.PerkEffect;
+import de.midorlo.relentless.domain.behemoth.Hitzone;
+import de.midorlo.relentless.domain.items.*;
 import de.midorlo.relentless.importer.*;
 import de.midorlo.relentless.repository.Repository;
 import de.midorlo.relentless.util.FileUtillities;
@@ -23,6 +19,7 @@ public class AppRelentless {
     Repository<Weapon> weaponRepository = new Repository<>();
     Repository<Armor> armorRepository = new Repository<>();
     Repository<Lantern> lanternRepository = new Repository<>();
+    Repository<Hitzone> HitzoneRepository = new Repository<>();
 
     public AppRelentless() {
         importGameObjects();
@@ -31,6 +28,9 @@ public class AppRelentless {
     public void importGameObjects() {
         PerkImporter perkImporter = new PerkImporter(perkRepository, perkEffectRepository);
         perkImporter.importGameObjects(FileUtillities.getPerksProtoObjects());
+
+        HitzoneImporter hitzoneImporter = new HitzoneImporter(HitzoneRepository);
+        hitzoneImporter.importGameObjects(null);
 
         CellImporter cellImporter = new CellImporter(cellRepository, perkRepository, perkEffectRepository);
         cellImporter.importGameObjects(FileUtillities.getCellProtoObjects());

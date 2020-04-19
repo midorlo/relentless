@@ -1,6 +1,6 @@
 package de.midorlo.relentless.domain.combat;
 
-import de.midorlo.relentless.domain.behemoth.BehemothPartType;
+import de.midorlo.relentless.domain.behemoth.Hitzone;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -14,7 +14,7 @@ public class AttackResult {
 
     String playerName;
     String behemothName;
-    BehemothPartType targetPart;
+    Hitzone targetPart;
 
     Double oldHealth;
     Double healthDamage;

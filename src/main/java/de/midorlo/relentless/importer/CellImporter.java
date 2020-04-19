@@ -22,7 +22,7 @@ public class CellImporter extends AbstractImporter<Cell> {
     }
 
     @Override
-    public void importGameObjects(List<LinkedHashMap> map) {
+    public void importGameObjects(List<LinkedHashMap<Object,Object>> map) {
         super.importGameObjects(map);
         repository.findAll().forEach(cell -> {
             perkRepository.save(cell.getPerks());

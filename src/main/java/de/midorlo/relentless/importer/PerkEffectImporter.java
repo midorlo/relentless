@@ -15,7 +15,7 @@ public class PerkEffectImporter extends AbstractImporter<PerkEffect> {
     }
 
     @Override
-    public PerkEffect parseGameObject(LinkedHashMap leveledPerkEffectMap, Object extraData) {
+    public PerkEffect parseGameObject(LinkedHashMap<Object,Object> leveledPerkEffectMap, Object extraData) {
         PerkEffect effect = new PerkEffect();
         Object description = leveledPerkEffectMap.get("description");
         Object value = leveledPerkEffectMap.get("value");

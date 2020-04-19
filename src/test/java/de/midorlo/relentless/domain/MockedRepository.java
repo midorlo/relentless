@@ -2,7 +2,7 @@ package de.midorlo.relentless.domain;
 
 import de.midorlo.relentless.domain.behemoth.Behemoth;
 import de.midorlo.relentless.domain.behemoth.BehemothPart;
-import de.midorlo.relentless.domain.behemoth.BehemothPartType;
+import de.midorlo.relentless.domain.behemoth.Hitzone;
 import de.midorlo.relentless.domain.combat.WeaponAttack;
 import de.midorlo.relentless.domain.combat.DamageType;
 import de.midorlo.relentless.domain.combat.Hunt;
@@ -30,10 +30,14 @@ public class MockedRepository {
         behemoth.setStaggerHealth(2000d);
         behemoth.setElement(Element.Umbral);
         behemoth.setThread(24);
-        BehemothPart behemothPart = new BehemothPart(BehemothPartType.Head, 1000d);
+        BehemothPart behemothPart = new BehemothPart(mockHitzone(), 1000d);
         behemothPart.setHealthWound(2000d);
         behemoth.getBehemothParts().add(behemothPart);
         return behemoth;
+    }
+
+    public static Hitzone mockHitzone() {
+        return new Hitzone("Head");
     }
 
     public static Hunt mockHunt() {

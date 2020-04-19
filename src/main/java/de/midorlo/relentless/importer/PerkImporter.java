@@ -7,7 +7,7 @@ import de.midorlo.relentless.repository.Repository;
 import java.util.*;
 import java.util.stream.Collectors;
 
-@SuppressWarnings({"rawtypes"})
+@SuppressWarnings({"rawtypes", "unchecked"})
 public class PerkImporter extends AbstractImporter<Perk> {
 
     private Repository<PerkEffect> perkEffectRepository;
@@ -26,7 +26,7 @@ public class PerkImporter extends AbstractImporter<Perk> {
 
         //Only nestes source data available, so create a data source on the fly while parsing Perks.
         PerkEffectImporter perkEffectImporter = new PerkEffectImporter(perkEffectRepository);
-        List<LinkedHashMap> perkEffectsDataSource = unwrapListInMap((LinkedHashMap) oMap.get("effects"));
+        List<LinkedHashMap<Object,Object>> perkEffectsDataSource = unwrapListInMap((LinkedHashMap) oMap.get("effects"));
         List<PerkEffect> effects = perkEffectImporter.parseGameObjects(perkEffectsDataSource);
 
         //Source Data lacks fields for name and level.

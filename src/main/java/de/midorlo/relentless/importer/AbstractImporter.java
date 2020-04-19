@@ -6,7 +6,6 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 
-@SuppressWarnings({"rawtypes", "unchecked"})
 public abstract class AbstractImporter<T> {
 
     protected Repository<T> repository;
@@ -20,8 +19,8 @@ public abstract class AbstractImporter<T> {
      *
      * @param map sourcemap.
      */
-    public void importGameObjects(List<LinkedHashMap> map) {
-        repository.save(parseGameObjects(map));
+    public void importGameObjects(List<LinkedHashMap<Object,Object>> map) {
+        if (map != null) repository.save(parseGameObjects(map));
     }
 
     /**
@@ -30,9 +29,9 @@ public abstract class AbstractImporter<T> {
      * @param map the map.
      * @return List of parsed Objects.
      */
-    public List<T> parseGameObjects(List<LinkedHashMap> map) {
+    public List<T> parseGameObjects(List<LinkedHashMap<Object,Object>> map) {
         List<T> parsedItems = new ArrayList<>();
-        for (LinkedHashMap oMap : map) {
+        for (LinkedHashMap<Object,Object> oMap : map) {
             parsedItems.add(parseGameObject(oMap));
         }
         return parsedItems;
@@ -45,7 +44,7 @@ public abstract class AbstractImporter<T> {
      * @param extraData additional data for "exotic" implementations.
      * @return T
      */
-    public abstract T parseGameObject(LinkedHashMap map, Object extraData);
+    public abstract T parseGameObject(LinkedHashMap<Object,Object> map, Object extraData);
 
     /**
      * Parses a Game Object as <T>
@@ -53,7 +52,7 @@ public abstract class AbstractImporter<T> {
      * @param map sourcemap.
      * @return GameObject
      */
-    private T parseGameObject(LinkedHashMap map) {
+    private T parseGameObject(LinkedHashMap<Object,Object> map) {
         return parseGameObject(map, null);
     }
 
@@ -66,6 +65,7 @@ public abstract class AbstractImporter<T> {
      * @param src will be String, Double, ArrayLists of those.
      * @param tar src values will be added to.
      */
+    @SuppressWarnings({"unchecked", "rawtypes"})
     protected static void parseMixedContents(Object src, List tar) {
         if (src instanceof ArrayList) {
             src = ((ArrayList) src).stream().filter(Objects::nonNull).collect(Collectors.toList());
@@ -99,11 +99,12 @@ public abstract class AbstractImporter<T> {
      * @param map the map.
      * @return the list.
      */
-    protected static List<LinkedHashMap> unwrapListInMap(LinkedHashMap map) {
-        List<LinkedHashMap> list = new ArrayList<>();
+    @SuppressWarnings("unchecked")
+    protected static List<LinkedHashMap<Object,Object>> unwrapListInMap(LinkedHashMap<Object,Object> map) {
+        List<LinkedHashMap<Object,Object>> list = new ArrayList<>();
         int index = 1;
         while (map.get("" + index) != null) {
-            list.add((LinkedHashMap) map.get("" + (index++)));
+            list.add((LinkedHashMap<Object,Object>) map.get("" + (index++)));
         }
         return list;
     }

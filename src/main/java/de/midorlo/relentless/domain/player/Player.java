@@ -1,7 +1,6 @@
 package de.midorlo.relentless.domain.player;
 
 import de.midorlo.relentless.domain.behemoth.Behemoth;
-import de.midorlo.relentless.domain.behemoth.BehemothPartType;
 import de.midorlo.relentless.domain.combat.Attack;
 import de.midorlo.relentless.domain.combat.WeaponAttack;
 import de.midorlo.relentless.domain.combat.AttackResult;
@@ -34,7 +33,7 @@ public class Player {
         return Attack.builder()
                 .player(this)
                 .behemoth(behemoth)
-                .targetPart(BehemothPartType.Head)
+                .targetPart(behemoth.getBehemothParts().get(0).getType())
                 .attackMove(weaponAttack)
                 .build()
                 .doAttack();
