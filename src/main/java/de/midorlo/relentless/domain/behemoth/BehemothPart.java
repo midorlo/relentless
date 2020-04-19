@@ -13,6 +13,7 @@ public class BehemothPart {
 
     BehemothPartType type;
     Double health;
+    Double healthWound;
     boolean wounded;
 
     public BehemothPart(BehemothPartType type, Double health) {

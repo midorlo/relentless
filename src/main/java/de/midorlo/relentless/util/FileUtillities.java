@@ -21,6 +21,10 @@ public class FileUtillities {
         return readYamlFiles(DIR_DAUNTLESS_BUILDER_PERKS);
     }
 
+    public static List<LinkedHashMap> getLanternProtoObjects() {
+        return readYamlFiles(DIR_DAUNTLESS_BUILDER_PERKS);
+    }
+
     public static List<LinkedHashMap> getWeaponsProtoObjects() {
         return readYamlFiles(DIR_DAUNTLESS_BUILDER_WEAPONS);
     }

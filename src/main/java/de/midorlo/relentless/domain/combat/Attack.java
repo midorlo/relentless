@@ -3,6 +3,7 @@ package de.midorlo.relentless.domain.combat;
 import de.midorlo.relentless.domain.behemoth.Behemoth;
 import de.midorlo.relentless.domain.behemoth.BehemothPart;
 import de.midorlo.relentless.domain.behemoth.BehemothPartType;
+import de.midorlo.relentless.domain.mutators.IAttackModifier;
 import de.midorlo.relentless.domain.player.Player;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -18,14 +19,15 @@ import java.util.List;
 public class Attack {
 
     Player player;
-    AttackMove attackMove;
+    WeaponAttack weaponAttack;
     Behemoth behemoth;
     BehemothPart behemothPart;
-    Damage damage;
+    Damage damage = new Damage();
 
     private Attack() {}
 
-    public AttackResult finish() {
+    public AttackResult doAttack() {
+        setDamage(getDamage().fixate());
         return behemoth.consume(this);
     }
 
@@ -48,7 +50,7 @@ public class Attack {
     }
 
     public interface bMove {
-        bFin attackMove(AttackMove attackMove);
+        bFin attackMove(WeaponAttack weaponAttack);
     }
 
     public interface bFin {
@@ -87,25 +89,25 @@ public class Attack {
         }
 
         @Override
-        public bFin attackMove(AttackMove attackMove) {
-            attack.setAttackMove(attackMove);
+        public bFin attackMove(WeaponAttack weaponAttack) {
+            attack.setWeaponAttack(weaponAttack);
             return this;
         }
 
         @Override
         public Attack build() {
-            //Get a damage baseline from the weapon swing
-            attack.setDamage(new Damage());
-            attack = attack.getAttackMove().modify(attack);
+
+            attack = attack.getPlayer().getLoadout().getWeapon().accountFor(attack);
+            attack = attack.getWeaponAttack().accountFor(attack);
             //Get Armor + Weapon Mutators (Cells, Perks)
-            List<IAttackModifier> modifiers = attack.getPlayer().getModifiers();
-            for (IAttackModifier modifier : modifiers) {
-                attack = modifier.modify(attack);
-            }
+//            List<IAttackModifier> modifiers = attack.getPlayer().getModifiers();
+//            for (IAttackModifier modifier : modifiers) {
+//                attack = modifier.accountFor(attack);
+//            }
             //Get behemoth stuff (like skarns special)
             List<IAttackModifier> behemothModifiers = attack.getBehemoth().getModifiers();
             for (IAttackModifier modifier : behemothModifiers) {
-                attack = modifier.modify(attack);
+                attack = modifier.accountFor(attack);
             }
             return attack;
         }

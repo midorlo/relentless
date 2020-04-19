@@ -1,8 +1,6 @@
 package de.midorlo.relentless.domain.items;
 
 import de.midorlo.relentless.domain.Element;
-import de.midorlo.relentless.domain.mutators.PerkEffect;
-import de.midorlo.relentless.domain.mutators.Perk;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;

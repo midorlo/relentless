@@ -6,65 +6,99 @@ import lombok.*;
  * Makes extensive use of the formulas at: https://docs.google.com/spreadsheets/d/13lw6ShdGDyelde7u4Dhs95skIQdLQ1LHRE2heFTVBoc/edit#gid=0
  */
 @Data
-@ToString
-@EqualsAndHashCode
 @AllArgsConstructor
-@NoArgsConstructor
 public class Damage {
 
-    /* Typed Flat Damage */
-    Double healthDamageFlat = 0d;
-    Double parthDamageFlat = 0d;
-    Double staggerDamageFlat = 0d;
-    Double woundDamageFlat = 0d;
+    /* Typed Summants */
+    Double healthDamage;
+    Double partDamage;
+    Double staggerDamage;
+    Double woundDamage;
 
-    /* Typed Multiplicators */
-    Double healthDamageMult = 0d;
-    Double partDamageMult = 0d;
-    Double staggerDamageMult = 0d;
-    Double woundDamageMult = 0d;
+    /* Typed Factors */
+    Double healthDamageFactor;
+    Double partDamageFactor;
+    Double staggerDamageFactor;
+    Double woundDamageFactor;
 
-    /* Special Multiplicators */
-    Double attackTypeMult = 0d;
-    Double critMult = 0d;
-    Double acidicMult = 0d;
-    Double powerMult = 0d;
-    Double marksmanMult = 0d;
-    Double hitzoneMult = 0d;
+    /* Special Factors */
+    Double critFactor;
+    Double acidicFactor;
+    Double powerFactor;
+    Double marksmanFactor;
+    Double hitzoneFactor;
 
     /* Absurdities */
-    Double setStaggerMalusFlat = 0d;
+    Double staggerDamageMalus;
+
+    /**
+     * New Instance will all empty values (including factors!)
+     */
+    public Damage() {
+        marksmanFactor = 0d;
+        critFactor = 0d;
+        acidicFactor = 0d;
+        hitzoneFactor = 0d;
+        healthDamage = 0d;
+        powerFactor = 0d;
+        partDamage = 0d;
+        staggerDamage = 0d;
+        woundDamage = 0d;
+        healthDamageFactor = 0d;
+        partDamageFactor = 0d;
+        staggerDamageFactor = 0d;
+        woundDamageFactor = 0d;
+        staggerDamageMalus = 0d;
+    }
 
     public void add(Damage damage) {
-        this.healthDamageFlat += damage.healthDamageFlat;
-        this.parthDamageFlat += damage.parthDamageFlat;
-        this.staggerDamageFlat += damage.staggerDamageFlat;
-        this.woundDamageFlat += damage.woundDamageFlat;
-        this.healthDamageMult += damage.healthDamageMult;
-        this.partDamageMult += damage.partDamageMult;
-        this.staggerDamageMult += damage.staggerDamageMult;
-        this.woundDamageMult += damage.woundDamageMult;
-        this.attackTypeMult += damage.attackTypeMult;
-        this.critMult += damage.critMult;
-        this.acidicMult += damage.acidicMult;
-        this.powerMult += damage.powerMult;
-        this.marksmanMult += damage.marksmanMult;
-        this.hitzoneMult += damage.hitzoneMult;
+        this.healthDamage += damage.healthDamage;
+        this.partDamage += damage.partDamage;
+        this.staggerDamage += damage.staggerDamage;
+        this.woundDamage += damage.woundDamage;
+        this.healthDamageFactor += damage.healthDamageFactor;
+        this.partDamageFactor += damage.partDamageFactor;
+        this.staggerDamageFactor += damage.staggerDamageFactor;
+        this.woundDamageFactor += damage.woundDamageFactor;
+        this.critFactor += damage.critFactor;
+        this.acidicFactor += damage.acidicFactor;
+        this.powerFactor += damage.powerFactor;
+        this.marksmanFactor += damage.marksmanFactor;
+        this.hitzoneFactor += damage.hitzoneFactor;
+    }
+
+    /**
+     * Applies final sanity check and fixes before evaluation.
+     */
+    public Damage fixate() {
+        if (getCritFactor() == 0) {
+            setCritFactor(1d);
+        }
+        if (getMarksmanFactor() == 0) {
+            setMarksmanFactor(1d);
+        }
+        if (getHitzoneFactor() == 0) {
+            setHitzoneFactor(1d);
+        }
+        if (getAcidicFactor() == 0) {
+            setAcidicFactor(1d);
+        }
+        return this;
     }
 
     public Double getHealthDamageNetto() {
-        return healthDamageFlat * attackTypeMult * critMult * healthDamageMult * powerMult * marksmanMult;
+        return healthDamage * critFactor * healthDamageFactor * powerFactor * marksmanFactor;
     }
 
     public Double getPartDamageNetto() {
-        return ((healthDamageFlat * partDamageMult) + parthDamageFlat) * attackTypeMult * critMult * healthDamageMult * powerMult * marksmanMult * acidicMult;
+        return ((healthDamage * partDamageFactor) + partDamage)  * critFactor * healthDamageFactor * powerFactor * marksmanFactor * acidicFactor;
     }
 
     public Double getStaggerDamageNetto() {
-        return (((healthDamageFlat * attackTypeMult * critMult * staggerDamageMult) - setStaggerMalusFlat) + staggerDamageFlat) * powerMult * hitzoneMult;
+        return (((healthDamage * critFactor * staggerDamageFactor) - staggerDamageMalus) + staggerDamage) * powerFactor * hitzoneFactor;
     }
 
     public Double getWoundDamageNetto() {
-        return ((healthDamageFlat * attackTypeMult * critMult * woundDamageMult * healthDamageMult) + woundDamageFlat) * powerMult;
+        return ((healthDamage  * critFactor * woundDamageFactor * healthDamageFactor) + woundDamage) * powerFactor;
     }
 }

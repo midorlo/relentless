@@ -1,6 +1,6 @@
 package de.midorlo.relentless.importer;
 
-import de.midorlo.relentless.domain.mutators.PerkEffect;
+import de.midorlo.relentless.domain.items.PerkEffect;
 import de.midorlo.relentless.repository.Repository;
 
 import java.util.ArrayList;
