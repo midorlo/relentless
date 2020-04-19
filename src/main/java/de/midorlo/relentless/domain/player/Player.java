@@ -5,7 +5,6 @@ import de.midorlo.relentless.domain.behemoth.BehemothPartType;
 import de.midorlo.relentless.domain.combat.Attack;
 import de.midorlo.relentless.domain.combat.WeaponAttack;
 import de.midorlo.relentless.domain.combat.AttackResult;
-import de.midorlo.relentless.domain.mutators.IAttackModifier;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
@@ -18,9 +17,11 @@ import lombok.extern.java.Log;
 @ToString
 @EqualsAndHashCode
 @Log
-public class Player implements IAttackModifier {
+public class Player {
 
     String name;
+    Integer health;
+    Integer stamina;
     Loadout loadout;
 
     /**
@@ -36,13 +37,7 @@ public class Player implements IAttackModifier {
                 .targetPart(BehemothPartType.Head)
                 .attackMove(weaponAttack)
                 .build()
-                .finish();
-    }
-
-
-    @Override
-    public Attack accountFor(Attack attack) {
-        return attack;
+                .doAttack();
     }
 }
 

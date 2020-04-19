@@ -6,12 +6,10 @@ package de.midorlo.relentless.domain.combat;
  */
 public class BonusWeaponAttack extends WeaponAttack {
 
-    boolean isCleave;
     WeaponAttack parent;
 
-    public BonusWeaponAttack(WeaponAttack parent, boolean isCleave) {
+    public BonusWeaponAttack(WeaponAttack parent) {
         super();
         this.parent = parent;
-        this.isCleave = isCleave;
     }
 }

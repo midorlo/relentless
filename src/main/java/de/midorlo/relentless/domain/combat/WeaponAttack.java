@@ -1,13 +1,9 @@
 package de.midorlo.relentless.domain.combat;
 
+import de.midorlo.relentless.domain.behemoth.BehemothPart;
 import de.midorlo.relentless.domain.behemoth.BehemothPartType;
-import de.midorlo.relentless.domain.items.Weapon;
-import de.midorlo.relentless.domain.mutators.AbstractDamageModifier;
-import de.midorlo.relentless.domain.mutators.ElementDamageModifier;
 import de.midorlo.relentless.domain.mutators.IAttackModifier;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
 import lombok.extern.java.Log;
 
 import java.util.ArrayList;
@@ -17,80 +13,99 @@ import java.util.List;
  * A Weapon's Attack.
  */
 @Data
-@ToString
-@EqualsAndHashCode
 @Log
 public class WeaponAttack implements IAttackModifier {
 
     String name;
-    DamageType damageType;
+    Integer damage;
+    Integer hits;
+    DamageType type;
+    boolean isCleave;
 
-    Damage damage = new Damage();
-    Damage baseline = new Damage();
-    List<BonusWeaponAttack> bonusAttacks;
-
-    protected WeaponAttack() {
-    }
-
-    private WeaponAttack(List<AbstractDamageModifier> damageModifierList) {
-        this.damageModifierList = damageModifierList;
-    }
-
-    Integer weaponDamage;
-    Integer hitsCount;
-    List<AbstractDamageModifier> damageModifierList;
-
-    public WeaponAttack(Weapon parent, String name, Integer weaponDamage, Integer hitsCount) {
-        this.name = name;
-        this.weaponDamage = weaponDamage;
-        this.hitsCount = hitsCount;
-    }
+    private List<BonusWeaponAttack> bonusWeaponAttacks = new ArrayList<>();
 
     public static aName builder() {
         return new WeaponAttackBuilder();
     }
 
     /**
-     * Will add the Weapon's Base damage.
-     * //todo 2tes damage object: damage und damageBaseline: chainblades machen zb 50% mehr dmg an wounded parts
+     * Accounts for:
+     * - healthDamage
+     * - woundDamage
+     * - PartDamage
+     * - StaggerDamage
      *
-     * @param attack attack.
-     * @return processed attack.
+     * @param attack the attack.
+     * @return modified attack.
      */
     @Override
     public Attack accountFor(Attack attack) {
-        //Account for DamageType
-
-
-        //Apply the Damage
-        attack.getDamage().add(this.damage);
-
-        /* Add contextual Values to the Attack */
-        //Blunt:+25% Part damage vs wounds
-        Damage bonus = new Damage();
-        if (((attack.getWeaponAttack().getDamageType().equals(DamageType.Blunt)
-                || (attack.getWeaponAttack().getDamageType().equals(DamageType.Piercing)))
-                || (attack.getWeaponAttack().getDamageType().equals(DamageType.Special)))
-                && attack.getBehemothPart().isWounded()) {
-            bonus.setPartDamageFactor(0.25d);
-        }
-        if (attack.getWeaponAttack().getDamageType().equals(DamageType.Slashing)
-                && attack.getBehemothPart().isWounded()) {
-            bonus.setPartDamageFactor(0.5d);
-        }
-
-        if (attack.getWeaponAttack().getDamageType().equals(DamageType.Slashing)
-                && (attack.getBehemothPart().getType().equals(BehemothPartType.Head)
-                || attack.getBehemothPart().getType().equals(BehemothPartType.Horn))) {
-            bonus.setPartDamageFactor(bonus.getPartDamageFactor() + 0.5d);
-        }
-        if (attack.getWeaponAttack().getDamageType().equals(DamageType.Piercing)
-                && (attack.getBehemothPart().getType().equals(BehemothPartType.Head)
-                || attack.getBehemothPart().getType().equals(BehemothPartType.Horn))) {
-            bonus.setPartDamageFactor(bonus.getPartDamageFactor() + 0.25);
-        }
-        attack.getDamage().add(bonus);
+        accountForWeaponAttack(attack);
+        accountForDamageType(attack);
+        accountForBehemothPart(attack);
         return attack;
+    }
+
+    private void accountForWeaponAttack(Attack attack) {
+        Damage damage = new Damage();
+        damage.setHealthDamage(getDamage().doubleValue());
+        damage.setWoundDamage(getDamage().doubleValue());
+        damage.setStaggerDamage(getDamage().doubleValue());
+        damage.setPartDamage(getDamage().doubleValue());
+        attack.getDamage().add(damage);
+    }
+
+    private void accountForDamageType(Attack attack) {
+        DamageType damageType = getType();
+        Damage damage = new Damage();
+
+        if (damageType.equals(DamageType.Slashing)) {
+            damage.setHealthDamageFactor(1d);
+            damage.setPartDamageFactor(1d);
+            damage.setStaggerDamageFactor(1d);
+            damage.setWoundDamageFactor(0d);
+        }
+
+        if (damageType.equals(DamageType.Piercing)) {
+            damage.setHealthDamageFactor(1d);
+            damage.setPartDamageFactor(0.75d);
+            damage.setStaggerDamageFactor(0d);
+            damage.setWoundDamageFactor(1d);
+        }
+
+        if (damageType.equals(DamageType.Special)) {
+            damage.setHealthDamageFactor(1d);
+            damage.setPartDamageFactor(1d);
+            damage.setStaggerDamageFactor(0d);
+            damage.setWoundDamageFactor(0d);
+        }
+
+        if (damageType.equals(DamageType.Blunt)) {
+            damage.setHealthDamageFactor(1d);
+            damage.setPartDamageFactor(1d);
+            damage.setStaggerDamageFactor(1d + (1d/3d));
+            damage.setWoundDamageFactor(0d);
+        }
+        attack.getDamage().add(damage);
+    }
+
+    private void accountForBehemothPart(Attack attack) {
+        Damage damage = new Damage();
+        BehemothPart part = attack.getBehemothPart();
+        DamageType damageType = getType();
+                if (part.isWounded()) {
+            switch (damageType) {
+                case Blunt   :
+                case Piercing:
+                case Special : damage.setPartDamageFactor(0.25d); break;
+                case Slashing: damage.setPartDamageFactor(0.5d); break;
+            }
+        }
+        if (damageType.equals(DamageType.Piercing)
+        && (part.getType().equals(BehemothPartType.Head) || part.getType().equals(BehemothPartType.Horn))) {
+            damage.setPartDamageFactor(damage.getPartDamageFactor() + 0.25);
+        }
+        attack.getDamage().add(damage);
     }
 
 //Builder
@@ -105,18 +120,16 @@ public class WeaponAttack implements IAttackModifier {
     }
 
     public interface aDamage {
-        aBonusAttacks damage(Double damage);
-    }
-
-    public interface aBonusAttacks {
-        aRdy bonusAttacks(Double bonusAttacks, Boolean isCleave);
+        aRdy damage(Integer damage);
     }
 
     public interface aRdy {
+        aRdy bonusAttacks(Integer bonusAttacks);
+        aRdy cleave(boolean isCleave);
         WeaponAttack build();
     }
 
-    static class WeaponAttackBuilder implements aType, aBonusAttacks, aDamage, aName, aRdy {
+    static class WeaponAttackBuilder implements aType, aDamage, aName, aRdy {
         WeaponAttack move = new WeaponAttack();
 
         private WeaponAttackBuilder() {
@@ -130,84 +143,34 @@ public class WeaponAttack implements IAttackModifier {
 
         @Override
         public aDamage type(DamageType type) {
-            move.setDamageType(type);
+            move.setType(type);
             return this;
         }
 
         @Override
-        public aBonusAttacks damage(Double healthDamage) {
-            move.getDamage().setHealthDamage(healthDamage);
+        public aRdy damage(Integer damage) {
+            move.setDamage(damage);
             return this;
         }
 
         @Override
-        public aRdy bonusAttacks(Double bonusAttacks, Boolean isCleave) {
-            List<BonusWeaponAttack> bonusAttackMoves = new ArrayList<>();
-            for (int i = 0; i < bonusAttacks; i++) {
-                BonusWeaponAttack bonusAttackMove = new BonusWeaponAttack(move, isCleave);
-                bonusAttackMoves.add(bonusAttackMove);
-            }
-            move.setBonusAttacks(bonusAttackMoves);
+        public aRdy bonusAttacks(Integer bonusAttacks) {
+            move.setHits(bonusAttacks);
+            return this;
+        }
+
+        @Override
+        public aRdy cleave(boolean isCleave) {
+            move.setCleave(isCleave);
             return this;
         }
 
         @Override
         public WeaponAttack build() {
-            initDamageBaseline();
-            return move;
-        }
-
-        /**
-         * Creates a Damage Object regarding only the WeaponAttack.
-         * Used to get sane initial values, especially for multiplicators.
-         */
-        protected void initDamageBaseline() {
-            Damage baseline = move.getDamage();
-            double tPartDmg = 0d, tWoundDmg = 0d, tStaggerDmg = 0d;
-            switch (move.getDamageType()) {
-                case Slashing:
-                    tPartDmg = 1d;
-                    tStaggerDmg = 1d;
-                    tWoundDmg = 0d;
-                    break;
-                case Special:
-                case Bullet:
-                    tPartDmg = 1d;
-                    tStaggerDmg = 0d;
-                    tWoundDmg = 0d;
-                    break;
-                case Blunt:
-                    tPartDmg = 1d;
-                    tStaggerDmg = 1d + (1d / 3d);
-                    tWoundDmg = 0d;
-                    break;
-                case Piercing:
-                    tPartDmg = 0.75d;
-                    tStaggerDmg = 0d;
-                    tWoundDmg = 1d;
-                    break;
-                default:
-                    log.warning(move.getDamageType().toString());
+            for (int i = 0; i < move.hits; i++) {
+                move.getBonusWeaponAttacks().add(new BonusWeaponAttack(move));
             }
-            baseline.setPartDamageFactor(tPartDmg);
-            baseline.setStaggerDamage(tStaggerDmg);
-            baseline.setWoundDamageFactor(tWoundDmg);
-            baseline.setPartDamage(
-                    baseline.getPartDamageFactor() * baseline.getHealthDamage()
-            );
-            baseline.setStaggerDamage(
-                    baseline.getStaggerDamageFactor() * baseline.getHealthDamage()
-            );
-            baseline.setWoundDamage(
-                    baseline.getWoundDamageFactor() * baseline.getHealthDamage()
-            );
-            baseline.setHealthDamageFactor(1d);
-            baseline.setAttackTypeFactor(1d);
-            baseline.setCritFactor(1d);
-            baseline.setPowerFactor(1d);
-            baseline.setAcidicFactor(1d);
-            baseline.setMarksmanFactor(1d);
-            baseline.setHitzoneFactor(1d);
+            return move;
         }
     }
 }

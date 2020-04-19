@@ -1,6 +1,5 @@
 package de.midorlo.relentless.domain.combat;
 
-import de.midorlo.relentless.domain.player.Loadout;
 import lombok.*;
 
 /**
@@ -15,18 +14,20 @@ public class Damage {
     Double partDamage;
     Double staggerDamage;
     Double woundDamage;
+
     /* Typed Factors */
     Double healthDamageFactor;
     Double partDamageFactor;
     Double staggerDamageFactor;
     Double woundDamageFactor;
+
     /* Special Factors */
-    Double attackTypeFactor;
     Double critFactor;
     Double acidicFactor;
     Double powerFactor;
     Double marksmanFactor;
     Double hitzoneFactor;
+
     /* Absurdities */
     Double staggerDamageMalus;
 
@@ -34,7 +35,12 @@ public class Damage {
      * New Instance will all empty values (including factors!)
      */
     public Damage() {
+        marksmanFactor = 0d;
+        critFactor = 0d;
+        acidicFactor = 0d;
+        hitzoneFactor = 0d;
         healthDamage = 0d;
+        powerFactor = 0d;
         partDamage = 0d;
         staggerDamage = 0d;
         woundDamage = 0d;
@@ -42,12 +48,6 @@ public class Damage {
         partDamageFactor = 0d;
         staggerDamageFactor = 0d;
         woundDamageFactor = 0d;
-        attackTypeFactor = 0d;
-        critFactor = 0d;
-        acidicFactor = 0d;
-        powerFactor = 0d;
-        marksmanFactor = 0d;
-        hitzoneFactor = 0d;
         staggerDamageMalus = 0d;
     }
 
@@ -60,7 +60,6 @@ public class Damage {
         this.partDamageFactor += damage.partDamageFactor;
         this.staggerDamageFactor += damage.staggerDamageFactor;
         this.woundDamageFactor += damage.woundDamageFactor;
-        this.attackTypeFactor += damage.attackTypeFactor;
         this.critFactor += damage.critFactor;
         this.acidicFactor += damage.acidicFactor;
         this.powerFactor += damage.powerFactor;
@@ -68,19 +67,38 @@ public class Damage {
         this.hitzoneFactor += damage.hitzoneFactor;
     }
 
+    /**
+     * Applies final sanity check and fixes before evaluation.
+     */
+    public Damage fixate() {
+        if (getCritFactor() == 0) {
+            setCritFactor(1d);
+        }
+        if (getMarksmanFactor() == 0) {
+            setMarksmanFactor(1d);
+        }
+        if (getHitzoneFactor() == 0) {
+            setHitzoneFactor(1d);
+        }
+        if (getAcidicFactor() == 0) {
+            setAcidicFactor(1d);
+        }
+        return this;
+    }
+
     public Double getHealthDamageNetto() {
-        return healthDamage * attackTypeFactor * critFactor * healthDamageFactor * powerFactor * marksmanFactor;
+        return healthDamage * critFactor * healthDamageFactor * powerFactor * marksmanFactor;
     }
 
     public Double getPartDamageNetto() {
-        return ((healthDamage * partDamageFactor) + partDamage) * attackTypeFactor * critFactor * healthDamageFactor * powerFactor * marksmanFactor * acidicFactor;
+        return ((healthDamage * partDamageFactor) + partDamage)  * critFactor * healthDamageFactor * powerFactor * marksmanFactor * acidicFactor;
     }
 
     public Double getStaggerDamageNetto() {
-        return (((healthDamage * attackTypeFactor * critFactor * staggerDamageFactor) - staggerDamageMalus) + staggerDamage) * powerFactor * hitzoneFactor;
+        return (((healthDamage * critFactor * staggerDamageFactor) - staggerDamageMalus) + staggerDamage) * powerFactor * hitzoneFactor;
     }
 
     public Double getWoundDamageNetto() {
-        return ((healthDamage * attackTypeFactor * critFactor * woundDamageFactor * healthDamageFactor) + woundDamage) * powerFactor;
+        return ((healthDamage  * critFactor * woundDamageFactor * healthDamageFactor) + woundDamage) * powerFactor;
     }
 }

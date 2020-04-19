@@ -22,7 +22,7 @@ public class Hunt {
     List<Behemoth> behemoths = new ArrayList<>();
     List<AttackResult> attackResultsLog = new ArrayList<>();
 
-    public void addAttackResult(AttackResult attackResult) {
+    public void saveResult(AttackResult attackResult) {
 //        log.info(attackResult.toString());
         attackResultsLog.add(attackResult);
     }

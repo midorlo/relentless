@@ -3,8 +3,6 @@ package de.midorlo.relentless.importer;
 import de.midorlo.relentless.domain.Element;
 import de.midorlo.relentless.domain.combat.DamageType;
 import de.midorlo.relentless.domain.items.*;
-import de.midorlo.relentless.domain.items.Perk;
-import de.midorlo.relentless.domain.items.PerkEffect;
 import de.midorlo.relentless.repository.Assets;
 import de.midorlo.relentless.repository.Repository;
 
@@ -52,7 +50,12 @@ public class WeaponImporter extends AbstractImporter<Weapon> {
         w.setDescription((String) description);
         w.setType(ItemType.valueOf(((String) type).trim().replace(" ", "")));
         w.setElement(((elemental == null) ? Element.Neutral : Element.valueOf((String) elemental)));
-        w.setDamageType(DamageType.valueOf((String) damage));
+        String damageTypeString = (String) damage;
+        //Bad source data again.
+        if ("Cutting".contentEquals(damageTypeString)) {
+            damageTypeString = "Slashing";
+        }
+        w.setDamageType(DamageType.valueOf(damageTypeString));
         Assets.assetsPathMap.put(w, (String) icon);
 
         PerkImporter perkImporter = new PerkImporter(perkRepository, perkEffectRepository);

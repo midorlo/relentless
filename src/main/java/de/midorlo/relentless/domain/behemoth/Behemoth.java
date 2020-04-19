@@ -23,7 +23,10 @@ public class Behemoth implements IAttackModifier {
 
     String name;
     Integer thread;
+
     Double health;
+    Double staggerHealth;
+
     Element element;
     List<BehemothPart> behemothParts = new ArrayList<>();
 
@@ -66,27 +69,50 @@ public class Behemoth implements IAttackModifier {
         return attack;
     }
 
-    public AttackResult consume(Attack attackNetto) {
-        Double oldHealth = getHealth(),
-                healthDamage = attackNetto.getDamage().getHealthDamageNetto(),
-                newHealth = oldHealth - healthDamage,
-                oldPartHealth = attackNetto.getBehemothPart().getHealth(),
-                partDamage = attackNetto.getDamage().getPartDamageNetto(),
-                newPartHealth = oldPartHealth - partDamage;
+    public AttackResult consume(Attack attack) {
 
-        setHealth(newHealth);
-        attackNetto.getBehemothPart().setHealth(newPartHealth);
+        BehemothPart part = attack.getBehemothPart();
+
+        Double healthDamage   = attack.getDamage().getHealthDamageNetto();
+        Double partDamage     = attack.getDamage().getPartDamageNetto();
+        Double staggerDamage  = attack.getDamage().getStaggerDamage();
+        Double woundDamage    = attack.getDamage().getWoundDamageNetto();
+
+        Double healthOld      = getHealth();
+        Double healthNew      = healthOld - healthDamage;
+        Double parthHealthOld = attack.getBehemothPart().getHealth();
+        Double partHealthNew  = parthHealthOld - partDamage;
+
+        Double woundHealthOld = part.getHealthWound();
+        Double woundHealthNew = woundHealthOld - woundDamage;
+
+        Double staggerHealthOld = getStaggerHealth();
+        Double staggerHealthNew = getStaggerHealth() - staggerDamage; //todo handle stagger
+
+        setHealth(healthNew);
+        setStaggerHealth(staggerHealthNew);
+
+        part.setHealth(partHealthNew);
+        part.setHealthWound(woundHealthNew);
+
+        //todo handle bonus attacks, with their hitzone displacements
 
         return new AttackResult(
-                attackNetto.getPlayer().getName(),
-                attackNetto.getBehemoth().getName(),
-                attackNetto.getBehemothPart().getType(),
-                oldHealth,
+                attack.getPlayer().getName(),
+                attack.getBehemoth().getName(),
+                attack.getBehemothPart().getType(),
+                healthOld,
                 healthDamage,
-                newHealth,
-                oldPartHealth,
+                healthNew,
+                parthHealthOld,
                 partDamage,
-                newPartHealth
+                partHealthNew,
+                staggerHealthOld,
+                staggerDamage,
+                staggerHealthNew,
+                woundHealthOld,
+                woundDamage,
+                woundHealthNew
         );
     }
 

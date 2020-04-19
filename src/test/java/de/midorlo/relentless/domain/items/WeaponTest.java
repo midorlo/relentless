@@ -1,15 +1,10 @@
 package de.midorlo.relentless.domain.items;
 
 
-import de.midorlo.relentless.domain.Element;
 import de.midorlo.relentless.domain.MockedRepository;
 import de.midorlo.relentless.domain.behemoth.BehemothPartType;
 import de.midorlo.relentless.domain.combat.Attack;
-import de.midorlo.relentless.domain.combat.Damage;
-import de.midorlo.relentless.domain.combat.DamageType;
 import org.testng.annotations.Test;
-
-import java.util.HashMap;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
@@ -19,19 +14,15 @@ public class WeaponTest {
 
     @Test
     public void accountForTest() {
-        Weapon weapon = new Weapon();
-        weapon.setDamageType(DamageType.Slashing);
-        weapon.setName("Mana Sword");
-        weapon.setElement(Element.Radiant);
-        weapon.setDescription("It's something");
+        Weapon weapon = MockedRepository.mockWeapon();
         Attack attack = Attack.builder()
                 .player(MockedRepository.mockPlayer())
                 .behemoth(MockedRepository.mockBehemoth())
                 .targetPart(BehemothPartType.Head)
                 .attackMove(MockedRepository.mockMoveset().get(0))
                 .build();
-        attack = weapon.accountFor(attack);
-        System.out.println("");
+        Attack modifiedAttack = weapon.accountFor(attack);
+        assertThat(modifiedAttack, equalTo(attack));
     }
 
 

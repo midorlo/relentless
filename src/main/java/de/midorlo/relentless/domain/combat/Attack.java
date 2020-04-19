@@ -26,7 +26,8 @@ public class Attack {
 
     private Attack() {}
 
-    public AttackResult finish() {
+    public AttackResult doAttack() {
+        setDamage(getDamage().fixate());
         return behemoth.consume(this);
     }
 
@@ -95,7 +96,8 @@ public class Attack {
 
         @Override
         public Attack build() {
-            //Get a damage baseline from the weapon swing
+
+            attack = attack.getPlayer().getLoadout().getWeapon().accountFor(attack);
             attack = attack.getWeaponAttack().accountFor(attack);
             //Get Armor + Weapon Mutators (Cells, Perks)
 //            List<IAttackModifier> modifiers = attack.getPlayer().getModifiers();

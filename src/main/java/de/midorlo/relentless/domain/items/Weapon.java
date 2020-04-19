@@ -28,7 +28,7 @@ public class Weapon extends Gear implements IAttackModifier {
      * @return 550.
      */
     public Integer getPower() {
-        return 550;
+        return 550; //todo handle levelled power
     }
 
     @Override

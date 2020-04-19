@@ -27,9 +27,11 @@ public class MockedRepository {
         Behemoth behemoth = new Behemoth();
         behemoth.setName("Meh-Kel, Holder of the Dark Triangle");
         behemoth.setHealth(2000d);
+        behemoth.setStaggerHealth(2000d);
         behemoth.setElement(Element.Umbral);
         behemoth.setThread(24);
         BehemothPart behemothPart = new BehemothPart(BehemothPartType.Head, 1000d);
+        behemothPart.setHealthWound(2000d);
         behemoth.getBehemothParts().add(behemothPart);
         return behemoth;
     }
@@ -49,9 +51,11 @@ public class MockedRepository {
 
     public static Weapon mockWeapon() {
         Weapon weapon = new Weapon();
-        weapon.setName("Inferno's Fangs");
-        weapon.setElement(Element.Blaze);
-        weapon.setType(ItemType.ChainBlades);
+        weapon.setName("Mana Sword");
+        weapon.setDescription("It's something");
+        weapon.setType(ItemType.Sword);
+        weapon.setDamageType(DamageType.Slashing);
+        weapon.setElement(Element.Radiant);
         weapon.setMoveSets(mockMovesets());
         return weapon;
     }
@@ -67,8 +71,9 @@ public class MockedRepository {
         WeaponAttack move = WeaponAttack.builder()
                 .name("Bladed 1(L)")
                 .type(DamageType.Slashing)
-                .damage(60d)
-                .bonusAttacks(1d, false)
+                .damage(60)
+                .cleave(false)
+                .bonusAttacks(3)
                 .build();
         moveset.add(move);
         return moveset;

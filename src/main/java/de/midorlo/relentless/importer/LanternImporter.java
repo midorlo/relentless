@@ -31,6 +31,6 @@ public class LanternImporter extends AbstractImporter<Lantern> {
         hold: Hold to drop a bomb from above that explodes after 1 second. Deals 650 damage and can interrupt Behemoths.
         */
 
-        return null;
+        return null; //todo impl
     }
 }
