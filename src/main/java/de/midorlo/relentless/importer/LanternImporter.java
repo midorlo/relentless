@@ -1,11 +1,12 @@
 package de.midorlo.relentless.importer;
 
-import de.midorlo.relentless.domain.items.Lantern;
-import de.midorlo.relentless.domain.items.Perk;
-import de.midorlo.relentless.domain.items.PerkEffect;
+import de.midorlo.relentless.domain.combat.WeaponAttack;
+import de.midorlo.relentless.domain.items.*;
 import de.midorlo.relentless.repository.Repository;
 
+import java.util.Arrays;
 import java.util.LinkedHashMap;
+import java.util.List;
 
 @SuppressWarnings("ALL")
 public class LanternImporter extends AbstractImporter<Lantern> {
@@ -30,7 +31,41 @@ public class LanternImporter extends AbstractImporter<Lantern> {
         instant: Tap to fire a cannonball from above that deals 350 damage or, against airborne Behemoths, deals 450 damage and critically strikes.
         hold: Hold to drop a bomb from above that explodes after 1 second. Deals 650 damage and can interrupt Behemoths.
         */
+        String name = (String) map.get("name");
+        String icon = (String) map.get("icon");
+        String description = (String) map.get("description");
+        String cells = (String) map.get("cells");
+        Object lanternAbility = map.get("lantern_ability");
 
-        return null; //todo impl
+        Lantern lantern = new Lantern();
+        lantern.setName(name);
+        lantern.setDescription(description);
+        if (cells != null) {
+            CellSocket cellSocket = new CellSocket();
+            CellType cellType = CellType.valueOf(cells);
+            cellSocket.setType(cellType);
+            lantern.getCellSockets().add(cellSocket);
+        }
+        lantern.getMoveSets().add(parseLanternAttackObjects((LinkedHashMap) lanternAbility, lantern));
+        return lantern;
+    }
+    public List<WeaponAttack> parseLanternAttackObjects(LinkedHashMap map, Lantern parent) {
+        String instant = (String) map.get("instant");
+        String hold = (String) map.get("hold");
+
+        WeaponAttack instantAttack = new WeaponAttack();
+        instantAttack.setName(parent.getName() + "_instant");
+        instantAttack.setDescription(instant);
+        instantAttack.setCleave(false);
+        instantAttack.setDamage(0);
+        instantAttack.setHits(0);
+
+        WeaponAttack holdAttack = new WeaponAttack();
+        holdAttack.setName(parent.getName() + "_hold");
+        holdAttack.setDescription(instant);
+        holdAttack.setCleave(false);
+        holdAttack.setDamage(0);
+        holdAttack.setHits(0);
+        return Arrays.asList(new WeaponAttack[]{instantAttack,holdAttack});
     }
 }

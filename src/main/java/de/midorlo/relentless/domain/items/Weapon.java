@@ -21,7 +21,7 @@ import java.util.List;
 @SuppressWarnings("SameReturnValue")
 public class Weapon extends Gear implements IAttackModifier {
 
-    List<List<WeaponAttack>> moveSets = new ArrayList<>();
+    protected List<List<WeaponAttack>> moveSets = new ArrayList<>();
     AttackType attackType;
 
     /**

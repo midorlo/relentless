@@ -17,6 +17,7 @@ import java.util.List;
 public class WeaponAttack implements IAttackModifier {
 
     String name;
+    String description;
     Integer damage;
     Integer hits;
     AttackType type;
