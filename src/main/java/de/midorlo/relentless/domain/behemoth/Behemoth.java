@@ -75,7 +75,7 @@ public class Behemoth implements IAttackModifier {
 
         Double healthDamage   = attack.getDamage().getHealthDamageNetto();
         Double partDamage     = attack.getDamage().getPartDamageNetto();
-        Double staggerDamage  = attack.getDamage().getStaggerDamage();
+        Double staggerDamage  = attack.getDamage().getStaggerDamageNetto();
         Double woundDamage    = attack.getDamage().getWoundDamageNetto();
 
         Double healthOld      = getHealth();

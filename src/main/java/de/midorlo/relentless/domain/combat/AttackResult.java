@@ -34,17 +34,24 @@ public class AttackResult {
 
     @Override
     public String toString() {
-        return "AttackResult { playerName='" + playerName + ", behemothName='" + behemothName + '\'' + ", targetPart=" +
-                targetPart + System.lineSeparator()
-                + "\t" +
-                ", health=" + oldHealth + "-> " + newHealth + "(" + healthDamage + ")"
-                + System.lineSeparator()
-                + "\t" +
-                ", part=" + oldPartHealth + "-> " + newPartHealth + "(" + partDamage + ")" + System.lineSeparator() + "\t"
-                + "\t" +
-                ", stagger=" + oldStaggerHealth + "-> " + newStaggerHealth + "(" + staggerDamage + ")" + System.lineSeparator() + "\t"
-                + "\t" +
-                ", wound=" + oldPartWoundHealth + "-> " + newPartWoundHealth + "(" + woundDamage + ")" + System.lineSeparator() + "\t" +
+        return "AttackResult{" + System.lineSeparator() +
+                "\tattack='" + playerName + '\'' +
+                ",'" + behemothName + '\'' +
+                "," + targetPart.getName() + System.lineSeparator() +
+                "\thealth=" + oldHealth +
+                ", " + healthDamage +
+                ", " + newHealth + System.lineSeparator() +
+                "\tpart=" + oldPartHealth +
+                ", " + partDamage +
+                ", " + newPartHealth + System.lineSeparator() +
+                "\tstagger=" + oldStaggerHealth +
+                ", " + staggerDamage +
+                ", " + newStaggerHealth + System.lineSeparator() +
+                "\twound=" + oldPartWoundHealth +
+                ", " + woundDamage +
+                ", " + newPartWoundHealth + System.lineSeparator() +
                 '}';
     }
 }
+
+

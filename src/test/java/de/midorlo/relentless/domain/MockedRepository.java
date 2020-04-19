@@ -4,7 +4,7 @@ import de.midorlo.relentless.domain.behemoth.Behemoth;
 import de.midorlo.relentless.domain.behemoth.BehemothPart;
 import de.midorlo.relentless.domain.behemoth.Hitzone;
 import de.midorlo.relentless.domain.combat.WeaponAttack;
-import de.midorlo.relentless.domain.combat.DamageType;
+import de.midorlo.relentless.domain.combat.AttackType;
 import de.midorlo.relentless.domain.combat.Hunt;
 import de.midorlo.relentless.domain.items.Weapon;
 import de.midorlo.relentless.domain.items.ItemType;
@@ -58,7 +58,7 @@ public class MockedRepository {
         weapon.setName("Mana Sword");
         weapon.setDescription("It's something");
         weapon.setType(ItemType.Sword);
-        weapon.setDamageType(DamageType.Slashing);
+        weapon.setAttackType(AttackType.Slashing);
         weapon.setElement(Element.Radiant);
         weapon.setMoveSets(mockMovesets());
         return weapon;
@@ -74,7 +74,7 @@ public class MockedRepository {
         ArrayList<WeaponAttack> moveset = new ArrayList<>();
         WeaponAttack move = WeaponAttack.builder()
                 .name("Bladed 1(L)")
-                .type(DamageType.Slashing)
+                .type(AttackType.Slashing)
                 .damage(60)
                 .cleave(false)
                 .bonusAttacks(3)
