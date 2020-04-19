@@ -50,6 +50,9 @@ public class PerkImporter extends AbstractImporter<Perk> {
      */
     public Perk parseWeaponPerk(LinkedHashMap map) {
         List<Perk> searchResults = super.repository.findBy(e -> e.getName().contentEquals((String) map.get("name")));
+        if (searchResults.isEmpty()) {
+            throw new RuntimeException("Import Perks first!");
+        }
         return searchResults.get(0);
     }
 

@@ -38,7 +38,7 @@ public class FileUtillities {
         return readYamlFiles(DIR_DAUNTLESS_BUILDER_CELLS);
     }
 
-    private static List<LinkedHashMap<Object, Object>> readYamlFiles(String directory) {
+    public static List<LinkedHashMap<Object, Object>> readYamlFiles(String directory) {
         ObjectMapper mapper = new ObjectMapper(new YAMLFactory());
         mapper.findAndRegisterModules();
         return getFiles(directory)

@@ -1,6 +1,7 @@
 package de.midorlo.relentless.importer;
 
 import de.midorlo.relentless.repository.Repository;
+import de.midorlo.relentless.util.FileUtillities;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -21,6 +22,14 @@ public abstract class AbstractImporter<T> {
      */
     public void importGameObjects(List<LinkedHashMap<Object,Object>> map) {
         if (map != null) repository.save(parseGameObjects(map));
+    }
+
+    /**
+     * Creates <T>'s from yaml-files in a directory.
+     * @param yamlsDirectory path to a directory containing yaml-files.
+     */
+    public void importGameObjects(String yamlsDirectory) {
+       importGameObjects(FileUtillities.readYamlFiles(yamlsDirectory));
     }
 
     /**
