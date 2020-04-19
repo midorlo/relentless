@@ -10,8 +10,6 @@ import lombok.EqualsAndHashCode;
 import lombok.ToString;
 import lombok.extern.java.Log;
 
-import java.util.List;
-
 @Data
 @ToString
 @EqualsAndHashCode
@@ -22,9 +20,14 @@ public class Attack {
     WeaponAttack weaponAttack;
     Behemoth behemoth;
     BehemothPart behemothPart;
-    Damage damage = new Damage();
+    Damage damage;
 
-    private Attack() {}
+    private Attack() {
+    }
+
+    private Attack consume(IAttackModifier modifier) {
+        return modifier.accountFor(this);
+    }
 
     public AttackResult doAttack() {
         setDamage(getDamage().fixate());
@@ -59,7 +62,7 @@ public class Attack {
 
     private static class AttackBuilder implements bPlayer, bBehemoth, bPart, bMove, bFin {
 
-        private Attack attack = new Attack();
+        private final Attack attack = new Attack();
 
         private AttackBuilder() {
         }
@@ -96,20 +99,11 @@ public class Attack {
 
         @Override
         public Attack build() {
-
-            attack = attack.getPlayer().getLoadout().getWeapon().accountFor(attack);
-            attack = attack.getWeaponAttack().accountFor(attack);
-            //Get Armor + Weapon Mutators (Cells, Perks)
-//            List<IAttackModifier> modifiers = attack.getPlayer().getModifiers();
-//            for (IAttackModifier modifier : modifiers) {
-//                attack = modifier.accountFor(attack);
-//            }
-            //Get behemoth stuff (like skarns special)
-            List<IAttackModifier> behemothModifiers = attack.getBehemoth().getModifiers();
-            for (IAttackModifier modifier : behemothModifiers) {
-                attack = modifier.accountFor(attack);
-            }
-            return attack;
+            attack.setDamage(new Damage());
+            return attack
+                    .consume(attack.getPlayer().getLoadout().getWeapon())
+                    .consume(attack.getWeaponAttack())
+                    .consume(attack.getBehemoth());
         }
     }
 }

@@ -61,7 +61,7 @@ public class Behemoth implements IAttackModifier {
     //@formatter:on
 
     public void setHealth(Double health) {
-        this.health = health;
+        this.health = health; //todo impl
     }
 
     @Override
@@ -114,9 +114,5 @@ public class Behemoth implements IAttackModifier {
                 woundDamage,
                 woundHealthNew
         );
-    }
-
-    public List<IAttackModifier> getModifiers() {
-        return new ArrayList<>();
     }
 }
