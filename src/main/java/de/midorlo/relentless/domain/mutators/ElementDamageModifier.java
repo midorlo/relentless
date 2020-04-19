@@ -10,6 +10,7 @@ public class ElementDamageModifier extends AbstractDamageModifier<Element> {
      * @param identifier     An exact attribute to look for.
      * @param damageModifier a damage Value that gets added to the attack, when the identifier matches.
      */
+    @SuppressWarnings("unused")
     public ElementDamageModifier(Element identifier, Damage damageModifier) {
         super(identifier, damageModifier);
     }

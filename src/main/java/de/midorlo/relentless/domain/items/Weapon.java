@@ -18,6 +18,7 @@ import java.util.List;
 @ToString(exclude = {"moveSets"}, callSuper = true)
 @EqualsAndHashCode(callSuper = true)
 @Log
+@SuppressWarnings("SameReturnValue")
 public class Weapon extends Gear implements IAttackModifier {
 
     List<List<WeaponAttack>> moveSets = new ArrayList<>();

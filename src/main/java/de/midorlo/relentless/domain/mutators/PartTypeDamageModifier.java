@@ -7,6 +7,7 @@ import de.midorlo.relentless.domain.combat.Damage;
 /**
  * Holds a Damage Modifier that Reacts to a targeted Part Type
  */
+@SuppressWarnings("unused")
 public class PartTypeDamageModifier extends AbstractDamageModifier<Hitzone> {
 
     /**
@@ -18,6 +19,7 @@ public class PartTypeDamageModifier extends AbstractDamageModifier<Hitzone> {
         super(partType, mutator);
     }
 
+    @SuppressWarnings("unused")
     @Override
     public boolean matches(Attack attack) {
         return identifier.equals(attack.getBehemothPart().getType());

@@ -7,7 +7,7 @@ import de.midorlo.relentless.repository.Repository;
 
 import java.util.LinkedHashMap;
 
-@SuppressWarnings("rawtypes")
+@SuppressWarnings("ALL")
 public class LanternImporter extends AbstractImporter<Lantern> {
 
     Repository<Perk> perkRepository;
@@ -20,7 +20,7 @@ public class LanternImporter extends AbstractImporter<Lantern> {
     }
 
     @Override
-    public Lantern parseGameObject(LinkedHashMap map, Object extraData) {
+    public Lantern parseGameObject(LinkedHashMap map) {
         /*
         name: Broadsides Lantern
         icon: /assets/icons/lanterns/BroadsidesLantern.png

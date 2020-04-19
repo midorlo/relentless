@@ -33,7 +33,7 @@ public class WeaponImporter extends AbstractImporter<Weapon> {
     }
 
     @Override
-    public Weapon parseGameObject(LinkedHashMap map, Object extraData) {
+    public Weapon parseGameObject(LinkedHashMap map) {
 
         Object name = map.get("name");
         Object description = map.get("description");
@@ -66,7 +66,7 @@ public class WeaponImporter extends AbstractImporter<Weapon> {
         w.getCellSockets().addAll(cellSockets);
 
         PerkEffectImporter perkEffectImporter = new PerkEffectImporter(perkEffectRepository);
-        List<PerkEffect> perkEffects = perkEffectImporter.parseGameWeaponObjects((ArrayList<LinkedHashMap>) unique_effects, w);
+        List<PerkEffect> perkEffects = perkEffectImporter.parseGameWeaponObjects((ArrayList<LinkedHashMap>) unique_effects);
         w.getPerkEffects().addAll(perkEffects);
 
         return w;

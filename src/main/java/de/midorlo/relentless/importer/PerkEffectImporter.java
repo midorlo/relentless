@@ -15,7 +15,7 @@ public class PerkEffectImporter extends AbstractImporter<PerkEffect> {
     }
 
     @Override
-    public PerkEffect parseGameObject(LinkedHashMap<Object,Object> leveledPerkEffectMap, Object extraData) {
+    public PerkEffect parseGameObject(LinkedHashMap<Object,Object> leveledPerkEffectMap) {
         PerkEffect effect = new PerkEffect();
         Object description = leveledPerkEffectMap.get("description");
         Object value = leveledPerkEffectMap.get("value");
@@ -28,21 +28,20 @@ public class PerkEffectImporter extends AbstractImporter<PerkEffect> {
      * Weapon data is another special snowflake
      *
      * @param mapsList list of Datamaps with reduced details
-     * @param extraData parent Weapon
      * @return list of Combat Effects
      */
-    public List<PerkEffect> parseGameWeaponObjects(ArrayList<LinkedHashMap> mapsList, Object extraData) {
+    public List<PerkEffect> parseGameWeaponObjects(ArrayList<LinkedHashMap> mapsList) {
         List<PerkEffect> effects = new ArrayList<>();
         if (mapsList != null) {
             for (LinkedHashMap map : mapsList) {
-                PerkEffect effect = parseGameWeaponObject(map, extraData);
+                PerkEffect effect = parseGameWeaponObject(map);
                 effects.add(effect);
             }
         }
         return effects;
     }
 
-    public PerkEffect parseGameWeaponObject(LinkedHashMap map, Object extraData) {
+    public PerkEffect parseGameWeaponObject(LinkedHashMap map) {
         String name = (String) map.get("name");
         String description = (String) map.get("description");
         Double value = parseMixedNumerics(map.get("value"));

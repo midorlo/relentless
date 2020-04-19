@@ -31,7 +31,7 @@ public class CellImporter extends AbstractImporter<Cell> {
     }
 
     @Override
-    public Cell parseGameObject(LinkedHashMap map, Object extraData) {
+    public Cell parseGameObject(LinkedHashMap map) {
         String name = (String) map.get("name");
         CellType cellType = CellType.valueOf((String) map.get("slot"));
         Cell cell = new Cell();

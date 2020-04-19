@@ -5,38 +5,14 @@ import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
-
-import static de.midorlo.relentless.util.Constants.*;
 
 @SuppressWarnings("rawtypes")
 public class FileUtillities {
-
-    public static List<LinkedHashMap<Object, Object>> getArmorsProtoObjects() {
-        return readYamlFiles(DIR_DAUNTLESS_BUILDER_ARMOR);
-    }
-
-    public static List<LinkedHashMap<Object, Object>> getPerksProtoObjects() {
-        return readYamlFiles(DIR_DAUNTLESS_BUILDER_PERKS);
-    }
-
-    public static List<LinkedHashMap<Object, Object>> getLanternProtoObjects() {
-        return readYamlFiles(DIR_DAUNTLESS_BUILDER_PERKS);
-    }
-
-    public static List<LinkedHashMap<Object, Object>> getWeaponsProtoObjects() {
-        return readYamlFiles(DIR_DAUNTLESS_BUILDER_WEAPONS);
-    }
-
-    /**
-     * Gives the contents of all .yaml-Files found in <code>DIR_DAUNTLESS_BUILDER_PERKS</code> as LinkedHashMap's.
-     *
-     * @return List<LinkedHashMap>.
-     */
-    public static List<LinkedHashMap<Object, Object>> getCellProtoObjects() {
-        return readYamlFiles(DIR_DAUNTLESS_BUILDER_CELLS);
-    }
 
     public static List<LinkedHashMap<Object, Object>> readYamlFiles(String directory) {
         ObjectMapper mapper = new ObjectMapper(new YAMLFactory());
@@ -71,6 +47,4 @@ public class FileUtillities {
         }
         return files;
     }
-
-
 }

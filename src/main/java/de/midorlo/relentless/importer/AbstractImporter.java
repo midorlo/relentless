@@ -20,16 +20,17 @@ public abstract class AbstractImporter<T> {
      *
      * @param map sourcemap.
      */
-    public void importGameObjects(List<LinkedHashMap<Object,Object>> map) {
+    public void importGameObjects(List<LinkedHashMap<Object, Object>> map) {
         if (map != null) repository.save(parseGameObjects(map));
     }
 
     /**
      * Creates <T>'s from yaml-files in a directory.
+     *
      * @param yamlsDirectory path to a directory containing yaml-files.
      */
     public void importGameObjects(String yamlsDirectory) {
-       importGameObjects(FileUtillities.readYamlFiles(yamlsDirectory));
+        importGameObjects(FileUtillities.readYamlFiles(yamlsDirectory));
     }
 
     /**
@@ -38,9 +39,9 @@ public abstract class AbstractImporter<T> {
      * @param map the map.
      * @return List of parsed Objects.
      */
-    public List<T> parseGameObjects(List<LinkedHashMap<Object,Object>> map) {
+    public List<T> parseGameObjects(List<LinkedHashMap<Object, Object>> map) {
         List<T> parsedItems = new ArrayList<>();
-        for (LinkedHashMap<Object,Object> oMap : map) {
+        for (LinkedHashMap<Object, Object> oMap : map) {
             parsedItems.add(parseGameObject(oMap));
         }
         return parsedItems;
@@ -49,21 +50,10 @@ public abstract class AbstractImporter<T> {
     /**
      * Parses a Game Object as <T>
      *
-     * @param map       sourcemap
-     * @param extraData additional data for "exotic" implementations.
+     * @param map sourcemap
      * @return T
      */
-    public abstract T parseGameObject(LinkedHashMap<Object,Object> map, Object extraData);
-
-    /**
-     * Parses a Game Object as <T>
-     *
-     * @param map sourcemap.
-     * @return GameObject
-     */
-    private T parseGameObject(LinkedHashMap<Object,Object> map) {
-        return parseGameObject(map, null);
-    }
+    public abstract T parseGameObject(LinkedHashMap<Object, Object> map);
 
     /**
      * Utillity Method to be able to parse heterogenic yaml-fields.
@@ -109,11 +99,11 @@ public abstract class AbstractImporter<T> {
      * @return the list.
      */
     @SuppressWarnings("unchecked")
-    protected static List<LinkedHashMap<Object,Object>> unwrapListInMap(LinkedHashMap<Object,Object> map) {
-        List<LinkedHashMap<Object,Object>> list = new ArrayList<>();
+    protected static List<LinkedHashMap<Object, Object>> unwrapListInMap(LinkedHashMap<Object, Object> map) {
+        List<LinkedHashMap<Object, Object>> list = new ArrayList<>();
         int index = 1;
         while (map.get("" + index) != null) {
-            list.add((LinkedHashMap<Object,Object>) map.get("" + (index++)));
+            list.add((LinkedHashMap<Object, Object>) map.get("" + (index++)));
         }
         return list;
     }

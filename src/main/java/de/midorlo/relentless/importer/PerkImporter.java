@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
 @SuppressWarnings({"rawtypes", "unchecked"})
 public class PerkImporter extends AbstractImporter<Perk> {
 
-    private Repository<PerkEffect> perkEffectRepository;
+    private final Repository<PerkEffect> perkEffectRepository;
 
     public PerkImporter(Repository<Perk> repository, Repository<PerkEffect> perkEffectRepository) {
         super(repository);
@@ -18,7 +18,7 @@ public class PerkImporter extends AbstractImporter<Perk> {
     }
 
     @Override
-    public Perk parseGameObject(LinkedHashMap oMap, Object extraData) {
+    public Perk parseGameObject(LinkedHashMap oMap) {
 
         Perk perk = new Perk();
         perk.setName((String) oMap.get("name"));
