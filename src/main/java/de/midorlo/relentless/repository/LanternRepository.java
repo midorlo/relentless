@@ -6,11 +6,15 @@ import de.midorlo.relentless.domain.items.PerkEffect;
 
 public class LanternRepository extends Repository<Lantern> {
 
-    private Repository<Perk> perkRepository;
-    private Repository<PerkEffect> perkEffectRepository;
+    private final Repository<Perk> perkRepository;
 
-    public LanternRepository(Repository<Perk> perkRepository, Repository<PerkEffect> perkEffectRepository) {
+    public LanternRepository(Repository<Perk> perkRepository) {
         this.perkRepository = perkRepository;
-        this.perkEffectRepository = perkEffectRepository;
+    }
+
+    @Override
+    public void save(Lantern lantern) {
+        lantern.getPerks().forEach(perkRepository::save);
+        super.save(lantern);
     }
 }

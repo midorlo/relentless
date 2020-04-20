@@ -13,10 +13,10 @@ public class AppRelentless {
 
     Repository<PerkEffect> perkEffectRepository = new PerkEffectsRepository();
     Repository<Perk> perkRepository = new PerkRepository(perkEffectRepository);
-    Repository<Cell> cellRepository = new CellRepository(perkRepository, perkEffectRepository);
-    Repository<Weapon> weaponRepository = new WeaponRepository(perkRepository, perkEffectRepository);
-    Repository<Armor> armorRepository = new ArmorRepository(perkRepository, perkEffectRepository);
-    Repository<Lantern> lanternRepository = new LanternRepository(perkRepository, perkEffectRepository);
+    Repository<Cell> cellRepository = new CellRepository(perkRepository);
+    Repository<Weapon> weaponRepository = new WeaponRepository(perkRepository);
+    Repository<Armor> armorRepository = new ArmorRepository(perkRepository);
+    Repository<Lantern> lanternRepository = new LanternRepository(perkRepository);
 
     public AppRelentless() {
         importGameObjects();

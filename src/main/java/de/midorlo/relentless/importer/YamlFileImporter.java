@@ -30,8 +30,8 @@ public abstract class YamlFileImporter<T> {
     /**
      * Creates <T>'s from yaml-files in a directory.
      */
-    public Repository<T> importGameObjects() {
-        return importGameObjects(FileUtillities.readYamlFiles(getYamlsPath()));
+    public void importGameObjects() {
+        importGameObjects(FileUtillities.readYamlFiles(getYamlsPath()));
     }
 
     /**

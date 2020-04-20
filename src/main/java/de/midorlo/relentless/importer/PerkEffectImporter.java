@@ -17,11 +17,9 @@ public class PerkEffectImporter extends YamlFileImporter<PerkEffect> {
     /**
      * There are no source yaml files present for perk effects. Those are created indirectly
      * while parsing Perks.
-     * @return identical repo from constructor.
      */
     @Override
-    public Repository<PerkEffect> importGameObjects() {
-        return repository;
+    public void importGameObjects() {
     }
 
     /**

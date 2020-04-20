@@ -2,15 +2,18 @@ package de.midorlo.relentless.repository;
 
 import de.midorlo.relentless.domain.items.Armor;
 import de.midorlo.relentless.domain.items.Perk;
-import de.midorlo.relentless.domain.items.PerkEffect;
 
 public class ArmorRepository extends Repository<Armor>{
 
-    private Repository<Perk> perkRepository;
-    private Repository<PerkEffect> perkEffectRepository;
+    private final Repository<Perk> perkRepository;
 
-    public ArmorRepository(Repository<Perk> perkRepository, Repository<PerkEffect> perkEffectRepository) {
+    public ArmorRepository(Repository<Perk> perkRepository) {
         this.perkRepository = perkRepository;
-        this.perkEffectRepository = perkEffectRepository;
+    }
+
+    @Override
+    public void save(Armor armor) {
+        armor.getPerks().forEach(perkRepository::save);
+        super.save(armor);
     }
 }
