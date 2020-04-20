@@ -8,14 +8,33 @@ import java.util.LinkedHashMap;
 import java.util.List;
 
 @SuppressWarnings("rawtypes")
-public class PerkEffectImporter extends AbstractImporter<PerkEffect> {
+public class PerkEffectImporter extends YamlFileImporter<PerkEffect> {
 
     public PerkEffectImporter(Repository<PerkEffect> repository) {
         super(repository);
     }
 
+    /**
+     * There are no source yaml files present for perk effects. Those are created indirectly
+     * while parsing Perks.
+     * @return identical repo from constructor.
+     */
     @Override
-    public PerkEffect parseGameObject(LinkedHashMap<Object,Object> leveledPerkEffectMap) {
+    public Repository<PerkEffect> importGameObjects() {
+        return repository;
+    }
+
+    /**
+     * Dummy.
+     * @return null.
+     */
+    @Override
+    protected String getYamlsPath() {
+        return null;
+    }
+
+    @Override
+    protected PerkEffect parseGameObject(LinkedHashMap<Object,Object> leveledPerkEffectMap) {
         PerkEffect effect = new PerkEffect();
         Object description = leveledPerkEffectMap.get("description");
         Object value = leveledPerkEffectMap.get("value");
@@ -30,7 +49,7 @@ public class PerkEffectImporter extends AbstractImporter<PerkEffect> {
      * @param mapsList list of Datamaps with reduced details
      * @return list of Combat Effects
      */
-    public List<PerkEffect> parseGameWeaponObjects(ArrayList<LinkedHashMap> mapsList) {
+    protected List<PerkEffect> parseGameWeaponObjects(ArrayList<LinkedHashMap> mapsList) {
         List<PerkEffect> effects = new ArrayList<>();
         if (mapsList != null) {
             for (LinkedHashMap map : mapsList) {
@@ -41,7 +60,7 @@ public class PerkEffectImporter extends AbstractImporter<PerkEffect> {
         return effects;
     }
 
-    public PerkEffect parseGameWeaponObject(LinkedHashMap map) {
+    protected PerkEffect parseGameWeaponObject(LinkedHashMap map) {
         String name = (String) map.get("name");
         String description = (String) map.get("description");
         Double value = parseMixedNumerics(map.get("value"));

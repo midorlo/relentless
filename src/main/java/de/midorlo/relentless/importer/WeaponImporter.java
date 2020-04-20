@@ -11,8 +11,10 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static de.midorlo.relentless.util.Constants.DIR_DAUNTLESS_BUILDER_WEAPONS;
+
 @SuppressWarnings({"unchecked", "rawtypes"})
-public class WeaponImporter extends AbstractImporter<Weapon> {
+public class WeaponImporter extends YamlFileImporter<Weapon> {
 
     Repository<Perk> perkRepository;
     Repository<PerkEffect> perkEffectRepository;
@@ -24,16 +26,7 @@ public class WeaponImporter extends AbstractImporter<Weapon> {
     }
 
     @Override
-    public void importGameObjects(List<LinkedHashMap<Object,Object>> map) {
-        super.importGameObjects(map);
-        repository.findAll().forEach(weapon -> {
-            perkRepository.save(weapon.getPerks());
-            perkEffectRepository.save(weapon.getPerkEffects());
-        });
-    }
-
-    @Override
-    public Weapon parseGameObject(LinkedHashMap map) {
+    protected Weapon parseGameObject(LinkedHashMap map) {
 
         Object name = map.get("name");
         Object description = map.get("description");
@@ -70,6 +63,21 @@ public class WeaponImporter extends AbstractImporter<Weapon> {
         w.getPerkEffects().addAll(perkEffects);
 
         return w;
+    }
+
+    @Override
+    protected String getYamlsPath() {
+        return DIR_DAUNTLESS_BUILDER_WEAPONS;
+    }
+
+    @Override
+    protected Repository<Weapon> importGameObjects(List<LinkedHashMap<Object,Object>> map) {
+        super.importGameObjects(map);
+        repository.findAll().forEach(weapon -> {
+            perkRepository.save(weapon.getPerks());
+            perkEffectRepository.save(weapon.getPerkEffects());
+        });
+        return repository;
     }
 
     private List<CellSocket> parseCellSockets(ArrayList<String> stringList) {

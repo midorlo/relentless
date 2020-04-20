@@ -1,6 +1,8 @@
 package de.midorlo.relentless.domain.combat;
 
+import de.midorlo.relentless.domain.Hunt;
 import de.midorlo.relentless.domain.MockedRepository;
+import de.midorlo.relentless.domain.WeaponAttack;
 import de.midorlo.relentless.domain.behemoth.Behemoth;
 import de.midorlo.relentless.domain.player.Player;
 import lombok.extern.java.Log;

@@ -3,9 +3,7 @@ package de.midorlo.relentless.domain;
 import de.midorlo.relentless.domain.behemoth.Behemoth;
 import de.midorlo.relentless.domain.behemoth.BehemothPart;
 import de.midorlo.relentless.domain.behemoth.Hitzone;
-import de.midorlo.relentless.domain.combat.WeaponAttack;
 import de.midorlo.relentless.domain.combat.AttackType;
-import de.midorlo.relentless.domain.combat.Hunt;
 import de.midorlo.relentless.domain.items.Weapon;
 import de.midorlo.relentless.domain.items.ItemType;
 import de.midorlo.relentless.domain.player.Loadout;
@@ -15,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MockedRepository {
+
 
     public static Player mockPlayer() {
         Player player = new Player();

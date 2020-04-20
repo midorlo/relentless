@@ -7,30 +7,31 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 
-public abstract class AbstractImporter<T> {
+public abstract class YamlFileImporter<T> {
 
     protected Repository<T> repository;
 
-    public AbstractImporter(Repository<T> repository) {
+    public YamlFileImporter(Repository<T> repository) {
         this.repository = repository;
     }
+
+    protected abstract String getYamlsPath();
 
     /**
      * Does all the magic.
      *
      * @param map sourcemap.
      */
-    public void importGameObjects(List<LinkedHashMap<Object, Object>> map) {
-        if (map != null) repository.save(parseGameObjects(map));
+    protected Repository<T> importGameObjects(List<LinkedHashMap<Object, Object>> map) {
+        repository.save(parseGameObjects(map));
+        return repository;
     }
 
     /**
      * Creates <T>'s from yaml-files in a directory.
-     *
-     * @param yamlsDirectory path to a directory containing yaml-files.
      */
-    public void importGameObjects(String yamlsDirectory) {
-        importGameObjects(FileUtillities.readYamlFiles(yamlsDirectory));
+    public Repository<T> importGameObjects() {
+        return importGameObjects(FileUtillities.readYamlFiles(getYamlsPath()));
     }
 
     /**
@@ -39,7 +40,7 @@ public abstract class AbstractImporter<T> {
      * @param map the map.
      * @return List of parsed Objects.
      */
-    public List<T> parseGameObjects(List<LinkedHashMap<Object, Object>> map) {
+    protected List<T> parseGameObjects(List<LinkedHashMap<Object, Object>> map) {
         List<T> parsedItems = new ArrayList<>();
         for (LinkedHashMap<Object, Object> oMap : map) {
             parsedItems.add(parseGameObject(oMap));
@@ -53,7 +54,7 @@ public abstract class AbstractImporter<T> {
      * @param map sourcemap
      * @return T
      */
-    public abstract T parseGameObject(LinkedHashMap<Object, Object> map);
+    protected abstract T parseGameObject(LinkedHashMap<Object, Object> map);
 
     /**
      * Utillity Method to be able to parse heterogenic yaml-fields.

@@ -9,8 +9,10 @@ import de.midorlo.relentless.repository.Repository;
 import java.util.LinkedHashMap;
 import java.util.List;
 
+import static de.midorlo.relentless.util.Constants.DIR_DAUNTLESS_BUILDER_CELLS;
+
 @SuppressWarnings("rawtypes")
-public class CellImporter extends AbstractImporter<Cell> {
+public class CellImporter extends YamlFileImporter<Cell> {
 
     Repository<Perk> perkRepository;
     Repository<PerkEffect> perkEffectRepository;
@@ -22,16 +24,22 @@ public class CellImporter extends AbstractImporter<Cell> {
     }
 
     @Override
-    public void importGameObjects(List<LinkedHashMap<Object,Object>> map) {
+    protected String getYamlsPath() {
+        return DIR_DAUNTLESS_BUILDER_CELLS;
+    }
+
+    @Override
+    protected Repository<Cell> importGameObjects(List<LinkedHashMap<Object,Object>> map) {
         super.importGameObjects(map);
         repository.findAll().forEach(cell -> {
             perkRepository.save(cell.getPerks());
             cell.getPerks().forEach(perk -> perkEffectRepository.save(perk.getEffects()));
         });
+        return repository;
     }
 
     @Override
-    public Cell parseGameObject(LinkedHashMap map) {
+    protected Cell parseGameObject(LinkedHashMap map) {
         String name = (String) map.get("name");
         CellType cellType = CellType.valueOf((String) map.get("slot"));
         Cell cell = new Cell();

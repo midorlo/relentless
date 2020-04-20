@@ -6,8 +6,6 @@ import de.midorlo.relentless.repository.Repository;
 import lombok.ToString;
 import lombok.extern.java.Log;
 
-import static de.midorlo.relentless.util.Constants.*;
-
 
 @Log
 @ToString
@@ -26,19 +24,19 @@ public class AppRelentless {
 
     public void importGameObjects() {
         PerkImporter perkImporter = new PerkImporter(perkRepository, perkEffectRepository);
-        perkImporter.importGameObjects(DIR_DAUNTLESS_BUILDER_PERKS);
+        perkImporter.importGameObjects();
 
         CellImporter cellImporter = new CellImporter(cellRepository, perkRepository, perkEffectRepository);
-        cellImporter.importGameObjects(DIR_DAUNTLESS_BUILDER_CELLS);
+        cellImporter.importGameObjects();
 
         WeaponImporter weaponImporter = new WeaponImporter(weaponRepository, perkRepository, perkEffectRepository);
-        weaponImporter.importGameObjects(DIR_DAUNTLESS_BUILDER_WEAPONS);
+        weaponImporter.importGameObjects();
 
         ArmorImporter armorImporter = new ArmorImporter(armorRepository, perkRepository, perkEffectRepository);
-        armorImporter.importGameObjects(DIR_DAUNTLESS_BUILDER_ARMOR);
+        armorImporter.importGameObjects();
 
         LanternImporter lanternImporter = new LanternImporter(lanternRepository, perkRepository, perkEffectRepository);
-        lanternImporter.importGameObjects(DIR_DAUNTLESS_BUILDER_LANTERNS);
+        lanternImporter.importGameObjects();
     }
 
     public static void main(String[] args) {

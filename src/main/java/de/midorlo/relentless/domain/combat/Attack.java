@@ -1,5 +1,6 @@
 package de.midorlo.relentless.domain.combat;
 
+import de.midorlo.relentless.domain.WeaponAttack;
 import de.midorlo.relentless.domain.behemoth.Behemoth;
 import de.midorlo.relentless.domain.behemoth.BehemothPart;
 import de.midorlo.relentless.domain.behemoth.Hitzone;

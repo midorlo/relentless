@@ -3,7 +3,7 @@ package de.midorlo.relentless.domain.items;
 import de.midorlo.relentless.domain.Element;
 import de.midorlo.relentless.domain.combat.Attack;
 import de.midorlo.relentless.domain.combat.Damage;
-import de.midorlo.relentless.domain.combat.WeaponAttack;
+import de.midorlo.relentless.domain.WeaponAttack;
 import de.midorlo.relentless.domain.combat.AttackType;
 import de.midorlo.relentless.domain.mutators.IAttackModifier;
 import lombok.Data;

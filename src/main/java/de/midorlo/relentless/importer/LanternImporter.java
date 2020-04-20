@@ -1,6 +1,6 @@
 package de.midorlo.relentless.importer;
 
-import de.midorlo.relentless.domain.combat.WeaponAttack;
+import de.midorlo.relentless.domain.WeaponAttack;
 import de.midorlo.relentless.domain.items.*;
 import de.midorlo.relentless.repository.Repository;
 
@@ -8,8 +8,10 @@ import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.List;
 
+import static de.midorlo.relentless.util.Constants.DIR_DAUNTLESS_BUILDER_LANTERNS;
+
 @SuppressWarnings("ALL")
-public class LanternImporter extends AbstractImporter<Lantern> {
+public class LanternImporter extends YamlFileImporter<Lantern> {
 
     Repository<Perk> perkRepository;
     Repository<PerkEffect> perkEffectRepository;
@@ -21,7 +23,7 @@ public class LanternImporter extends AbstractImporter<Lantern> {
     }
 
     @Override
-    public Lantern parseGameObject(LinkedHashMap map) {
+    protected Lantern parseGameObject(LinkedHashMap map) {
         /*
         name: Broadsides Lantern
         icon: /assets/icons/lanterns/BroadsidesLantern.png
@@ -49,7 +51,8 @@ public class LanternImporter extends AbstractImporter<Lantern> {
         lantern.getMoveSets().add(parseLanternAttackObjects((LinkedHashMap) lanternAbility, lantern));
         return lantern;
     }
-    public List<WeaponAttack> parseLanternAttackObjects(LinkedHashMap map, Lantern parent) {
+
+    protected List<WeaponAttack> parseLanternAttackObjects(LinkedHashMap map, Lantern parent) {
         String instant = (String) map.get("instant");
         String hold = (String) map.get("hold");
 
@@ -67,5 +70,10 @@ public class LanternImporter extends AbstractImporter<Lantern> {
         holdAttack.setDamage(0);
         holdAttack.setHits(0);
         return Arrays.asList(new WeaponAttack[]{instantAttack,holdAttack});
+    }
+
+    @Override
+    protected String getYamlsPath() {
+        return DIR_DAUNTLESS_BUILDER_LANTERNS;
     }
 }
