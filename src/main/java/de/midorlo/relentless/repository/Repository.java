@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
  * Global Repository that is used like a Database (until I implement a real one //todo).
  */
 @ToString
-public class Repository<T> {
+public abstract class Repository<T> {
 
     private final List<T> objects = new ArrayList<>();
 

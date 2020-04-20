@@ -2,7 +2,7 @@ package de.midorlo.relentless;
 
 import de.midorlo.relentless.domain.items.*;
 import de.midorlo.relentless.importer.*;
-import de.midorlo.relentless.repository.Repository;
+import de.midorlo.relentless.repository.*;
 import lombok.ToString;
 import lombok.extern.java.Log;
 
@@ -11,12 +11,12 @@ import lombok.extern.java.Log;
 @ToString
 public class AppRelentless {
 
-    Repository<Perk> perkRepository = new Repository<>();
-    Repository<PerkEffect> perkEffectRepository = new Repository<>();
-    Repository<Cell> cellRepository = new Repository<>();
-    Repository<Weapon> weaponRepository = new Repository<>();
-    Repository<Armor> armorRepository = new Repository<>();
-    Repository<Lantern> lanternRepository = new Repository<>();
+    Repository<PerkEffect> perkEffectRepository = new PerkEffectsRepository();
+    Repository<Perk> perkRepository = new PerkRepository(perkEffectRepository);
+    Repository<Cell> cellRepository = new CellRepository(perkRepository, perkEffectRepository);
+    Repository<Weapon> weaponRepository = new WeaponRepository(perkRepository, perkEffectRepository);
+    Repository<Armor> armorRepository = new ArmorRepository(perkRepository, perkEffectRepository);
+    Repository<Lantern> lanternRepository = new LanternRepository(perkRepository, perkEffectRepository);
 
     public AppRelentless() {
         importGameObjects();
