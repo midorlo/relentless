@@ -14,7 +14,7 @@ public class BehemothPart {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @OneToOne
+    @OneToOne(cascade=CascadeType.PERSIST)
     Hitzone hitzone;
 
     Double health;

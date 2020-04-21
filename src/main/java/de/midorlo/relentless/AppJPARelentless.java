@@ -16,7 +16,6 @@ public class AppJPARelentless {
 
     public static void main(String[] args) {
         SpringApplication.run(AppJPARelentless.class);
-        System.out.println("hmkl");
     }
 
     @Bean
@@ -32,18 +31,18 @@ public class AppJPARelentless {
    @Bean
     public CommandLineRunner demoHitzone(BehemothPartRepository behemothPartRepository, HitzoneRepository hitzoneRepository) {
         return args -> {
-
             Hitzone head = new Hitzone("Head");
-            hitzoneRepository.save(head);
-
             BehemothPart behemothPart = new BehemothPart();
             behemothPart.setHealth(10000d);
             behemothPart.setHitzone(head);
-
             behemothPartRepository.save(behemothPart);
-
             Iterable<BehemothPart> all = behemothPartRepository.findAll();
+            System.out.println("--------------- <Parts>  ---------------");
             all.forEach(part -> log.info(part.toString()));
+            System.out.println("--------------- </Parts> ---------------");
+            System.out.println("--------------- <Hitzones>  ---------------");
+            hitzoneRepository.findAll().forEach(h -> log.info(h.toString()));
+            System.out.println("--------------- </Hitzones> ---------------");
         };
     }
 }
