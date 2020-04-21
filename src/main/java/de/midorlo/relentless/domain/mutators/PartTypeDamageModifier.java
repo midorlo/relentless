@@ -22,6 +22,6 @@ public class PartTypeDamageModifier extends AbstractDamageModifier<Hitzone> {
     @SuppressWarnings("unused")
     @Override
     public boolean matches(Attack attack) {
-        return identifier.equals(attack.getBehemothPart().getType());
+        return identifier.equals(attack.getBehemothPart().getHitzone());
     }
 }

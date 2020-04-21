@@ -1,7 +1,9 @@
 package de.midorlo.relentless;
 
+import de.midorlo.relentless.domain.behemoth.BehemothPart;
 import de.midorlo.relentless.domain.behemoth.Hitzone;
-import de.midorlo.relentless.repository.HitzoneRepository;
+import de.midorlo.relentless.repository.jpa.BehemothPartRepository;
+import de.midorlo.relentless.repository.jpa.HitzoneRepository;
 import lombok.extern.java.Log;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -14,6 +16,7 @@ public class AppJPARelentless {
 
     public static void main(String[] args) {
         SpringApplication.run(AppJPARelentless.class);
+        System.out.println("hmkl");
     }
 
     @Bean
@@ -23,6 +26,24 @@ public class AppJPARelentless {
             repository.save(new Hitzone("H2"));
             Iterable<Hitzone> all = repository.findAll();
             all.forEach(hitzone -> log.info(hitzone.toString()));
+        };
+    }
+
+   @Bean
+    public CommandLineRunner demoHitzone(BehemothPartRepository behemothPartRepository, HitzoneRepository hitzoneRepository) {
+        return args -> {
+
+            Hitzone head = new Hitzone("Head");
+            hitzoneRepository.save(head);
+
+            BehemothPart behemothPart = new BehemothPart();
+            behemothPart.setHealth(10000d);
+            behemothPart.setHitzone(head);
+
+            behemothPartRepository.save(behemothPart);
+
+            Iterable<BehemothPart> all = behemothPartRepository.findAll();
+            all.forEach(part -> log.info(part.toString()));
         };
     }
 }

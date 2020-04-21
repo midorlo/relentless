@@ -1,27 +1,38 @@
 package de.midorlo.relentless.domain.behemoth;
 
 import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
 import lombok.extern.java.Log;
 
+import javax.persistence.*;
+
 @Data
-@ToString
-@EqualsAndHashCode
 @Log
+@Entity
 public class BehemothPart {
 
-    Hitzone type;
-    Double health;
-    Double healthWound;
-    boolean wounded;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
 
-    public BehemothPart(Hitzone type, Double health) {
-        this.type = type;
+    @OneToOne
+    Hitzone hitzone;
+
+    Double health;
+    Double marginWounded;
+
+    public BehemothPart() {}
+
+    public BehemothPart(Hitzone hitzone, Double health) {
+        this.hitzone = hitzone;
         this.health = health;
+        this.marginWounded = health;
+    }
+
+    public void setHealth(Double health) {
+        Double diff = health - health;
     }
 
     public boolean isWounded() {
-        return wounded;
+        return marginWounded <= 0;
     }
 }

@@ -106,7 +106,7 @@ public class WeaponAttack implements IAttackModifier {
             }
         }
         if (attackType.equals(AttackType.Piercing)
-                && (part.getType().equals(Hitzone.head) || part.getType().equals(Hitzone.horn))) {
+                && (part.getHitzone().equals(Hitzone.head) || part.getHitzone().equals(Hitzone.horn))) {
             damage.setPartDamageFactor(damage.getPartDamageFactor() + 0.25);
         }
         attack.getDamage().add(damage);

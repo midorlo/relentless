@@ -83,7 +83,7 @@ public class Behemoth implements IAttackModifier {
         Double parthHealthOld = attack.getBehemothPart().getHealth();
         Double partHealthNew  = parthHealthOld - partDamage;
 
-        Double woundHealthOld = part.getHealthWound();
+        Double woundHealthOld = part.getMarginWounded();
         Double woundHealthNew = woundHealthOld - woundDamage;
 
         Double staggerHealthOld = getStaggerHealth();
@@ -93,14 +93,14 @@ public class Behemoth implements IAttackModifier {
         setStaggerHealth(staggerHealthNew);
 
         part.setHealth(partHealthNew);
-        part.setHealthWound(woundHealthNew);
+        part.setMarginWounded(woundHealthNew);
 
         //todo handle bonus attacks, with their hitzone displacements
 
         return new AttackResult(
                 attack.getPlayer().getName(),
                 attack.getBehemoth().getName(),
-                attack.getBehemothPart().getType(),
+                attack.getBehemothPart().getHitzone(),
                 healthOld,
                 healthDamage,
                 healthNew,

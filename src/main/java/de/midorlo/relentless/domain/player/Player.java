@@ -33,7 +33,7 @@ public class Player {
         return Attack.builder()
                 .player(this)
                 .behemoth(behemoth)
-                .targetPart(behemoth.getBehemothParts().get(0).getType())
+                .targetPart(behemoth.getBehemothParts().get(0).getHitzone())
                 .attackMove(weaponAttack)
                 .build()
                 .doAttack();

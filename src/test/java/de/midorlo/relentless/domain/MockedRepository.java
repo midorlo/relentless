@@ -30,7 +30,7 @@ public class MockedRepository {
         behemoth.setElement(Element.Umbral);
         behemoth.setThread(24);
         BehemothPart behemothPart = new BehemothPart(mockHitzone(), 1000d);
-        behemothPart.setHealthWound(2000d);
+        behemothPart.setMarginWounded(2000d);
         behemoth.getBehemothParts().add(behemothPart);
         return behemoth;
     }

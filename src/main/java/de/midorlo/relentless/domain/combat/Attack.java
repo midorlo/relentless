@@ -88,7 +88,7 @@ public class Attack {
         @Override
         public bMove targetPart(Hitzone hitzone) {
             return targetPart(attack.getBehemoth().getBehemothParts().stream()
-                    .filter(behemothPart1 -> behemothPart1.getType().equals(hitzone))
+                    .filter(behemothPart1 -> behemothPart1.getHitzone().equals(hitzone))
                     .findFirst().orElse(null));
         }
 

@@ -1,4 +1,4 @@
-package de.midorlo.relentless.repository;
+package de.midorlo.relentless.repository.jpa;
 
 import de.midorlo.relentless.domain.behemoth.Hitzone;
 import org.springframework.data.repository.CrudRepository;
