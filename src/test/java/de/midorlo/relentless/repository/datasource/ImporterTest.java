@@ -1,15 +1,14 @@
-package de.midorlo.relentless;
+package de.midorlo.relentless.repository.datasource;
+
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 import de.midorlo.relentless.domain.items.*;
 import de.midorlo.relentless.importer.*;
 import de.midorlo.relentless.repository.*;
-import lombok.ToString;
-import lombok.extern.java.Log;
+import org.testng.annotations.Test;
 
-
-@Log
-@ToString
-public class AppRelentless {
+public class ImporterTest {
 
     Repository<PerkEffect> perkEffectRepository = new PerkEffectsRepository();
     Repository<Perk> perkRepository = new PerkRepository(perkEffectRepository);
@@ -18,29 +17,22 @@ public class AppRelentless {
     Repository<Armor> armorRepository = new ArmorRepository(perkRepository);
     Repository<Lantern> lanternRepository = new LanternRepository(perkRepository);
 
-    public AppRelentless() {
-        importGameObjects();
-    }
-
-    public void importGameObjects() {
+    @Test
+    public void testImportGameObjects() {
         PerkImporter perkImporter = new PerkImporter(perkRepository, perkEffectRepository);
         perkImporter.importGameObjects();
-
         CellImporter cellImporter = new CellImporter(cellRepository, perkRepository, perkEffectRepository);
         cellImporter.importGameObjects();
-
         WeaponImporter weaponImporter = new WeaponImporter(weaponRepository, perkRepository, perkEffectRepository);
         weaponImporter.importGameObjects();
-
         ArmorImporter armorImporter = new ArmorImporter(armorRepository, perkRepository, perkEffectRepository);
         armorImporter.importGameObjects();
-
         LanternImporter lanternImporter = new LanternImporter(lanternRepository, perkRepository, perkEffectRepository);
         lanternImporter.importGameObjects();
-    }
 
-    public static void main(String[] args) {
-        AppRelentless app = new AppRelentless();
-        System.out.println(app);
+        assertThat(perkRepository.findAll().size(), equalTo(56));
+        assertThat(cellRepository.findAll().size(), equalTo(56));
+        assertThat(weaponRepository.findAll().size(), equalTo(138));
+        assertThat(armorRepository.findAll().size(), equalTo(91));
     }
 }

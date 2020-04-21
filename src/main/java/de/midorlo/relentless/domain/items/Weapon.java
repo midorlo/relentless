@@ -3,8 +3,8 @@ package de.midorlo.relentless.domain.items;
 import de.midorlo.relentless.domain.Element;
 import de.midorlo.relentless.domain.combat.Attack;
 import de.midorlo.relentless.domain.combat.Damage;
-import de.midorlo.relentless.domain.combat.WeaponAttack;
-import de.midorlo.relentless.domain.combat.DamageType;
+import de.midorlo.relentless.domain.WeaponAttack;
+import de.midorlo.relentless.domain.combat.AttackType;
 import de.midorlo.relentless.domain.mutators.IAttackModifier;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -18,10 +18,11 @@ import java.util.List;
 @ToString(exclude = {"moveSets"}, callSuper = true)
 @EqualsAndHashCode(callSuper = true)
 @Log
+@SuppressWarnings("SameReturnValue")
 public class Weapon extends Gear implements IAttackModifier {
 
-    List<List<WeaponAttack>> moveSets = new ArrayList<>();
-    DamageType damageType;
+    protected List<List<WeaponAttack>> moveSets = new ArrayList<>();
+    AttackType attackType;
 
     /**
      * Disregard everything but maxxed out weapons for now.

@@ -1,7 +1,11 @@
-package de.midorlo.relentless.domain.combat;
+package de.midorlo.relentless.domain;
 
 import de.midorlo.relentless.domain.behemoth.BehemothPart;
-import de.midorlo.relentless.domain.behemoth.BehemothPartType;
+import de.midorlo.relentless.domain.behemoth.Hitzone;
+import de.midorlo.relentless.domain.combat.Attack;
+import de.midorlo.relentless.domain.combat.AttackType;
+import de.midorlo.relentless.domain.combat.Damage;
+import de.midorlo.relentless.domain.combat.WeaponExtraAttack;
 import de.midorlo.relentless.domain.mutators.IAttackModifier;
 import lombok.Data;
 import lombok.extern.java.Log;
@@ -17,12 +21,13 @@ import java.util.List;
 public class WeaponAttack implements IAttackModifier {
 
     String name;
+    String description;
     Integer damage;
     Integer hits;
-    DamageType type;
+    AttackType type;
     boolean isCleave;
 
-    private List<BonusWeaponAttack> bonusWeaponAttacks = new ArrayList<>();
+    private List<WeaponExtraAttack> weaponExtraAttacks = new ArrayList<>();
 
     public static aName builder() {
         return new WeaponAttackBuilder();
@@ -41,7 +46,7 @@ public class WeaponAttack implements IAttackModifier {
     @Override
     public Attack accountFor(Attack attack) {
         accountForWeaponAttack(attack);
-        accountForDamageType(attack);
+        accountForAttackType(attack);
         accountForBehemothPart(attack);
         return attack;
     }
@@ -55,35 +60,35 @@ public class WeaponAttack implements IAttackModifier {
         attack.getDamage().add(damage);
     }
 
-    private void accountForDamageType(Attack attack) {
-        DamageType damageType = getType();
+    private void accountForAttackType(Attack attack) {
+        AttackType attackType = getType();
         Damage damage = new Damage();
 
-        if (damageType.equals(DamageType.Slashing)) {
+        if (attackType.equals(AttackType.Slashing)) {
             damage.setHealthDamageFactor(1d);
             damage.setPartDamageFactor(1d);
             damage.setStaggerDamageFactor(1d);
             damage.setWoundDamageFactor(0d);
         }
 
-        if (damageType.equals(DamageType.Piercing)) {
+        if (attackType.equals(AttackType.Piercing)) {
             damage.setHealthDamageFactor(1d);
             damage.setPartDamageFactor(0.75d);
             damage.setStaggerDamageFactor(0d);
             damage.setWoundDamageFactor(1d);
         }
 
-        if (damageType.equals(DamageType.Special)) {
+        if (attackType.equals(AttackType.Special)) {
             damage.setHealthDamageFactor(1d);
             damage.setPartDamageFactor(1d);
             damage.setStaggerDamageFactor(0d);
             damage.setWoundDamageFactor(0d);
         }
 
-        if (damageType.equals(DamageType.Blunt)) {
+        if (attackType.equals(AttackType.Blunt)) {
             damage.setHealthDamageFactor(1d);
             damage.setPartDamageFactor(1d);
-            damage.setStaggerDamageFactor(1d + (1d/3d));
+            damage.setStaggerDamageFactor(1d + (1d / 3d));
             damage.setWoundDamageFactor(0d);
         }
         attack.getDamage().add(damage);
@@ -92,17 +97,16 @@ public class WeaponAttack implements IAttackModifier {
     private void accountForBehemothPart(Attack attack) {
         Damage damage = new Damage();
         BehemothPart part = attack.getBehemothPart();
-        DamageType damageType = getType();
-                if (part.isWounded()) {
-            switch (damageType) {
-                case Blunt   :
-                case Piercing:
-                case Special : damage.setPartDamageFactor(0.25d); break;
-                case Slashing: damage.setPartDamageFactor(0.5d); break;
+        AttackType attackType = getType();
+        if (part.isWounded()) {
+            if (AttackType.Blunt.equals(attackType) || AttackType.Piercing.equals(attackType) || AttackType.Special.equals(attackType)) {
+                damage.setPartDamageFactor(0.25d);
+            } else if (AttackType.Slashing.equals(attackType)) {
+                damage.setPartDamageFactor(0.5d);
             }
         }
-        if (damageType.equals(DamageType.Piercing)
-        && (part.getType().equals(BehemothPartType.Head) || part.getType().equals(BehemothPartType.Horn))) {
+        if (attackType.equals(AttackType.Piercing)
+                && (part.getType().equals(Hitzone.head) || part.getType().equals(Hitzone.horn))) {
             damage.setPartDamageFactor(damage.getPartDamageFactor() + 0.25);
         }
         attack.getDamage().add(damage);
@@ -116,7 +120,7 @@ public class WeaponAttack implements IAttackModifier {
     }
 
     public interface aType {
-        aDamage type(DamageType type);
+        aDamage type(AttackType type);
     }
 
     public interface aDamage {
@@ -125,7 +129,9 @@ public class WeaponAttack implements IAttackModifier {
 
     public interface aRdy {
         aRdy bonusAttacks(Integer bonusAttacks);
+
         aRdy cleave(boolean isCleave);
+
         WeaponAttack build();
     }
 
@@ -142,7 +148,7 @@ public class WeaponAttack implements IAttackModifier {
         }
 
         @Override
-        public aDamage type(DamageType type) {
+        public aDamage type(AttackType type) {
             move.setType(type);
             return this;
         }
@@ -168,7 +174,7 @@ public class WeaponAttack implements IAttackModifier {
         @Override
         public WeaponAttack build() {
             for (int i = 0; i < move.hits; i++) {
-                move.getBonusWeaponAttacks().add(new BonusWeaponAttack(move));
+                move.getWeaponExtraAttacks().add(new WeaponExtraAttack(move));
             }
             return move;
         }

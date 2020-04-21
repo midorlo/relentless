@@ -8,14 +8,31 @@ import java.util.LinkedHashMap;
 import java.util.List;
 
 @SuppressWarnings("rawtypes")
-public class PerkEffectImporter extends AbstractImporter<PerkEffect> {
+public class PerkEffectImporter extends YamlFileImporter<PerkEffect> {
 
     public PerkEffectImporter(Repository<PerkEffect> repository) {
         super(repository);
     }
 
+    /**
+     * There are no source yaml files present for perk effects. Those are created indirectly
+     * while parsing Perks.
+     */
     @Override
-    public PerkEffect parseGameObject(LinkedHashMap leveledPerkEffectMap, Object extraData) {
+    public void importGameObjects() {
+    }
+
+    /**
+     * Dummy.
+     * @return null.
+     */
+    @Override
+    protected String getYamlsPath() {
+        return null;
+    }
+
+    @Override
+    protected PerkEffect parseGameObject(LinkedHashMap<Object,Object> leveledPerkEffectMap) {
         PerkEffect effect = new PerkEffect();
         Object description = leveledPerkEffectMap.get("description");
         Object value = leveledPerkEffectMap.get("value");
@@ -28,21 +45,20 @@ public class PerkEffectImporter extends AbstractImporter<PerkEffect> {
      * Weapon data is another special snowflake
      *
      * @param mapsList list of Datamaps with reduced details
-     * @param extraData parent Weapon
      * @return list of Combat Effects
      */
-    public List<PerkEffect> parseGameWeaponObjects(ArrayList<LinkedHashMap> mapsList, Object extraData) {
+    protected List<PerkEffect> parseGameWeaponObjects(ArrayList<LinkedHashMap> mapsList) {
         List<PerkEffect> effects = new ArrayList<>();
         if (mapsList != null) {
             for (LinkedHashMap map : mapsList) {
-                PerkEffect effect = parseGameWeaponObject(map, extraData);
+                PerkEffect effect = parseGameWeaponObject(map);
                 effects.add(effect);
             }
         }
         return effects;
     }
 
-    public PerkEffect parseGameWeaponObject(LinkedHashMap map, Object extraData) {
+    protected PerkEffect parseGameWeaponObject(LinkedHashMap map) {
         String name = (String) map.get("name");
         String description = (String) map.get("description");
         Double value = parseMixedNumerics(map.get("value"));

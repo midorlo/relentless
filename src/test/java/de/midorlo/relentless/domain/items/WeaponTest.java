@@ -2,7 +2,6 @@ package de.midorlo.relentless.domain.items;
 
 
 import de.midorlo.relentless.domain.MockedRepository;
-import de.midorlo.relentless.domain.behemoth.BehemothPartType;
 import de.midorlo.relentless.domain.combat.Attack;
 import org.testng.annotations.Test;
 
@@ -18,7 +17,7 @@ public class WeaponTest {
         Attack attack = Attack.builder()
                 .player(MockedRepository.mockPlayer())
                 .behemoth(MockedRepository.mockBehemoth())
-                .targetPart(BehemothPartType.Head)
+                .targetPart(MockedRepository.mockHitzone())
                 .attackMove(MockedRepository.mockMoveset().get(0))
                 .build();
         Attack modifiedAttack = weapon.accountFor(attack);

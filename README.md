@@ -17,7 +17,7 @@ Allows for testing and comparision of user specified loadouts for effectivity in
 
 ### Calculation Scheme
 
-In a nutshell: Collect but dont process mutators from all available sources. Process at last.
+In a nutshell: Collect but don't process mutators from all available sources. Process at last.
  
 ![alt text](.readme/img/draw/seq_calculation.png "Logo Title Text 1")
 

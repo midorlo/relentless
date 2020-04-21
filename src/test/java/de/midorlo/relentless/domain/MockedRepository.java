@@ -2,10 +2,8 @@ package de.midorlo.relentless.domain;
 
 import de.midorlo.relentless.domain.behemoth.Behemoth;
 import de.midorlo.relentless.domain.behemoth.BehemothPart;
-import de.midorlo.relentless.domain.behemoth.BehemothPartType;
-import de.midorlo.relentless.domain.combat.WeaponAttack;
-import de.midorlo.relentless.domain.combat.DamageType;
-import de.midorlo.relentless.domain.combat.Hunt;
+import de.midorlo.relentless.domain.behemoth.Hitzone;
+import de.midorlo.relentless.domain.combat.AttackType;
 import de.midorlo.relentless.domain.items.Weapon;
 import de.midorlo.relentless.domain.items.ItemType;
 import de.midorlo.relentless.domain.player.Loadout;
@@ -15,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MockedRepository {
+
 
     public static Player mockPlayer() {
         Player player = new Player();
@@ -30,10 +29,14 @@ public class MockedRepository {
         behemoth.setStaggerHealth(2000d);
         behemoth.setElement(Element.Umbral);
         behemoth.setThread(24);
-        BehemothPart behemothPart = new BehemothPart(BehemothPartType.Head, 1000d);
+        BehemothPart behemothPart = new BehemothPart(mockHitzone(), 1000d);
         behemothPart.setHealthWound(2000d);
         behemoth.getBehemothParts().add(behemothPart);
         return behemoth;
+    }
+
+    public static Hitzone mockHitzone() {
+        return new Hitzone("Head");
     }
 
     public static Hunt mockHunt() {
@@ -54,7 +57,7 @@ public class MockedRepository {
         weapon.setName("Mana Sword");
         weapon.setDescription("It's something");
         weapon.setType(ItemType.Sword);
-        weapon.setDamageType(DamageType.Slashing);
+        weapon.setAttackType(AttackType.Slashing);
         weapon.setElement(Element.Radiant);
         weapon.setMoveSets(mockMovesets());
         return weapon;
@@ -70,7 +73,7 @@ public class MockedRepository {
         ArrayList<WeaponAttack> moveset = new ArrayList<>();
         WeaponAttack move = WeaponAttack.builder()
                 .name("Bladed 1(L)")
-                .type(DamageType.Slashing)
+                .type(AttackType.Slashing)
                 .damage(60)
                 .cleave(false)
                 .bonusAttacks(3)

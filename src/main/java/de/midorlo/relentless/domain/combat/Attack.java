@@ -1,16 +1,15 @@
 package de.midorlo.relentless.domain.combat;
 
+import de.midorlo.relentless.domain.WeaponAttack;
 import de.midorlo.relentless.domain.behemoth.Behemoth;
 import de.midorlo.relentless.domain.behemoth.BehemothPart;
-import de.midorlo.relentless.domain.behemoth.BehemothPartType;
+import de.midorlo.relentless.domain.behemoth.Hitzone;
 import de.midorlo.relentless.domain.mutators.IAttackModifier;
 import de.midorlo.relentless.domain.player.Player;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 import lombok.extern.java.Log;
-
-import java.util.List;
 
 @Data
 @ToString
@@ -22,9 +21,14 @@ public class Attack {
     WeaponAttack weaponAttack;
     Behemoth behemoth;
     BehemothPart behemothPart;
-    Damage damage = new Damage();
+    Damage damage;
 
-    private Attack() {}
+    private Attack() {
+    }
+
+    private Attack consume(IAttackModifier modifier) {
+        return modifier.accountFor(this);
+    }
 
     public AttackResult doAttack() {
         setDamage(getDamage().fixate());
@@ -46,7 +50,7 @@ public class Attack {
     }
 
     public interface bPart {
-        bMove targetPart(BehemothPartType behemothPartType);
+        bMove targetPart(Hitzone hitzone);
     }
 
     public interface bMove {
@@ -59,7 +63,7 @@ public class Attack {
 
     private static class AttackBuilder implements bPlayer, bBehemoth, bPart, bMove, bFin {
 
-        private Attack attack = new Attack();
+        private final Attack attack = new Attack();
 
         private AttackBuilder() {
         }
@@ -82,9 +86,9 @@ public class Attack {
         }
 
         @Override
-        public bMove targetPart(BehemothPartType behemothPartType) {
+        public bMove targetPart(Hitzone hitzone) {
             return targetPart(attack.getBehemoth().getBehemothParts().stream()
-                    .filter(behemothPart1 -> behemothPart1.getType().equals(behemothPartType))
+                    .filter(behemothPart1 -> behemothPart1.getType().equals(hitzone))
                     .findFirst().orElse(null));
         }
 
@@ -96,20 +100,11 @@ public class Attack {
 
         @Override
         public Attack build() {
-
-            attack = attack.getPlayer().getLoadout().getWeapon().accountFor(attack);
-            attack = attack.getWeaponAttack().accountFor(attack);
-            //Get Armor + Weapon Mutators (Cells, Perks)
-//            List<IAttackModifier> modifiers = attack.getPlayer().getModifiers();
-//            for (IAttackModifier modifier : modifiers) {
-//                attack = modifier.accountFor(attack);
-//            }
-            //Get behemoth stuff (like skarns special)
-            List<IAttackModifier> behemothModifiers = attack.getBehemoth().getModifiers();
-            for (IAttackModifier modifier : behemothModifiers) {
-                attack = modifier.accountFor(attack);
-            }
-            return attack;
+            attack.setDamage(new Damage());
+            return attack
+                    .consume(attack.getPlayer().getLoadout().getWeapon())
+                    .consume(attack.getWeaponAttack())
+                    .consume(attack.getBehemoth());
         }
     }
 }

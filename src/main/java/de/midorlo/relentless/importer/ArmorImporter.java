@@ -14,8 +14,10 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 
+import static de.midorlo.relentless.util.Constants.DIR_DAUNTLESS_BUILDER_ARMOR;
+
 @SuppressWarnings({"rawtypes", "unchecked"})
-public class ArmorImporter extends AbstractImporter<Armor> {
+public class ArmorImporter extends YamlFileImporter<Armor> {
 
     Repository<Perk> perkRepository;
     Repository<PerkEffect> perkEffectRepository;
@@ -27,26 +29,22 @@ public class ArmorImporter extends AbstractImporter<Armor> {
     }
 
     @Override
-    public void importGameObjects(List<LinkedHashMap> map) {
+    protected String getYamlsPath() {
+        return DIR_DAUNTLESS_BUILDER_ARMOR;
+    }
+
+    @Override
+    protected Repository<Armor> importGameObjects(List<LinkedHashMap<Object,Object>> map) {
         super.importGameObjects(map);
         repository.findAll().forEach(armor -> {
             perkRepository.save(armor.getPerks());
             perkEffectRepository.save(armor.getPerkEffects());
         });
-    }
-
-    private List<CellSocket> parseCellSockets(String cellSocketString) {
-        List<CellSocket> cellSockets = new ArrayList<>();
-        if (cellSocketString != null) {
-            CellSocket cellSocket = new CellSocket();
-            cellSocket.setType(CellType.valueOf(cellSocketString));
-            cellSockets.add(cellSocket);
-        }
-        return cellSockets;
+        return repository;
     }
 
     @Override
-    public Armor parseGameObject(LinkedHashMap map, Object extraData) {
+    protected Armor parseGameObject(LinkedHashMap map) {
         Object name = map.get("name");
         Object description = map.get("description");
         Object icon = map.get("icon");
@@ -73,9 +71,19 @@ public class ArmorImporter extends AbstractImporter<Armor> {
         a.getCellSockets().addAll(cellSockets);
 
         PerkEffectImporter perkEffectImporter = new PerkEffectImporter(perkEffectRepository);
-        List<PerkEffect> perkEffects = perkEffectImporter.parseGameWeaponObjects((ArrayList<LinkedHashMap>) unique_effects, a);
+        List<PerkEffect> perkEffects = perkEffectImporter.parseGameWeaponObjects((ArrayList<LinkedHashMap>) unique_effects);
         a.getPerkEffects().addAll(perkEffects);
 
         return a;
+    }
+
+    private List<CellSocket> parseCellSockets(String cellSocketString) {
+        List<CellSocket> cellSockets = new ArrayList<>();
+        if (cellSocketString != null) {
+            CellSocket cellSocket = new CellSocket();
+            cellSocket.setType(CellType.valueOf(cellSocketString));
+            cellSockets.add(cellSocket);
+        }
+        return cellSockets;
     }
 }

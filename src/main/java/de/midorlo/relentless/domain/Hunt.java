@@ -1,7 +1,8 @@
-package de.midorlo.relentless.domain.combat;
+package de.midorlo.relentless.domain;
 
-import de.midorlo.relentless.domain.player.Player;
 import de.midorlo.relentless.domain.behemoth.Behemoth;
+import de.midorlo.relentless.domain.combat.AttackResult;
+import de.midorlo.relentless.domain.player.Player;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
@@ -23,7 +24,6 @@ public class Hunt {
     List<AttackResult> attackResultsLog = new ArrayList<>();
 
     public void saveResult(AttackResult attackResult) {
-//        log.info(attackResult.toString());
         attackResultsLog.add(attackResult);
     }
 }
