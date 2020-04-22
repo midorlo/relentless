@@ -16,21 +16,22 @@ public class AttackResult {
     String behemothName;
     Hitzone targetPart;
 
-    Double oldHealth;
-    Double healthDamage;
-    Double newHealth;
+    Integer oldHealth;
+    Integer healthDamage;
+    Integer newHealth;
 
-    Double oldPartHealth;
-    Double partDamage;
-    Double newPartHealth;
+    Integer oldPartHealth;
+    Integer partDamage;
+    Integer newPartHealth;
 
-    Double oldStaggerHealth;
-    Double staggerDamage;
-    Double newStaggerHealth;
+    Integer oldStaggerHealth;
+    Integer staggerDamage;
+    Integer newStaggerHealth;
 
-    Double oldPartWoundHealth;
-    Double woundDamage;
-    Double newPartWoundHealth;
+    Integer oldPartWoundHealth;
+    Integer woundDamage;
+    Integer newPartWoundHealth;
+
 
     @Override
     public String toString() {

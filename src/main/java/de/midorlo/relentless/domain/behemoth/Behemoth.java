@@ -3,12 +3,11 @@ package de.midorlo.relentless.domain.behemoth;
 import de.midorlo.relentless.domain.Element;
 import de.midorlo.relentless.domain.combat.Attack;
 import de.midorlo.relentless.domain.combat.AttackResult;
-import de.midorlo.relentless.domain.mutators.IAttackModifier;
+import de.midorlo.relentless.domain.IAttackModifier;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
 import lombok.extern.java.Log;
 
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,23 +15,26 @@ import java.util.List;
  * Represents a Player's Enemy.
  */
 @Data
-@ToString
-@EqualsAndHashCode
 @Log
+@Entity
 public class Behemoth implements IAttackModifier {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
+
     String name;
-    Integer thread;
-
-    Double health;
-    Double staggerHealth;
-
     Element element;
+    Integer thread;
+    Integer health;
+    Integer staggerHealth;
+
+    @OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
     List<BehemothPart> behemothParts = new ArrayList<>();
 
-    //@formatter:off
     public Integer getPower() {
         int power = 0;
+        //@formatter:off
         switch (thread) {
             case 30:power += 75;
             case 22:power += 75;
@@ -56,12 +58,8 @@ public class Behemoth implements IAttackModifier {
             case 2: power += 25;
             case 1: power += 50;
         }
+        //@formatter:on
         return power;
-    }
-    //@formatter:on
-
-    public void setHealth(Double health) {
-        this.health = health; //todo impl
     }
 
     @Override
@@ -69,25 +67,29 @@ public class Behemoth implements IAttackModifier {
         return attack;
     }
 
+    static Integer round(Double v) {
+        return (int) Math.round(v);
+    }
+
     public AttackResult consume(Attack attack) {
 
         BehemothPart part = attack.getBehemothPart();
 
-        Double healthDamage   = attack.getDamage().getHealthDamageNetto();
-        Double partDamage     = attack.getDamage().getPartDamageNetto();
-        Double staggerDamage  = attack.getDamage().getStaggerDamageNetto();
-        Double woundDamage    = attack.getDamage().getWoundDamageNetto();
+        Integer healthDamage = round(attack.getDamage().getHealthDamageNetto());
+        Integer partDamage = round(attack.getDamage().getPartDamageNetto());
+        Integer staggerDamage = round(attack.getDamage().getStaggerDamageNetto());
+        Integer woundDamage = round(attack.getDamage().getWoundDamageNetto());
 
-        Double healthOld      = getHealth();
-        Double healthNew      = healthOld - healthDamage;
-        Double parthHealthOld = attack.getBehemothPart().getHealth();
-        Double partHealthNew  = parthHealthOld - partDamage;
+        Integer healthOld = getHealth();
+        Integer healthNew = (int) Math.round(healthOld - healthDamage);
+        Integer parthHealthOld = attack.getBehemothPart().getHealth();
+        Integer partHealthNew = parthHealthOld - partDamage;
 
-        Double woundHealthOld = part.getMarginWounded();
-        Double woundHealthNew = woundHealthOld - woundDamage;
+        Integer woundHealthOld = part.getMarginWounded();
+        Integer woundHealthNew = woundHealthOld - woundDamage;
 
-        Double staggerHealthOld = getStaggerHealth();
-        Double staggerHealthNew = getStaggerHealth() - staggerDamage; //todo handle stagger
+        Integer staggerHealthOld = getStaggerHealth();
+        Integer staggerHealthNew = (int) Math.round(getStaggerHealth() - staggerDamage); //todo handle stagger
 
         setHealth(healthNew);
         setStaggerHealth(staggerHealthNew);

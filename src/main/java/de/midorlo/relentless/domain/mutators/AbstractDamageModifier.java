@@ -1,5 +1,6 @@
 package de.midorlo.relentless.domain.mutators;
 
+import de.midorlo.relentless.domain.IAttackModifier;
 import de.midorlo.relentless.domain.combat.Attack;
 import de.midorlo.relentless.domain.combat.Damage;
 import lombok.Data;

@@ -5,7 +5,7 @@ import de.midorlo.relentless.domain.combat.Attack;
 import de.midorlo.relentless.domain.combat.Damage;
 import de.midorlo.relentless.domain.WeaponAttack;
 import de.midorlo.relentless.domain.combat.AttackType;
-import de.midorlo.relentless.domain.mutators.IAttackModifier;
+import de.midorlo.relentless.domain.IAttackModifier;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;

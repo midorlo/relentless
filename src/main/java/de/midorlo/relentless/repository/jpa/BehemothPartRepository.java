@@ -10,4 +10,5 @@ public interface BehemothPartRepository extends CrudRepository<BehemothPart, Lon
     List<BehemothPart> findAllByHitzoneName(String name);
 
     BehemothPart findById(long id);
+
 }

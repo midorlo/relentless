@@ -4,7 +4,7 @@ import de.midorlo.relentless.domain.WeaponAttack;
 import de.midorlo.relentless.domain.behemoth.Behemoth;
 import de.midorlo.relentless.domain.behemoth.BehemothPart;
 import de.midorlo.relentless.domain.behemoth.Hitzone;
-import de.midorlo.relentless.domain.mutators.IAttackModifier;
+import de.midorlo.relentless.domain.IAttackModifier;
 import de.midorlo.relentless.domain.player.Player;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
