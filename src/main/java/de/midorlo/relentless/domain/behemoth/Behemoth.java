@@ -1,9 +1,9 @@
 package de.midorlo.relentless.domain.behemoth;
 
 import de.midorlo.relentless.domain.Element;
-import de.midorlo.relentless.domain.IAttackConsumer;
-import de.midorlo.relentless.domain.combat.Attack;
-import de.midorlo.relentless.domain.combat.AttackResult;
+import de.midorlo.relentless.domain.attack.IAttackConsumer;
+import de.midorlo.relentless.domain.attack.Attack;
+import de.midorlo.relentless.domain.attack.AttackResult;
 import lombok.Data;
 import lombok.extern.java.Log;
 
@@ -44,19 +44,23 @@ public class Behemoth implements IAttackConsumer {
 
         AttackResult result = new AttackResult(attack);
 
-        Integer healthDamage = round(attack.getDamage().getHealthDamageNetto());
+        Integer healthDamage = round(attack.getAttackDamage().getHealthDamageNetto());
         Integer newHealth = Math.round(getHealth() - healthDamage);
         result.setHealthDamage(healthDamage);
         result.setNewHealth(newHealth);
+        setHealth(newHealth);
 
-        Integer staggerDamage = round(attack.getDamage().getStaggerDamageNetto());
+        Integer staggerDamage = round(attack.getAttackDamage().getStaggerDamageNetto());
         Integer newStaggerHealth = Math.round(getStaggerHealth() - staggerDamage); //todo handle stagger
         result.setStaggerDamage(staggerDamage);
         result.setNewStaggerHealth(newStaggerHealth);
+        setStaggerHealth(newStaggerHealth);
 
         for (BehemothPart behemothPart : getBehemothParts()) {
             if (attack.getBehemothPart().equals(behemothPart)) {
-                AttackResult partResult = behemothPart.consume(attack);
+                AttackResult attackResult = behemothPart.consume(attack);
+                result = result.fillWith(attackResult);
+                break;
             }
         }
 

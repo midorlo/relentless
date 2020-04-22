@@ -1,11 +1,11 @@
 package de.midorlo.relentless.domain.mutators;
 
+import de.midorlo.relentless.domain.attack.AttackDamage;
 import de.midorlo.relentless.domain.behemoth.Hitzone;
-import de.midorlo.relentless.domain.combat.Attack;
-import de.midorlo.relentless.domain.combat.Damage;
+import de.midorlo.relentless.domain.attack.Attack;
 
 /**
- * Holds a Damage Modifier that Reacts to a targeted Part Type
+ * Holds a AttackDamage Modifier that Reacts to a targeted Part Type
  */
 @SuppressWarnings("unused")
 public class PartTypeDamageModifier extends AbstractDamageModifier<Hitzone> {
@@ -15,7 +15,7 @@ public class PartTypeDamageModifier extends AbstractDamageModifier<Hitzone> {
      * @param partType the part type to identify
      * @param mutator    changed damage values
      */
-    public PartTypeDamageModifier(Hitzone partType, Damage mutator) {
+    public PartTypeDamageModifier(Hitzone partType, AttackDamage mutator) {
         super(partType, mutator);
     }
 

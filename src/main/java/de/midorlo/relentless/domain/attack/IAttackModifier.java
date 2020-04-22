@@ -1,6 +1,6 @@
-package de.midorlo.relentless.domain;
+package de.midorlo.relentless.domain.attack;
 
-import de.midorlo.relentless.domain.combat.Attack;
+import de.midorlo.relentless.domain.attack.Attack;
 
 public interface IAttackModifier {
 

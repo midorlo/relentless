@@ -1,11 +1,7 @@
-package de.midorlo.relentless.domain;
+package de.midorlo.relentless.domain.attack;
 
 import de.midorlo.relentless.domain.behemoth.BehemothPart;
 import de.midorlo.relentless.domain.behemoth.Hitzone;
-import de.midorlo.relentless.domain.combat.Attack;
-import de.midorlo.relentless.domain.combat.AttackType;
-import de.midorlo.relentless.domain.combat.Damage;
-import de.midorlo.relentless.domain.combat.WeaponExtraAttack;
 import lombok.Data;
 import lombok.extern.java.Log;
 
@@ -51,64 +47,64 @@ public class WeaponAttack implements IAttackModifier {
     }
 
     private void accountForWeaponAttack(Attack attack) {
-        Damage damage = new Damage();
-        damage.setHealthDamage(getDamage().doubleValue());
-        damage.setWoundDamage(getDamage().doubleValue());
-        damage.setStaggerDamage(getDamage().doubleValue());
-        damage.setPartDamage(getDamage().doubleValue());
-        attack.getDamage().add(damage);
+        AttackDamage attackDamage = new AttackDamage();
+        attackDamage.setHealthDamage(getDamage().doubleValue());
+        attackDamage.setWoundDamage(getDamage().doubleValue());
+        attackDamage.setStaggerDamage(getDamage().doubleValue());
+        attackDamage.setPartDamage(getDamage().doubleValue());
+        attack.getAttackDamage().add(attackDamage);
     }
 
     private void accountForAttackType(Attack attack) {
         AttackType attackType = getType();
-        Damage damage = new Damage();
+        AttackDamage attackDamage = new AttackDamage();
 
         if (attackType.equals(AttackType.Slashing)) {
-            damage.setHealthDamageFactor(1d);
-            damage.setPartDamageFactor(1d);
-            damage.setStaggerDamageFactor(1d);
-            damage.setWoundDamageFactor(0d);
+            attackDamage.setHealthDamageFactor(1d);
+            attackDamage.setPartDamageFactor(1d);
+            attackDamage.setStaggerDamageFactor(1d);
+            attackDamage.setWoundDamageFactor(0d);
         }
 
         if (attackType.equals(AttackType.Piercing)) {
-            damage.setHealthDamageFactor(1d);
-            damage.setPartDamageFactor(0.75d);
-            damage.setStaggerDamageFactor(0d);
-            damage.setWoundDamageFactor(1d);
+            attackDamage.setHealthDamageFactor(1d);
+            attackDamage.setPartDamageFactor(0.75d);
+            attackDamage.setStaggerDamageFactor(0d);
+            attackDamage.setWoundDamageFactor(1d);
         }
 
         if (attackType.equals(AttackType.Special)) {
-            damage.setHealthDamageFactor(1d);
-            damage.setPartDamageFactor(1d);
-            damage.setStaggerDamageFactor(0d);
-            damage.setWoundDamageFactor(0d);
+            attackDamage.setHealthDamageFactor(1d);
+            attackDamage.setPartDamageFactor(1d);
+            attackDamage.setStaggerDamageFactor(0d);
+            attackDamage.setWoundDamageFactor(0d);
         }
 
         if (attackType.equals(AttackType.Blunt)) {
-            damage.setHealthDamageFactor(1d);
-            damage.setPartDamageFactor(1d);
-            damage.setStaggerDamageFactor(1d + (1d / 3d));
-            damage.setWoundDamageFactor(0d);
+            attackDamage.setHealthDamageFactor(1d);
+            attackDamage.setPartDamageFactor(1d);
+            attackDamage.setStaggerDamageFactor(1d + (1d / 3d));
+            attackDamage.setWoundDamageFactor(0d);
         }
-        attack.getDamage().add(damage);
+        attack.getAttackDamage().add(attackDamage);
     }
 
     private void accountForBehemothPart(Attack attack) {
-        Damage damage = new Damage();
+        AttackDamage attackDamage = new AttackDamage();
         BehemothPart part = attack.getBehemothPart();
         AttackType attackType = getType();
         if (part.isWounded()) {
             if (AttackType.Blunt.equals(attackType) || AttackType.Piercing.equals(attackType) || AttackType.Special.equals(attackType)) {
-                damage.setPartDamageFactor(0.25d);
+                attackDamage.setPartDamageFactor(0.25d);
             } else if (AttackType.Slashing.equals(attackType)) {
-                damage.setPartDamageFactor(0.5d);
+                attackDamage.setPartDamageFactor(0.5d);
             }
         }
         if (attackType.equals(AttackType.Piercing)
                 && (part.getHitzone().equals(Hitzone.head) || part.getHitzone().equals(Hitzone.horn))) {
-            damage.setPartDamageFactor(damage.getPartDamageFactor() + 0.25);
+            attackDamage.setPartDamageFactor(attackDamage.getPartDamageFactor() + 0.25);
         }
-        attack.getDamage().add(damage);
+        attack.getAttackDamage().add(attackDamage);
     }
 
 //Builder

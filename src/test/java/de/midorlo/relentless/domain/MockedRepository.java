@@ -1,9 +1,10 @@
 package de.midorlo.relentless.domain;
 
+import de.midorlo.relentless.domain.attack.WeaponAttack;
 import de.midorlo.relentless.domain.behemoth.Behemoth;
 import de.midorlo.relentless.domain.behemoth.BehemothPart;
 import de.midorlo.relentless.domain.behemoth.Hitzone;
-import de.midorlo.relentless.domain.combat.AttackType;
+import de.midorlo.relentless.domain.attack.AttackType;
 import de.midorlo.relentless.domain.items.Weapon;
 import de.midorlo.relentless.domain.items.ItemType;
 import de.midorlo.relentless.domain.player.Loadout;

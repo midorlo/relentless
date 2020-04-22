@@ -1,10 +1,8 @@
-package de.midorlo.relentless.domain.combat;
+package de.midorlo.relentless.domain.attack;
 
-import de.midorlo.relentless.domain.WeaponAttack;
 import de.midorlo.relentless.domain.behemoth.Behemoth;
 import de.midorlo.relentless.domain.behemoth.BehemothPart;
 import de.midorlo.relentless.domain.behemoth.Hitzone;
-import de.midorlo.relentless.domain.IAttackModifier;
 import de.midorlo.relentless.domain.player.Player;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -21,7 +19,7 @@ public class Attack {
     WeaponAttack weaponAttack;
     Behemoth behemoth;
     BehemothPart behemothPart;
-    Damage damage;
+    AttackDamage attackDamage;
 
     private Attack() {
     }
@@ -31,12 +29,11 @@ public class Attack {
     }
 
     public AttackResult doAttack() {
-        setDamage(getDamage().fixate());
+        setAttackDamage(getAttackDamage().fixate());
         return behemoth.consume(this);
     }
 
-//----------------------------------------------------------------------------------------------------------------------
-
+    //<editor-fold desc="Builder" //>
     public static bPlayer builder() {
         return new AttackBuilder();
     }
@@ -100,11 +97,12 @@ public class Attack {
 
         @Override
         public Attack build() {
-            attack.setDamage(new Damage());
+            attack.setAttackDamage(new AttackDamage());
             return attack
                     .consume(attack.getPlayer().getLoadout().getWeapon())
                     .consume(attack.getWeaponAttack())
                     .consume(attack.getBehemoth());
         }
     }
+    //</editor-fold>
 }

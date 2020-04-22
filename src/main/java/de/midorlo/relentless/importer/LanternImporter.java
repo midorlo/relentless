@@ -1,6 +1,6 @@
 package de.midorlo.relentless.importer;
 
-import de.midorlo.relentless.domain.WeaponAttack;
+import de.midorlo.relentless.domain.attack.WeaponAttack;
 import de.midorlo.relentless.domain.items.*;
 import de.midorlo.relentless.repository.Repository;
 

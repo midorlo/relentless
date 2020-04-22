@@ -1,6 +1,4 @@
-package de.midorlo.relentless.domain.combat;
-
-import de.midorlo.relentless.domain.WeaponAttack;
+package de.midorlo.relentless.domain.attack;
 
 /**
  * Represents a bonus attack; Think of Cleave, spin or

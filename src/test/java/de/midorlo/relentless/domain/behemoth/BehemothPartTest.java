@@ -24,10 +24,10 @@ public class BehemothPartTest {
         assertThat(p1, not(equalTo(p2)));
 
         p1.setHitzone(p2.getHitzone());
-        p1.setMarginWounded(p2.getMarginWounded() + 1);
+        p1.setWoundHealth(p2.getWoundHealth() + 1);
         assertThat(p1, not(equalTo(p2)));
 
-        p1.setMarginWounded(p2.getMarginWounded());
+        p1.setWoundHealth(p2.getWoundHealth());
         assertThat(p1, equalTo(p2));
     }
 }

@@ -1,9 +1,7 @@
-package de.midorlo.relentless.domain.combat;
+package de.midorlo.relentless.domain.attack;
 
-import de.midorlo.relentless.domain.Element;
 import de.midorlo.relentless.domain.Hunt;
 import de.midorlo.relentless.domain.MockedRepository;
-import de.midorlo.relentless.domain.WeaponAttack;
 import de.midorlo.relentless.domain.behemoth.Behemoth;
 import de.midorlo.relentless.domain.behemoth.Hitzone;
 import de.midorlo.relentless.domain.player.Player;

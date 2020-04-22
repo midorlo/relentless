@@ -1,7 +1,7 @@
 package de.midorlo.relentless.importer;
 
 import de.midorlo.relentless.domain.Element;
-import de.midorlo.relentless.domain.combat.AttackType;
+import de.midorlo.relentless.domain.attack.AttackType;
 import de.midorlo.relentless.domain.items.*;
 import de.midorlo.relentless.repository.Assets;
 import de.midorlo.relentless.repository.Repository;

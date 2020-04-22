@@ -1,8 +1,8 @@
 package de.midorlo.relentless.domain.behemoth;
 
-import de.midorlo.relentless.domain.IAttackConsumer;
-import de.midorlo.relentless.domain.combat.Attack;
-import de.midorlo.relentless.domain.combat.AttackResult;
+import de.midorlo.relentless.domain.attack.IAttackConsumer;
+import de.midorlo.relentless.domain.attack.Attack;
+import de.midorlo.relentless.domain.attack.AttackResult;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.extern.java.Log;
@@ -25,7 +25,7 @@ public class BehemothPart implements IAttackConsumer {
     Hitzone hitzone;
 
     Integer health;
-    Integer marginWounded;
+    Integer woundHealth;
 
     public BehemothPart() {
     }
@@ -33,11 +33,11 @@ public class BehemothPart implements IAttackConsumer {
     public BehemothPart(Hitzone hitzone, Integer health) {
         this.hitzone = hitzone;
         this.health = health;
-        this.marginWounded = health;
+        this.woundHealth = health;
     }
 
     public boolean isWounded() {
-        return marginWounded <= 0;
+        return woundHealth <= 0;
     }
 
     @Override
@@ -45,18 +45,26 @@ public class BehemothPart implements IAttackConsumer {
 
         AttackResult result = new AttackResult();
 
-        Integer partDamage     = round(attack.getDamage().getPartDamageNetto());
-        Integer woundDamage    = round(attack.getDamage().getWoundDamageNetto());
-        Integer parthHealthOld = getHealth();
-        Integer woundHealthOld = getMarginWounded();
-        Integer partHealthNew  = parthHealthOld - partDamage;
-        Integer woundHealthNew = woundHealthOld - woundDamage;
+        result.setOldPartHealth(getHealth());
+        result.setOldWoundHealth(getWoundHealth());
 
-        setHealth(partHealthNew);
-        setMarginWounded(woundHealthNew);
+        Integer partDamage = round(attack.getAttackDamage().getPartDamageNetto());
+        Integer woundDamage = round(attack.getAttackDamage().getWoundDamageNetto());
+
+        result.setPartDamage(partDamage);
+        result.setWoundDamage(woundDamage);
+
+        Integer newPartHealth = getHealth() - partDamage;
+        Integer newWoundHealth = getWoundHealth() - woundDamage;
+
+        result.setNewPartHealth(newPartHealth);
+        result.setNewWoundHealth(newWoundHealth);
+
+        setHealth(newPartHealth);
+        setWoundHealth(newWoundHealth);
 
         //todo handle bonus attacks, with their hitzone displacements
-        return new AttackResult();
+        return result;
     }
 
     @Override

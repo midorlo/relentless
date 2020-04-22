@@ -1,8 +1,8 @@
 package de.midorlo.relentless.domain.mutators;
 
-import de.midorlo.relentless.domain.IAttackModifier;
-import de.midorlo.relentless.domain.combat.Attack;
-import de.midorlo.relentless.domain.combat.Damage;
+import de.midorlo.relentless.domain.attack.IAttackModifier;
+import de.midorlo.relentless.domain.attack.Attack;
+import de.midorlo.relentless.domain.attack.AttackDamage;
 import lombok.Data;
 import lombok.extern.java.Log;
 
@@ -19,16 +19,16 @@ import lombok.extern.java.Log;
 public abstract class AbstractDamageModifier<T> implements IAttackModifier {
 
     protected T identifier;
-    protected Damage damageModifier;
+    protected AttackDamage attackDamageModifier;
 
     /**
      * New Instance
      * @param identifier An exact attribute to look for.
-     * @param damageModifier a damage Value that gets added to the attack, when the identifier matches.
+     * @param attackDamageModifier a damage Value that gets added to the attack, when the identifier matches.
      */
-    public AbstractDamageModifier(T identifier, Damage damageModifier) {
+    public AbstractDamageModifier(T identifier, AttackDamage attackDamageModifier) {
         this.identifier = identifier;
-        this.damageModifier = damageModifier;
+        this.attackDamageModifier = attackDamageModifier;
     }
 
     public abstract boolean matches(Attack attack);
@@ -36,7 +36,7 @@ public abstract class AbstractDamageModifier<T> implements IAttackModifier {
     @Override
     public  Attack accountFor(Attack attack) {
         if (matches(attack)) {
-            attack.getDamage().add(this.damageModifier);
+            attack.getAttackDamage().add(this.attackDamageModifier);
         }
         return attack;
     }
