@@ -1,11 +1,7 @@
 package de.midorlo.relentless.domain.items;
 
 import de.midorlo.relentless.domain.Element;
-import de.midorlo.relentless.domain.combat.Attack;
-import de.midorlo.relentless.domain.combat.Damage;
-import de.midorlo.relentless.domain.WeaponAttack;
-import de.midorlo.relentless.domain.combat.AttackType;
-import de.midorlo.relentless.domain.mutators.IAttackModifier;
+import de.midorlo.relentless.domain.attack.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
@@ -34,22 +30,22 @@ public class Weapon extends Gear implements IAttackModifier {
 
     @Override
     public Attack accountFor(Attack attack) {
-        attack.getDamage().add(getPowerFactor(attack));
+        attack.getAttackDamage().add(getPowerFactor(attack));
         return attack;
     }
 
     /**
-     * Gets the Weapon Damage of a specific Attack Context.
+     * Gets the Weapon AttackDamage of a specific Attack Context.
      * @param attackContext context
-     * @return weapon Damage
+     * @return weapon AttackDamage
      */
-    protected Damage getPowerFactor(Attack attackContext) {
+    protected AttackDamage getPowerFactor(Attack attackContext) {
         double differencedPower = getPower() - attackContext.getBehemoth().getPower();
         Element behemothElement = attackContext.getBehemoth().getElement();
         double powerFactor = getPowerFactor(differencedPower, Element.compareForAttack(getElement(), behemothElement));
-        Damage damage = new Damage();
-        damage.setPowerFactor(powerFactor);
-        return damage;
+        AttackDamage attackDamage = new AttackDamage();
+        attackDamage.setPowerFactor(powerFactor);
+        return attackDamage;
     }
 
     static Double getPowerFactor(Double differencedPower, int elementStrength) {

@@ -1,4 +1,4 @@
-package de.midorlo.relentless.domain.combat;
+package de.midorlo.relentless.domain.attack;
 
 import lombok.*;
 
@@ -7,7 +7,7 @@ import lombok.*;
  */
 @Data
 @AllArgsConstructor
-public class Damage {
+public class AttackDamage {
 
     /* Typed Summants */
     Double healthDamage;
@@ -34,7 +34,7 @@ public class Damage {
     /**
      * New Instance will all empty values (including factors!)
      */
-    public Damage() {
+    public AttackDamage() {
         marksmanFactor = 0d;
         critFactor = 0d;
         acidicFactor = 0d;
@@ -51,26 +51,26 @@ public class Damage {
         staggerDamageMalus = 0d;
     }
 
-    public void add(Damage damage) {
-        this.healthDamage += damage.healthDamage;
-        this.partDamage += damage.partDamage;
-        this.staggerDamage += damage.staggerDamage;
-        this.woundDamage += damage.woundDamage;
-        this.healthDamageFactor += damage.healthDamageFactor;
-        this.partDamageFactor += damage.partDamageFactor;
-        this.staggerDamageFactor += damage.staggerDamageFactor;
-        this.woundDamageFactor += damage.woundDamageFactor;
-        this.critFactor += damage.critFactor;
-        this.acidicFactor += damage.acidicFactor;
-        this.powerFactor += damage.powerFactor;
-        this.marksmanFactor += damage.marksmanFactor;
-        this.hitzoneFactor += damage.hitzoneFactor;
+    public void add(AttackDamage attackDamage) {
+        this.healthDamage += attackDamage.healthDamage;
+        this.partDamage += attackDamage.partDamage;
+        this.staggerDamage += attackDamage.staggerDamage;
+        this.woundDamage += attackDamage.woundDamage;
+        this.healthDamageFactor += attackDamage.healthDamageFactor;
+        this.partDamageFactor += attackDamage.partDamageFactor;
+        this.staggerDamageFactor += attackDamage.staggerDamageFactor;
+        this.woundDamageFactor += attackDamage.woundDamageFactor;
+        this.critFactor += attackDamage.critFactor;
+        this.acidicFactor += attackDamage.acidicFactor;
+        this.powerFactor += attackDamage.powerFactor;
+        this.marksmanFactor += attackDamage.marksmanFactor;
+        this.hitzoneFactor += attackDamage.hitzoneFactor;
     }
 
     /**
      * Applies final sanity check and fixes before evaluation.
      */
-    public Damage fixate() {
+    public AttackDamage fixate() {
         if (getCritFactor() == 0) {
             setCritFactor(1d);
         }

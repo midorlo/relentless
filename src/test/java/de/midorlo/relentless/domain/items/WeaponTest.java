@@ -2,7 +2,7 @@ package de.midorlo.relentless.domain.items;
 
 
 import de.midorlo.relentless.domain.MockedRepository;
-import de.midorlo.relentless.domain.combat.Attack;
+import de.midorlo.relentless.domain.attack.Attack;
 import org.testng.annotations.Test;
 
 import static org.hamcrest.MatcherAssert.assertThat;

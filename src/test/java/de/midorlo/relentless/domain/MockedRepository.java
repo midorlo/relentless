@@ -1,15 +1,17 @@
 package de.midorlo.relentless.domain;
 
+import de.midorlo.relentless.domain.attack.WeaponAttack;
 import de.midorlo.relentless.domain.behemoth.Behemoth;
 import de.midorlo.relentless.domain.behemoth.BehemothPart;
 import de.midorlo.relentless.domain.behemoth.Hitzone;
-import de.midorlo.relentless.domain.combat.AttackType;
+import de.midorlo.relentless.domain.attack.AttackType;
 import de.midorlo.relentless.domain.items.Weapon;
 import de.midorlo.relentless.domain.items.ItemType;
 import de.midorlo.relentless.domain.player.Loadout;
 import de.midorlo.relentless.domain.player.Player;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class MockedRepository {
@@ -24,15 +26,20 @@ public class MockedRepository {
 
     public static Behemoth mockBehemoth() {
         Behemoth behemoth = new Behemoth();
-        behemoth.setName("Meh-Kel, Holder of the Dark Triangle");
-        behemoth.setHealth(2000d);
-        behemoth.setStaggerHealth(2000d);
-        behemoth.setElement(Element.Umbral);
-        behemoth.setThread(24);
-        BehemothPart behemothPart = new BehemothPart(mockHitzone(), 1000d);
-        behemothPart.setHealthWound(2000d);
-        behemoth.getBehemothParts().add(behemothPart);
+        behemoth.setName("Shrike");
+        behemoth.setHealth(30000);
+        behemoth.setStaggerHealth(10000);
+        behemoth.setElement(Element.Neutral);
+        behemoth.setThread(5);
+        behemoth.setBehemothParts(mockBehemothParts());
         return behemoth;
+    }
+
+    public static List<BehemothPart> mockBehemothParts() {
+        return Arrays.asList(
+                new BehemothPart(Hitzone.head, 1000),
+                new BehemothPart(Hitzone.head, 1000),
+                new BehemothPart(Hitzone.body, 1000));
     }
 
     public static Hitzone mockHitzone() {

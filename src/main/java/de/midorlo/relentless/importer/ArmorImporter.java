@@ -34,13 +34,12 @@ public class ArmorImporter extends YamlFileImporter<Armor> {
     }
 
     @Override
-    protected Repository<Armor> importGameObjects(List<LinkedHashMap<Object,Object>> map) {
+    protected void importGameObjects(List<LinkedHashMap<Object,Object>> map) {
         super.importGameObjects(map);
         repository.findAll().forEach(armor -> {
             perkRepository.save(armor.getPerks());
             perkEffectRepository.save(armor.getPerkEffects());
         });
-        return repository;
     }
 
     @Override

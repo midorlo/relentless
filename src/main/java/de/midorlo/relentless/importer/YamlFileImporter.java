@@ -22,9 +22,8 @@ public abstract class YamlFileImporter<T> {
      *
      * @param map sourcemap.
      */
-    protected Repository<T> importGameObjects(List<LinkedHashMap<Object, Object>> map) {
+    protected void importGameObjects(List<LinkedHashMap<Object, Object>> map) {
         repository.save(parseGameObjects(map));
-        return repository;
     }
 
     /**

@@ -4,8 +4,6 @@ import de.midorlo.relentless.domain.player.Loadout;
 import de.midorlo.relentless.domain.player.Player;
 import org.testng.annotations.Test;
 
-import static org.testng.Assert.*;
-
 public class LoadoutTest {
 
     @Test

@@ -1,27 +1,74 @@
 package de.midorlo.relentless.domain.behemoth;
 
+import de.midorlo.relentless.domain.attack.IAttackConsumer;
+import de.midorlo.relentless.domain.attack.Attack;
+import de.midorlo.relentless.domain.attack.AttackResult;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.ToString;
 import lombok.extern.java.Log;
 
+import javax.persistence.*;
+
+import static de.midorlo.relentless.util.NumericUtils.round;
+
 @Data
-@ToString
-@EqualsAndHashCode
 @Log
-public class BehemothPart {
+@Entity
+@EqualsAndHashCode(exclude = "id")
+public class BehemothPart implements IAttackConsumer {
 
-    Hitzone type;
-    Double health;
-    Double healthWound;
-    boolean wounded;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
 
-    public BehemothPart(Hitzone type, Double health) {
-        this.type = type;
+    @OneToOne(cascade = CascadeType.PERSIST)
+    Hitzone hitzone;
+
+    Integer health;
+    Integer woundHealth;
+
+    public BehemothPart() {
+    }
+
+    public BehemothPart(Hitzone hitzone, Integer health) {
+        this.hitzone = hitzone;
         this.health = health;
+        this.woundHealth = health;
     }
 
     public boolean isWounded() {
-        return wounded;
+        return woundHealth <= 0;
+    }
+
+    @Override
+    public AttackResult consume(Attack attack) {
+
+        AttackResult result = new AttackResult();
+
+        result.setOldPartHealth(getHealth());
+        result.setOldWoundHealth(getWoundHealth());
+
+        Integer partDamage = round(attack.getAttackDamage().getPartDamageNetto());
+        Integer woundDamage = round(attack.getAttackDamage().getWoundDamageNetto());
+
+        result.setPartDamage(partDamage);
+        result.setWoundDamage(woundDamage);
+
+        Integer newPartHealth = getHealth() - partDamage;
+        Integer newWoundHealth = getWoundHealth() - woundDamage;
+
+        result.setNewPartHealth(newPartHealth);
+        result.setNewWoundHealth(newWoundHealth);
+
+        setHealth(newPartHealth);
+        setWoundHealth(newWoundHealth);
+
+        //todo handle bonus attacks, with their hitzone displacements
+        return result;
+    }
+
+    @Override
+    public Attack accountFor(Attack attack) {
+        return attack;
     }
 }

@@ -1,7 +1,7 @@
 package de.midorlo.relentless.importer;
 
 import de.midorlo.relentless.domain.Element;
-import de.midorlo.relentless.domain.combat.AttackType;
+import de.midorlo.relentless.domain.attack.AttackType;
 import de.midorlo.relentless.domain.items.*;
 import de.midorlo.relentless.repository.Assets;
 import de.midorlo.relentless.repository.Repository;
@@ -71,13 +71,12 @@ public class WeaponImporter extends YamlFileImporter<Weapon> {
     }
 
     @Override
-    protected Repository<Weapon> importGameObjects(List<LinkedHashMap<Object,Object>> map) {
+    protected void importGameObjects(List<LinkedHashMap<Object,Object>> map) {
         super.importGameObjects(map);
         repository.findAll().forEach(weapon -> {
             perkRepository.save(weapon.getPerks());
             perkEffectRepository.save(weapon.getPerkEffects());
         });
-        return repository;
     }
 
     private List<CellSocket> parseCellSockets(ArrayList<String> stringList) {
