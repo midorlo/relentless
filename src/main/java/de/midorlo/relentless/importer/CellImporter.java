@@ -29,13 +29,12 @@ public class CellImporter extends YamlFileImporter<Cell> {
     }
 
     @Override
-    protected Repository<Cell> importGameObjects(List<LinkedHashMap<Object,Object>> map) {
+    protected void importGameObjects(List<LinkedHashMap<Object,Object>> map) {
         super.importGameObjects(map);
         repository.findAll().forEach(cell -> {
             perkRepository.save(cell.getPerks());
             cell.getPerks().forEach(perk -> perkEffectRepository.save(perk.getEffects()));
         });
-        return repository;
     }
 
     @Override

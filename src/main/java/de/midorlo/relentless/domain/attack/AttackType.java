@@ -1,4 +1,4 @@
-package de.midorlo.relentless.domain.combat;
+package de.midorlo.relentless.domain.attack;
 
 import lombok.Data;
 
