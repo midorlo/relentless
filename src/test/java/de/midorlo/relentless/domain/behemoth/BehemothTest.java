@@ -90,9 +90,4 @@ public class BehemothTest {
         b1.getBehemothParts().get(0).setHealth(1);
         assertThat(b1, not(equalTo(b2)));
     }
-
-    @Test
-    public void hashCodeTest() {
-
-    }
 }

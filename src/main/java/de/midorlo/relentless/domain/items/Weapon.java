@@ -2,7 +2,6 @@ package de.midorlo.relentless.domain.items;
 
 import de.midorlo.relentless.domain.Element;
 import de.midorlo.relentless.domain.attack.*;
-import de.midorlo.relentless.domain.attack.AttackDamage;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
