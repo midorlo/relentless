@@ -1,9 +1,9 @@
 package de.midorlo.relentless.domain.behemoth;
 
 import de.midorlo.relentless.domain.Element;
+import de.midorlo.relentless.domain.IAttackConsumer;
 import de.midorlo.relentless.domain.combat.Attack;
 import de.midorlo.relentless.domain.combat.AttackResult;
-import de.midorlo.relentless.domain.IAttackModifier;
 import lombok.Data;
 import lombok.extern.java.Log;
 
@@ -11,26 +11,57 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import static de.midorlo.relentless.util.NumericUtils.round;
+
 /**
  * Represents a Player's Enemy.
  */
 @Data
 @Log
 @Entity
-public class Behemoth implements IAttackModifier {
+public class Behemoth implements IAttackConsumer {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    String name;
-    Element element;
-    Integer thread;
-    Integer health;
-    Integer staggerHealth;
-
     @OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
     List<BehemothPart> behemothParts = new ArrayList<>();
+
+    private String name;
+    private Element element;
+    private Integer thread;
+    private Integer health;
+    private Integer staggerHealth;
+
+    @Override
+    public Attack accountFor(Attack attack) {
+        return attack;
+    }
+
+    @Override
+    public AttackResult consume(Attack attack) {
+
+        AttackResult result = new AttackResult(attack);
+
+        Integer healthDamage = round(attack.getDamage().getHealthDamageNetto());
+        Integer newHealth = Math.round(getHealth() - healthDamage);
+        result.setHealthDamage(healthDamage);
+        result.setNewHealth(newHealth);
+
+        Integer staggerDamage = round(attack.getDamage().getStaggerDamageNetto());
+        Integer newStaggerHealth = Math.round(getStaggerHealth() - staggerDamage); //todo handle stagger
+        result.setStaggerDamage(staggerDamage);
+        result.setNewStaggerHealth(newStaggerHealth);
+
+        for (BehemothPart behemothPart : getBehemothParts()) {
+            if (attack.getBehemothPart().equals(behemothPart)) {
+                AttackResult partResult = behemothPart.consume(attack);
+            }
+        }
+
+        return result;
+    }
 
     public Integer getPower() {
         int power = 0;
@@ -60,61 +91,5 @@ public class Behemoth implements IAttackModifier {
         }
         //@formatter:on
         return power;
-    }
-
-    @Override
-    public Attack accountFor(Attack attack) {
-        return attack;
-    }
-
-    static Integer round(Double v) {
-        return (int) Math.round(v);
-    }
-
-    public AttackResult consume(Attack attack) {
-
-        BehemothPart part = attack.getBehemothPart();
-
-        Integer healthDamage = round(attack.getDamage().getHealthDamageNetto());
-        Integer partDamage = round(attack.getDamage().getPartDamageNetto());
-        Integer staggerDamage = round(attack.getDamage().getStaggerDamageNetto());
-        Integer woundDamage = round(attack.getDamage().getWoundDamageNetto());
-
-        Integer healthOld = getHealth();
-        Integer healthNew = (int) Math.round(healthOld - healthDamage);
-        Integer parthHealthOld = attack.getBehemothPart().getHealth();
-        Integer partHealthNew = parthHealthOld - partDamage;
-
-        Integer woundHealthOld = part.getMarginWounded();
-        Integer woundHealthNew = woundHealthOld - woundDamage;
-
-        Integer staggerHealthOld = getStaggerHealth();
-        Integer staggerHealthNew = (int) Math.round(getStaggerHealth() - staggerDamage); //todo handle stagger
-
-        setHealth(healthNew);
-        setStaggerHealth(staggerHealthNew);
-
-        part.setHealth(partHealthNew);
-        part.setMarginWounded(woundHealthNew);
-
-        //todo handle bonus attacks, with their hitzone displacements
-
-        return new AttackResult(
-                attack.getPlayer().getName(),
-                attack.getBehemoth().getName(),
-                attack.getBehemothPart().getHitzone(),
-                healthOld,
-                healthDamage,
-                healthNew,
-                parthHealthOld,
-                partDamage,
-                partHealthNew,
-                staggerHealthOld,
-                staggerDamage,
-                staggerHealthNew,
-                woundHealthOld,
-                woundDamage,
-                woundHealthNew
-        );
     }
 }

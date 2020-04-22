@@ -1,6 +1,5 @@
 package de.midorlo.relentless.domain.combat;
 
-import de.midorlo.relentless.domain.behemoth.Hitzone;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -14,7 +13,7 @@ public class AttackResult {
 
     String playerName;
     String behemothName;
-    Hitzone targetPart;
+    String targetPartName;
 
     Integer oldHealth;
     Integer healthDamage;
@@ -32,26 +31,42 @@ public class AttackResult {
     Integer woundDamage;
     Integer newPartWoundHealth;
 
+    public AttackResult() {
+    }
+
+    /**
+     * New instance. Prefil with "before" values.
+     *
+     * @param attack the attack.
+     */
+    public AttackResult(Attack attack) {
+        this.playerName = attack.getPlayer().getName();
+        this.behemothName = attack.getBehemoth().getName();
+        this.targetPartName = attack.getBehemothPart().getHitzone().getName();
+        this.oldHealth = attack.getBehemoth().getHealth();
+        this.oldPartHealth = attack.getBehemothPart().getHealth();
+        this.oldStaggerHealth = attack.getBehemoth().getStaggerHealth();
+        this.oldPartWoundHealth = attack.getBehemothPart().getHealth();
+    }
 
     @Override
     public String toString() {
-        return "AttackResult{" + System.lineSeparator() +
-                "\tattack='" + playerName + '\'' +
-                ",'" + behemothName + '\'' +
-                "," + targetPart.getName() + System.lineSeparator() +
-                "\thealth=" + oldHealth +
-                ", " + healthDamage +
-                ", " + newHealth + System.lineSeparator() +
-                "\tpart=" + oldPartHealth +
-                ", " + partDamage +
-                ", " + newPartHealth + System.lineSeparator() +
-                "\tstagger=" + oldStaggerHealth +
-                ", " + staggerDamage +
-                ", " + newStaggerHealth + System.lineSeparator() +
-                "\twound=" + oldPartWoundHealth +
-                ", " + woundDamage +
-                ", " + newPartWoundHealth + System.lineSeparator() +
-                '}';
+        return "AttackResult{"
+                + playerName + ","
+                + behemothName + ","
+                + targetPartName + ","
+                + oldHealth + ","
+                + healthDamage + ","
+                + newHealth + ","
+                + oldPartHealth + ","
+                + partDamage + ","
+                + newPartHealth + ","
+                + oldStaggerHealth + ","
+                + staggerDamage + ","
+                + newStaggerHealth + ","
+                + oldPartWoundHealth + ","
+                + woundDamage + ","
+                + newPartWoundHealth + "}";
     }
 }
 
