@@ -50,7 +50,8 @@ public class LanternImporter extends YamlFileImporter<Lantern> {
             cellSocket.setType(CellImporter.parseCellType(cells));
             lantern.getCellSockets().add(cellSocket);
         }
-        lantern.getMoveSets().add(parseLanternAttackObjects((LinkedHashMap) lanternAbility, lantern));
+        //todo fix
+//        lantern.getMoveSets().add(parseLanternAttackObjects((LinkedHashMap) lanternAbility, lantern));
         return lantern;
     }
 

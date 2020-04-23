@@ -20,9 +20,9 @@ public class HuntTest {
         Behemoth behemoth = hunt.getBehemoths().get(0);
         behemoth.setThread(5);
         behemoth.getBehemothParts().get(0).setHitzone(Hitzone.body);
-        WeaponAttack weaponAttack = player.getLoadout().getWeapon().getMoveSets().get(0).get(0);
+        WeaponAttack weaponAttack = player.getLoadout().getWeapon().getMovesets().get(0).getAttacks().get(0);
         weaponAttack.setDamage(80);
-        weaponAttack.setType(AttackType.Blunt);
+        weaponAttack.setType(new AttackType("Blunt"));
 
 
 
