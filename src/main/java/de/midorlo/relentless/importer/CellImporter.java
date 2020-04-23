@@ -39,12 +39,16 @@ public class CellImporter extends YamlFileImporter<Cell> {
     @Override
     protected Cell parseGameObject(LinkedHashMap map) {
         String name = (String) map.get("name");
-        CellType cellType = CellType.valueOf((String) map.get("slot"));
+        Object slot = map.get("slot");
         Cell cell = new Cell();
         cell.setName(name);
-        cell.setCellType(cellType);
+        cell.setCellType(parseCellType(map.get("slot")));
         cell.setLevel(3);
         cell.getPerks().addAll(perkRepository.findBy(e -> name.contains(e.getName())));
         return cell;
+    }
+
+    protected static CellType parseCellType(Object mapValue) {
+        return new CellType(((String)mapValue));
     }
 }

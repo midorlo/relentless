@@ -1,9 +1,8 @@
 package de.midorlo.relentless.importer;
 
-import de.midorlo.relentless.domain.item.Element;
-import de.midorlo.relentless.domain.item.Armor;
 import de.midorlo.relentless.domain.cell.CellSocket;
-import de.midorlo.relentless.domain.cell.CellType;
+import de.midorlo.relentless.domain.item.Armor;
+import de.midorlo.relentless.domain.item.Element;
 import de.midorlo.relentless.domain.item.ItemType;
 import de.midorlo.relentless.domain.perk.Perk;
 import de.midorlo.relentless.domain.perk.PerkEffect;
@@ -80,7 +79,7 @@ public class ArmorImporter extends YamlFileImporter<Armor> {
         List<CellSocket> cellSockets = new ArrayList<>();
         if (cellSocketString != null) {
             CellSocket cellSocket = new CellSocket();
-            cellSocket.setType(CellType.valueOf(cellSocketString));
+            cellSocket.setType(CellImporter.parseCellType(cellSocketString));
             cellSockets.add(cellSocket);
         }
         return cellSockets;

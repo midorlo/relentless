@@ -1,9 +1,8 @@
 package de.midorlo.relentless.importer;
 
-import de.midorlo.relentless.domain.combat.WeaponAttack;
 import de.midorlo.relentless.domain.cell.CellSocket;
-import de.midorlo.relentless.domain.cell.CellType;
-import de.midorlo.relentless.domain.item.*;
+import de.midorlo.relentless.domain.combat.WeaponAttack;
+import de.midorlo.relentless.domain.item.Lantern;
 import de.midorlo.relentless.domain.perk.Perk;
 import de.midorlo.relentless.domain.perk.PerkEffect;
 import de.midorlo.relentless.repository.dep.Repository;
@@ -48,8 +47,7 @@ public class LanternImporter extends YamlFileImporter<Lantern> {
         lantern.setDescription(description);
         if (cells != null) {
             CellSocket cellSocket = new CellSocket();
-            CellType cellType = CellType.valueOf(cells);
-            cellSocket.setType(cellType);
+            cellSocket.setType(CellImporter.parseCellType(cells));
             lantern.getCellSockets().add(cellSocket);
         }
         lantern.getMoveSets().add(parseLanternAttackObjects((LinkedHashMap) lanternAbility, lantern));

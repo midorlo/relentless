@@ -1,9 +1,9 @@
 package de.midorlo.relentless.importer;
 
-import de.midorlo.relentless.domain.item.Element;
 import de.midorlo.relentless.domain.cell.CellSocket;
-import de.midorlo.relentless.domain.cell.CellType;
-import de.midorlo.relentless.domain.item.*;
+import de.midorlo.relentless.domain.item.Element;
+import de.midorlo.relentless.domain.item.ItemType;
+import de.midorlo.relentless.domain.item.Weapon;
 import de.midorlo.relentless.domain.perk.Perk;
 import de.midorlo.relentless.domain.perk.PerkEffect;
 import de.midorlo.relentless.repository.dep.Assets;
@@ -81,7 +81,7 @@ public class WeaponImporter extends YamlFileImporter<Weapon> {
         if (stringList != null) {
             cellSockets.addAll(stringList.stream().map(e -> {
                 CellSocket cellSocket = new CellSocket();
-                cellSocket.setType(CellType.valueOf(e));
+                cellSocket.setType(CellImporter.parseCellType(e));
                 return cellSocket;
             }).collect(Collectors.toList()));
         }
