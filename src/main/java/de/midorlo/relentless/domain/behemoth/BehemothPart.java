@@ -1,8 +1,8 @@
 package de.midorlo.relentless.domain.behemoth;
 
-import de.midorlo.relentless.domain.combat.IAttackConsumer;
 import de.midorlo.relentless.domain.combat.Attack;
 import de.midorlo.relentless.domain.combat.AttackResult;
+import de.midorlo.relentless.domain.combat.IAttackConsumer;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.extern.java.Log;

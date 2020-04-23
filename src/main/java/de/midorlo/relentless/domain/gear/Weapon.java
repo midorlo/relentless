@@ -1,14 +1,16 @@
 package de.midorlo.relentless.domain.gear;
 
 import de.midorlo.relentless.domain.Element;
-import de.midorlo.relentless.domain.combat.*;
+import de.midorlo.relentless.domain.combat.Attack;
+import de.midorlo.relentless.domain.combat.AttackDamage;
+import de.midorlo.relentless.domain.combat.IAttackModifier;
+import de.midorlo.relentless.domain.combat.WeaponAttack;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 import lombok.extern.java.Log;
 
 import javax.persistence.Entity;
-import javax.persistence.OneToMany;
 import java.util.ArrayList;
 import java.util.List;
 

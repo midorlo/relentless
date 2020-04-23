@@ -1,8 +1,8 @@
 package de.midorlo.relentless.domain.mutator;
 
-import de.midorlo.relentless.domain.combat.IAttackModifier;
 import de.midorlo.relentless.domain.combat.Attack;
 import de.midorlo.relentless.domain.combat.AttackDamage;
+import de.midorlo.relentless.domain.combat.IAttackModifier;
 import lombok.Data;
 import lombok.extern.java.Log;
 

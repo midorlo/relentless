@@ -2,7 +2,8 @@ package de.midorlo.relentless.domain.cell;
 
 import lombok.Data;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.Id;
 
 /**
  * The type of a Cell.

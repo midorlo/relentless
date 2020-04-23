@@ -4,7 +4,9 @@ import de.midorlo.relentless.domain.perk.Perk;
 import de.midorlo.relentless.domain.perk.PerkEffect;
 import de.midorlo.relentless.repository.yaml.YamlRepository;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.stream.Collectors;
 
 import static de.midorlo.relentless.util.Constants.DIR_DAUNTLESS_BUILDER_PERKS;

@@ -1,10 +1,9 @@
 package de.midorlo.relentless.domain;
 
-import de.midorlo.relentless.domain.Loadout;
-import de.midorlo.relentless.domain.combat.WeaponAttack;
 import de.midorlo.relentless.domain.behemoth.Behemoth;
 import de.midorlo.relentless.domain.combat.Attack;
 import de.midorlo.relentless.domain.combat.AttackResult;
+import de.midorlo.relentless.domain.combat.WeaponAttack;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;

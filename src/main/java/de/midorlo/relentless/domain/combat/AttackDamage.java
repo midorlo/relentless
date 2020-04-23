@@ -1,6 +1,7 @@
 package de.midorlo.relentless.domain.combat;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
 
 /**
  * Makes extensive use of the formulas at: https://docs.google.com/spreadsheets/d/13lw6ShdGDyelde7u4Dhs95skIQdLQ1LHRE2heFTVBoc/edit#gid=0

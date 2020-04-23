@@ -1,6 +1,5 @@
 package de.midorlo.relentless.domain.cell;
 
-import de.midorlo.relentless.domain.gear.Gear;
 import lombok.Data;
 import lombok.extern.java.Log;
 

@@ -2,7 +2,6 @@ package de.midorlo.relentless;
 
 import de.midorlo.relentless.domain.Element;
 import de.midorlo.relentless.domain.cell.Cell;
-import de.midorlo.relentless.domain.cell.CellSocket;
 import de.midorlo.relentless.domain.gear.Armor;
 import de.midorlo.relentless.domain.gear.Lantern;
 import de.midorlo.relentless.domain.gear.Weapon;
@@ -12,9 +11,7 @@ import de.midorlo.relentless.importer.*;
 import de.midorlo.relentless.importer.manual.CellTypeManualImporter;
 import de.midorlo.relentless.importer.manual.ElementImporter;
 import de.midorlo.relentless.repository.*;
-import de.midorlo.relentless.repository.CellRepository;
 import de.midorlo.relentless.repository.yaml.*;
-import de.midorlo.relentless.repository.yaml.PerkYamlRepository;
 import lombok.extern.java.Log;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -81,9 +78,7 @@ public class AppJPARelentless {
             //Perks
             perkYamlRepository.findAll().forEach(perk -> {
                 List<PerkEffect> newEffects = new ArrayList<>();
-                perk.getEffects().forEach(perkEffect -> {
-                    newEffects.add(perkEffectRepository.findByNameAndLevel(perkEffect.getName(), perkEffect.getLevel()));
-                });
+                perk.getEffects().forEach(perkEffect -> newEffects.add(perkEffectRepository.findByNameAndLevel(perkEffect.getName(), perkEffect.getLevel())));
                 perk.setEffects(newEffects);
             });
             perkRepository.saveAll(perkYamlRepository.findAll());

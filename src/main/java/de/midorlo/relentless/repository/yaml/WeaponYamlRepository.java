@@ -1,7 +1,7 @@
 package de.midorlo.relentless.repository.yaml;
 
-import de.midorlo.relentless.domain.perk.Perk;
 import de.midorlo.relentless.domain.gear.Weapon;
+import de.midorlo.relentless.domain.perk.Perk;
 
 public class WeaponYamlRepository extends YamlRepository<Weapon> {
 

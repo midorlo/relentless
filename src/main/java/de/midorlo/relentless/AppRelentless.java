@@ -1,7 +1,9 @@
 package de.midorlo.relentless;
 
 import de.midorlo.relentless.domain.cell.Cell;
-import de.midorlo.relentless.domain.gear.*;
+import de.midorlo.relentless.domain.gear.Armor;
+import de.midorlo.relentless.domain.gear.Lantern;
+import de.midorlo.relentless.domain.gear.Weapon;
 import de.midorlo.relentless.domain.perk.Perk;
 import de.midorlo.relentless.domain.perk.PerkEffect;
 import de.midorlo.relentless.importer.*;

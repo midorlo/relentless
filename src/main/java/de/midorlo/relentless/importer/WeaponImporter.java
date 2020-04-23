@@ -71,9 +71,7 @@ public class WeaponImporter extends YamlFileImporter<Weapon> {
     @Override
     protected void importGameObjects(List<LinkedHashMap<Object,Object>> map) {
         super.importGameObjects(map);
-        repository.findAll().forEach(weapon -> {
-            perkRepository.save(weapon.getPerks());
-        });
+        repository.findAll().forEach(weapon -> perkRepository.save(weapon.getPerks()));
     }
 
     private List<CellSocket> parseCellSockets(ArrayList<String> stringList) {

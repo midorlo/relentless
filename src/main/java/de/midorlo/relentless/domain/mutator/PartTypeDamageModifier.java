@@ -1,8 +1,8 @@
 package de.midorlo.relentless.domain.mutator;
 
-import de.midorlo.relentless.domain.combat.AttackDamage;
 import de.midorlo.relentless.domain.behemoth.Hitzone;
 import de.midorlo.relentless.domain.combat.Attack;
+import de.midorlo.relentless.domain.combat.AttackDamage;
 
 /**
  * Holds a AttackDamage Modifier that Reacts to a targeted Part Type

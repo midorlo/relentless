@@ -1,9 +1,10 @@
 package de.midorlo.relentless.domain;
 
-import com.sun.istack.Nullable;
 import lombok.Data;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.OneToOne;
 
 @Data
 @Entity
