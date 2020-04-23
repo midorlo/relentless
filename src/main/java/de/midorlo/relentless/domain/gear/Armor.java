@@ -1,9 +1,17 @@
 package de.midorlo.relentless.domain.gear;
 
-@SuppressWarnings("SameReturnValue")
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
+
+import javax.persistence.Entity;
+
+@EqualsAndHashCode(callSuper = true)
+@ToString(callSuper = true)
+@Data
+@Entity
 public class Armor extends Gear {
 
-    @SuppressWarnings("unused")
     public Double getResistance() {
         return  137.5d; //todo handle levelled armor
     }

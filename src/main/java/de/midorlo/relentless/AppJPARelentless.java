@@ -43,6 +43,7 @@ public class AppJPARelentless {
             HitzoneRepository hitzoneRepository,
             PerkEffectRepository perkEffectRepository,
             WeaponRepository weaponRepository,
+            ArmorRepository armorRepository,
             PerkRepository perkRepository
     ) {
         return args -> {
@@ -54,7 +55,7 @@ public class AppJPARelentless {
             YamlRepository<Cell> cellYamlRepository = new CellYamlRepository(perkYamlRepository);
 
             YamlRepository<Weapon> weaponYamlRepository = new WeaponYamlRepository(perkYamlRepository);
-            YamlRepository<Armor> armorYamlRepository = new ArmorRepository(perkYamlRepository);
+            YamlRepository<Armor> armorYamlRepository = new ArmorYamlRepository(perkYamlRepository);
             YamlRepository<Lantern> lanternYamlRepository = new LanternRepository(perkYamlRepository);
 
             PerkImporter perkImporter = new PerkImporter(perkYamlRepository, perkEffectYamlRepository);
@@ -106,6 +107,14 @@ public class AppJPARelentless {
                 cellSocketRepository.saveAll(weapon.getCellSockets());
             });
             weaponRepository.saveAll(weaponYamlRepository.findAll());
+
+            //Armor
+            armorYamlRepository.findAll().forEach(objs -> {
+                cellSocketRepository.saveAll(objs.getCellSockets());
+                objs.setElement(refreshElement(objs.getElement(), elementRepository));
+                objs.setPerks(refreshPerks(objs.getPerks(), perkRepository));
+            });
+            armorRepository.saveAll(armorYamlRepository.findAll());
 
             log.info("Ending");
         };

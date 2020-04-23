@@ -17,7 +17,7 @@ public class ImporterTest {
     YamlRepository<Perk> perkRepository = new PerkYamlRepository(perkEffectRepository);
     YamlRepository<Cell> cellRepository = new CellYamlRepository(perkRepository);
     YamlRepository<Weapon> weaponRepository = new WeaponYamlRepository(perkRepository);
-    YamlRepository<Armor> armorRepository = new ArmorRepository(perkRepository);
+    YamlRepository<Armor> armorRepository = new ArmorYamlRepository(perkRepository);
     YamlRepository<Lantern> lanternRepository = new LanternRepository(perkRepository);
 
     @Test
