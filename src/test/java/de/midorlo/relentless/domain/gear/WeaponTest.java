@@ -18,7 +18,7 @@ public class WeaponTest {
                 .player(MockedRepository.mockPlayer())
                 .behemoth(MockedRepository.mockBehemoth())
                 .targetPart(MockedRepository.mockHitzone())
-                .attackMove(MockedRepository.mockMoveset().get(0))
+                .attackMove(MockedRepository.mockMoveset().getAttacks().get(0))
                 .build();
         Attack modifiedAttack = weapon.accountFor(attack);
         assertThat(modifiedAttack, equalTo(attack));

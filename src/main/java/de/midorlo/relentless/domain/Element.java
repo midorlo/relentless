@@ -32,9 +32,11 @@ public class Element {
      */
     public static int compareForAttack(Element my, Element his) {
         int val = 0;
-        if (my.equals(his)) {
+        if (my == null || his == null) {
+            return 0;
+        } else if (my.equals(his)) {
             val = -1;
-        } else if (my.getCounters().equals(his)) {
+        } else if (my.getCounters() != null && my.getCounters().equals(his)) {
             val = 1;
         }
         return val;

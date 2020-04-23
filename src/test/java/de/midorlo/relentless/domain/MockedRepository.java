@@ -5,6 +5,7 @@ import de.midorlo.relentless.domain.behemoth.BehemothPart;
 import de.midorlo.relentless.domain.behemoth.Hitzone;
 import de.midorlo.relentless.domain.combat.AttackType;
 import de.midorlo.relentless.domain.combat.Hunt;
+import de.midorlo.relentless.domain.combat.Moveset;
 import de.midorlo.relentless.domain.combat.WeaponAttack;
 import de.midorlo.relentless.domain.gear.ItemType;
 import de.midorlo.relentless.domain.gear.Weapon;
@@ -64,26 +65,26 @@ public class MockedRepository {
         weapon.setDescription("It's something");
         weapon.setType(ItemType.Sword);
         weapon.setElement(new Element("Radiant"));
-        weapon.setMoveSets(mockMovesets());
+        weapon.setMovesets(mockMovesets());
         return weapon;
     }
 
-    public static List<List<WeaponAttack>> mockMovesets() {
-        List<List<WeaponAttack>> moveSets = new ArrayList<>();
-        moveSets.add(mockMoveset());
-        return moveSets;
+    public static List<Moveset> mockMovesets() {
+        ArrayList<Moveset> movesets = new ArrayList<>();
+        movesets.add(mockMoveset());
+        return movesets;
     }
 
-    public static ArrayList<WeaponAttack> mockMoveset() {
-        ArrayList<WeaponAttack> moveset = new ArrayList<>();
-        WeaponAttack move = WeaponAttack.builder()
+    public static Moveset mockMoveset() {
+        Moveset moveset = new Moveset();
+        WeaponAttack weaponAttack = WeaponAttack.builder()
                 .name("Bladed 1(L)")
-                .type(AttackType.Slashing)
+                .type(new AttackType("Slashing"))
                 .damage(60)
                 .cleave(false)
                 .bonusAttacks(3)
                 .build();
-        moveset.add(move);
+        moveset.getAttacks().add(weaponAttack);
         return moveset;
     }
 }

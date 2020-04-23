@@ -68,28 +68,28 @@ public class WeaponAttack implements IAttackModifier {
         AttackType attackType = getType();
         AttackDamage attackDamage = new AttackDamage();
 
-        if (attackType.equals(AttackType.Slashing)) {
+        if (attackType.getName().contentEquals("Slashing")) {
             attackDamage.setHealthDamageFactor(1d);
             attackDamage.setPartDamageFactor(1d);
             attackDamage.setStaggerDamageFactor(1d);
             attackDamage.setWoundDamageFactor(0d);
         }
 
-        if (attackType.equals(AttackType.Piercing)) {
+        if (attackType.getName().contentEquals("Piercing")) {
             attackDamage.setHealthDamageFactor(1d);
             attackDamage.setPartDamageFactor(0.75d);
             attackDamage.setStaggerDamageFactor(0d);
             attackDamage.setWoundDamageFactor(1d);
         }
 
-        if (attackType.equals(AttackType.Special)) {
+        if (attackType.getName().contentEquals("Special")) {
             attackDamage.setHealthDamageFactor(1d);
             attackDamage.setPartDamageFactor(1d);
             attackDamage.setStaggerDamageFactor(0d);
             attackDamage.setWoundDamageFactor(0d);
         }
 
-        if (attackType.equals(AttackType.Blunt)) {
+        if (attackType.getName().contentEquals("Blunt")) {
             attackDamage.setHealthDamageFactor(1d);
             attackDamage.setPartDamageFactor(1d);
             attackDamage.setStaggerDamageFactor(1d + (1d / 3d));
@@ -103,13 +103,13 @@ public class WeaponAttack implements IAttackModifier {
         BehemothPart part = attack.getBehemothPart();
         AttackType attackType = getType();
         if (part.isWounded()) {
-            if (AttackType.Blunt.equals(attackType) || AttackType.Piercing.equals(attackType) || AttackType.Special.equals(attackType)) {
+            if ("Blunt".contentEquals(attackType.getName()) || "Piercing".contentEquals(attackType.getName()) || "Special".contentEquals(attackType.getName())) {
                 attackDamage.setPartDamageFactor(0.25d);
-            } else if (AttackType.Slashing.equals(attackType)) {
+            } else if ("Slashing".contentEquals(attackType.getName())) {
                 attackDamage.setPartDamageFactor(0.5d);
             }
         }
-        if (attackType.equals(AttackType.Piercing)
+        if (attackType.getName().contentEquals("Piercing")
                 && (part.getHitzone().equals(Hitzone.head) || part.getHitzone().equals(Hitzone.horn))) {
             attackDamage.setPartDamageFactor(attackDamage.getPartDamageFactor() + 0.25);
         }

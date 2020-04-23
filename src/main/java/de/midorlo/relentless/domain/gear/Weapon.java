@@ -1,16 +1,15 @@
 package de.midorlo.relentless.domain.gear;
 
 import de.midorlo.relentless.domain.Element;
-import de.midorlo.relentless.domain.combat.Attack;
-import de.midorlo.relentless.domain.combat.AttackDamage;
-import de.midorlo.relentless.domain.combat.IAttackModifier;
-import de.midorlo.relentless.domain.combat.WeaponAttack;
+import de.midorlo.relentless.domain.combat.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 import lombok.extern.java.Log;
 
 import javax.persistence.Entity;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,7 +20,12 @@ import java.util.List;
 @Entity
 public class Weapon extends Gear implements IAttackModifier {
 
-    @Deprecated protected transient List<List<WeaponAttack>> moveSets = new ArrayList<>();
+    @OneToMany
+    private List<Moveset> movesets = new ArrayList<>();
+
+    public Weapon() {
+        setLevel(15);
+    }
 
     public Integer getPower() {
         int power = 0;
@@ -41,7 +45,6 @@ public class Weapon extends Gear implements IAttackModifier {
             case  3: power += 40;
             case  2: power += 40;
             case  1: power += 40;
-            default: break;
         }
         return power;
     }
