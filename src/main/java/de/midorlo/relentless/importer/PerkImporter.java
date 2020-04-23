@@ -1,10 +1,12 @@
 package de.midorlo.relentless.importer;
 
-import de.midorlo.relentless.domain.items.Perk;
-import de.midorlo.relentless.domain.items.PerkEffect;
-import de.midorlo.relentless.repository.Repository;
+import de.midorlo.relentless.domain.perk.Perk;
+import de.midorlo.relentless.domain.perk.PerkEffect;
+import de.midorlo.relentless.repository.yaml.YamlRepository;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.stream.Collectors;
 
 import static de.midorlo.relentless.util.Constants.DIR_DAUNTLESS_BUILDER_PERKS;
@@ -12,9 +14,9 @@ import static de.midorlo.relentless.util.Constants.DIR_DAUNTLESS_BUILDER_PERKS;
 @SuppressWarnings({"rawtypes", "unchecked"})
 public class PerkImporter extends YamlFileImporter<Perk> {
 
-    private final Repository<PerkEffect> perkEffectRepository;
+    private final YamlRepository<PerkEffect> perkEffectRepository;
 
-    public PerkImporter(Repository<Perk> repository, Repository<PerkEffect> perkEffectRepository) {
+    public PerkImporter(YamlRepository<Perk> repository, YamlRepository<PerkEffect> perkEffectRepository) {
         super(repository);
         this.perkEffectRepository = perkEffectRepository;
     }

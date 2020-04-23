@@ -1,19 +1,12 @@
 package de.midorlo.relentless.repository;
 
-import de.midorlo.relentless.domain.items.Perk;
-import de.midorlo.relentless.domain.items.PerkEffect;
+import de.midorlo.relentless.domain.perk.Perk;
+import org.springframework.data.repository.CrudRepository;
 
-public class PerkRepository extends Repository<Perk> {
+import java.util.List;
 
-    private final Repository<PerkEffect> perkEffectRepository;
-
-    public PerkRepository(Repository<PerkEffect> perkEffectRepository) {
-        this.perkEffectRepository = perkEffectRepository;
-    }
-
-    @Override
-    public void save(Perk perk) {
-        perk.getEffects().forEach(perkEffectRepository::save);
-        super.save(perk);
-    }
+public interface PerkRepository extends CrudRepository<Perk, Long> {
+    List<Perk> findAllByName(String name);
+    Perk findByName(String name);
+    Perk findByNameAndLevel(String name, Integer level);
 }

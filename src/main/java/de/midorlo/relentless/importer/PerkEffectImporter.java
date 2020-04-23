@@ -1,16 +1,17 @@
 package de.midorlo.relentless.importer;
 
-import de.midorlo.relentless.domain.items.PerkEffect;
-import de.midorlo.relentless.repository.Repository;
+import de.midorlo.relentless.domain.perk.PerkEffect;
+import de.midorlo.relentless.domain.perk.PerkEffectDescription;
+import de.midorlo.relentless.domain.perk.PerkEffectValue;
+import de.midorlo.relentless.repository.yaml.YamlRepository;
 
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @SuppressWarnings("rawtypes")
 public class PerkEffectImporter extends YamlFileImporter<PerkEffect> {
 
-    public PerkEffectImporter(Repository<PerkEffect> repository) {
+    public PerkEffectImporter(YamlRepository<PerkEffect> repository) {
         super(repository);
     }
 
@@ -31,13 +32,25 @@ public class PerkEffectImporter extends YamlFileImporter<PerkEffect> {
         return null;
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     protected PerkEffect parseGameObject(LinkedHashMap<Object,Object> leveledPerkEffectMap) {
         PerkEffect effect = new PerkEffect();
-        Object description = leveledPerkEffectMap.get("description");
-        Object value = leveledPerkEffectMap.get("value");
-        parseMixedContents(description, effect.getDescriptions());
-        parseMixedContents(value, effect.getValues());
+
+        Object descriptions = leveledPerkEffectMap.get("description");
+        Object values       = leveledPerkEffectMap.get("value");
+
+        List<String> descriptionsList = (descriptions instanceof String)
+                ? Collections.singletonList(((String) descriptions))
+                : (ArrayList<String>) descriptions;
+
+        List<Object> valuesList = (values instanceof ArrayList)
+                ? (List<Object>) values
+                : Collections.singletonList(values);
+
+        effect.getDescriptions().addAll(parsePerkEffectDescriptions(descriptionsList));
+        effect.getValues().addAll(parsePerkEffectValues(valuesList));
+
         return effect;
     }
 
@@ -77,9 +90,25 @@ public class PerkEffectImporter extends YamlFileImporter<PerkEffect> {
 
         PerkEffect effect = new PerkEffect();
         effect.setName(name);
-        effect.getDescriptions().add(description);
+//        effect.getDescriptions().add(description);
         effect.setLevel(level);
-        effect.getValues().add(""+value);
+//        effect.getValues().add(""+value);
         return effect;
     }
+
+    protected static List<PerkEffectDescription> parsePerkEffectDescriptions(List<String> parsedList) {
+        return parsedList.stream()
+                .filter(Objects::nonNull)
+                .map(PerkEffectDescription::new)
+                .collect(Collectors.toList());
+    }
+
+    protected static List<PerkEffectValue> parsePerkEffectValues(List<Object> parsedList) {
+        return parsedList.stream()
+                .filter(Objects::nonNull)
+                .map(e -> "" + e)
+                .map(PerkEffectValue::new)
+                .collect(Collectors.toList());
+    }
+
 }

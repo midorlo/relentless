@@ -1,14 +1,13 @@
 package de.midorlo.relentless.importer;
 
 import de.midorlo.relentless.domain.Element;
-import de.midorlo.relentless.domain.items.Armor;
-import de.midorlo.relentless.domain.items.CellSocket;
-import de.midorlo.relentless.domain.items.CellType;
-import de.midorlo.relentless.domain.items.ItemType;
-import de.midorlo.relentless.domain.items.Perk;
-import de.midorlo.relentless.domain.items.PerkEffect;
-import de.midorlo.relentless.repository.Assets;
-import de.midorlo.relentless.repository.Repository;
+import de.midorlo.relentless.domain.cell.CellSocket;
+import de.midorlo.relentless.domain.gear.Armor;
+import de.midorlo.relentless.domain.gear.ItemType;
+import de.midorlo.relentless.domain.perk.Perk;
+import de.midorlo.relentless.domain.perk.PerkEffect;
+import de.midorlo.relentless.repository.yaml.Assets;
+import de.midorlo.relentless.repository.yaml.YamlRepository;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -19,10 +18,10 @@ import static de.midorlo.relentless.util.Constants.DIR_DAUNTLESS_BUILDER_ARMOR;
 @SuppressWarnings({"rawtypes", "unchecked"})
 public class ArmorImporter extends YamlFileImporter<Armor> {
 
-    Repository<Perk> perkRepository;
-    Repository<PerkEffect> perkEffectRepository;
+    YamlRepository<Perk> perkRepository;
+    YamlRepository<PerkEffect> perkEffectRepository;
 
-    public ArmorImporter(Repository repository, Repository<Perk> perkRepository, Repository<PerkEffect> perkEffectRepository) {
+    public ArmorImporter(YamlRepository repository, YamlRepository<Perk> perkRepository, YamlRepository<PerkEffect> perkEffectRepository) {
         super(repository);
         this.perkRepository = perkRepository;
         this.perkEffectRepository = perkEffectRepository;
@@ -36,10 +35,7 @@ public class ArmorImporter extends YamlFileImporter<Armor> {
     @Override
     protected void importGameObjects(List<LinkedHashMap<Object,Object>> map) {
         super.importGameObjects(map);
-        repository.findAll().forEach(armor -> {
-            perkRepository.save(armor.getPerks());
-            perkEffectRepository.save(armor.getPerkEffects());
-        });
+        repository.findAll().forEach(armor -> perkRepository.save(armor.getPerks()));
     }
 
     @Override
@@ -58,7 +54,7 @@ public class ArmorImporter extends YamlFileImporter<Armor> {
         a.setName((String) name);
         a.setDescription((String) description);
         a.setType(ItemType.valueOf(((String) type).trim().replace(" ", "")));
-        a.setElement(((strength == null) ? Element.Neutral : Element.valueOf((String) strength)));
+        a.setElement(((strength == null) ? new Element("Neutral") : new Element("strength")));
 
         Assets.assetsPathMap.put(a, (String) icon);
 
@@ -69,9 +65,10 @@ public class ArmorImporter extends YamlFileImporter<Armor> {
         List<CellSocket> cellSockets = parseCellSockets((String) cellsMap);
         a.getCellSockets().addAll(cellSockets);
 
-        PerkEffectImporter perkEffectImporter = new PerkEffectImporter(perkEffectRepository);
-        List<PerkEffect> perkEffects = perkEffectImporter.parseGameWeaponObjects((ArrayList<LinkedHashMap>) unique_effects);
-        a.getPerkEffects().addAll(perkEffects);
+        //todo uniques als Perks parsen
+//        PerkEffectImporter perkEffectImporter = new PerkEffectImporter(perkEffectRepository);
+//        List<PerkEffect> perkEffects = perkEffectImporter.parseGameWeaponObjects((ArrayList<LinkedHashMap>) unique_effects);
+//        a.getPerkEffects().addAll(perkEffects);
 
         return a;
     }
@@ -80,7 +77,7 @@ public class ArmorImporter extends YamlFileImporter<Armor> {
         List<CellSocket> cellSockets = new ArrayList<>();
         if (cellSocketString != null) {
             CellSocket cellSocket = new CellSocket();
-            cellSocket.setType(CellType.valueOf(cellSocketString));
+            cellSocket.setType(CellImporter.parseCellType(cellSocketString));
             cellSockets.add(cellSocket);
         }
         return cellSockets;

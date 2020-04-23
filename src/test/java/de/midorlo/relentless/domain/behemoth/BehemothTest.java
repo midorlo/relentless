@@ -59,8 +59,8 @@ public class BehemothTest {
     public void equalsTest() {
         assertThat(b1, equalTo(b2));
 
-        b1.setElement(Element.Neutral);
-        b2.setElement(Element.Frost);
+        b1.setElement(new Element("Neutral"));
+        b2.setElement(new Element("Frost"));
         assertThat(b1, not(equalTo(b2)));
 
         b1.setElement(b2.getElement());

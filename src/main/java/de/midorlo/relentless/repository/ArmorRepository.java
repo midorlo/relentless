@@ -1,19 +1,8 @@
 package de.midorlo.relentless.repository;
 
-import de.midorlo.relentless.domain.items.Armor;
-import de.midorlo.relentless.domain.items.Perk;
+import de.midorlo.relentless.domain.gear.Armor;
+import org.springframework.data.repository.CrudRepository;
 
-public class ArmorRepository extends Repository<Armor>{
+public interface ArmorRepository  extends CrudRepository<Armor, String> {
 
-    private final Repository<Perk> perkRepository;
-
-    public ArmorRepository(Repository<Perk> perkRepository) {
-        this.perkRepository = perkRepository;
-    }
-
-    @Override
-    public void save(Armor armor) {
-        armor.getPerks().forEach(perkRepository::save);
-        super.save(armor);
-    }
 }
