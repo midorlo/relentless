@@ -1,9 +1,9 @@
 package de.midorlo.relentless.importer;
 
+import de.midorlo.relentless.domain.Element;
 import de.midorlo.relentless.domain.cell.CellSocket;
-import de.midorlo.relentless.domain.item.Armor;
-import de.midorlo.relentless.domain.item.Element;
-import de.midorlo.relentless.domain.item.ItemType;
+import de.midorlo.relentless.domain.gear.Armor;
+import de.midorlo.relentless.domain.gear.ItemType;
 import de.midorlo.relentless.domain.perk.Perk;
 import de.midorlo.relentless.domain.perk.PerkEffect;
 import de.midorlo.relentless.repository.dep.Assets;
@@ -57,7 +57,7 @@ public class ArmorImporter extends YamlFileImporter<Armor> {
         a.setName((String) name);
         a.setDescription((String) description);
         a.setType(ItemType.valueOf(((String) type).trim().replace(" ", "")));
-        a.setElement(((strength == null) ? Element.Neutral : Element.valueOf((String) strength)));
+        a.setElement(((strength == null) ? new Element("Neutral") : new Element("strength")));
 
         Assets.assetsPathMap.put(a, (String) icon);
 

@@ -4,6 +4,7 @@ import de.midorlo.relentless.domain.perk.PerkEffect;
 import de.midorlo.relentless.domain.perk.PerkEffectDescription;
 import de.midorlo.relentless.domain.perk.PerkEffectValue;
 import de.midorlo.relentless.importer.manual.CellTypeManualImporter;
+import de.midorlo.relentless.importer.manual.ElementImporter;
 import de.midorlo.relentless.repository.*;
 import lombok.extern.java.Log;
 import org.springframework.boot.CommandLineRunner;
@@ -21,14 +22,17 @@ public class AppJPARelentless {
 
     @Bean
     public CommandLineRunner demo(
+            ElementRepository elementRepository,
+            CellTypeRepository cellTypeRepository,
             BehemothRepository behemothRepository,
             BehemothPartRepository behemothPartRepository,
             HitzoneRepository hitzoneRepository,
-            PerkEffectRepository perkEffectRepository,
-            CellTypeRepository cellTypeRepository) {
+            PerkEffectRepository perkEffectRepository
+    ) {
         return args -> {
             log.info("Starting");
 
+            ElementImporter.doImport(elementRepository);
             CellTypeManualImporter.doImport(cellTypeRepository);
 
             PerkEffect perkEffect = new PerkEffect();

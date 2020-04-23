@@ -1,4 +1,4 @@
-package de.midorlo.relentless.domain.item;
+package de.midorlo.relentless.domain.gear;
 
 @SuppressWarnings("SameReturnValue")
 public class Armor extends Gear {

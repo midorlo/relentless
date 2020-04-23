@@ -1,6 +1,6 @@
 package de.midorlo.relentless.domain.behemoth;
 
-import de.midorlo.relentless.domain.item.Element;
+import de.midorlo.relentless.domain.Element;
 import de.midorlo.relentless.domain.combat.IAttackConsumer;
 import de.midorlo.relentless.domain.combat.Attack;
 import de.midorlo.relentless.domain.combat.AttackResult;
@@ -29,7 +29,10 @@ public class Behemoth implements IAttackConsumer {
     List<BehemothPart> behemothParts = new ArrayList<>();
 
     private String name;
+
+    @OneToOne
     private Element element;
+
     private Integer thread;
     private Integer health;
     private Integer staggerHealth;

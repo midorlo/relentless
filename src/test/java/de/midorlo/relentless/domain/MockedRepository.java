@@ -6,11 +6,8 @@ import de.midorlo.relentless.domain.behemoth.Behemoth;
 import de.midorlo.relentless.domain.behemoth.BehemothPart;
 import de.midorlo.relentless.domain.behemoth.Hitzone;
 import de.midorlo.relentless.domain.combat.AttackType;
-import de.midorlo.relentless.domain.item.Element;
-import de.midorlo.relentless.domain.item.Weapon;
-import de.midorlo.relentless.domain.item.ItemType;
-import de.midorlo.relentless.domain.player.Loadout;
-import de.midorlo.relentless.domain.player.Player;
+import de.midorlo.relentless.domain.gear.Weapon;
+import de.midorlo.relentless.domain.gear.ItemType;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -31,7 +28,7 @@ public class MockedRepository {
         behemoth.setName("Shrike");
         behemoth.setHealth(30000);
         behemoth.setStaggerHealth(10000);
-        behemoth.setElement(Element.Neutral);
+        behemoth.setElement(new Element("Neutral"));
         behemoth.setThread(5);
         behemoth.setBehemothParts(mockBehemothParts());
         return behemoth;
@@ -66,7 +63,7 @@ public class MockedRepository {
         weapon.setName("Mana Sword");
         weapon.setDescription("It's something");
         weapon.setType(ItemType.Sword);
-        weapon.setElement(Element.Radiant);
+        weapon.setElement(new Element("Radiant"));
         weapon.setMoveSets(mockMovesets());
         return weapon;
     }

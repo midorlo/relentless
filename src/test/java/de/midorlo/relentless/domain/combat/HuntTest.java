@@ -3,7 +3,7 @@ package de.midorlo.relentless.domain.combat;
 import de.midorlo.relentless.domain.MockedRepository;
 import de.midorlo.relentless.domain.behemoth.Behemoth;
 import de.midorlo.relentless.domain.behemoth.Hitzone;
-import de.midorlo.relentless.domain.player.Player;
+import de.midorlo.relentless.domain.Player;
 import lombok.extern.java.Log;
 import org.testng.annotations.Test;
 

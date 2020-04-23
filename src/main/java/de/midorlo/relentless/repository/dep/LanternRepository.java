@@ -1,6 +1,6 @@
 package de.midorlo.relentless.repository.dep;
 
-import de.midorlo.relentless.domain.item.Lantern;
+import de.midorlo.relentless.domain.gear.Lantern;
 import de.midorlo.relentless.domain.perk.Perk;
 
 public class LanternRepository extends Repository<Lantern> {

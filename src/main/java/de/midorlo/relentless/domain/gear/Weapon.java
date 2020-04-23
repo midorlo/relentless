@@ -1,5 +1,6 @@
-package de.midorlo.relentless.domain.item;
+package de.midorlo.relentless.domain.gear;
 
+import de.midorlo.relentless.domain.Element;
 import de.midorlo.relentless.domain.combat.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -60,7 +61,11 @@ public class Weapon extends Gear implements IAttackModifier {
     protected AttackDamage getPowerFactor(Attack attackContext) {
         double differencedPower = getPower() - attackContext.getBehemoth().getPower();
         Element behemothElement = attackContext.getBehemoth().getElement();
-        double powerFactor = getPowerFactor(differencedPower, Element.compareForAttack(getElement(), behemothElement));
+
+        int elementStrength = Element.compareForAttack(getElement(), behemothElement);
+        double powerFactor = getPowerFactor(differencedPower, elementStrength);
+
+
         AttackDamage attackDamage = new AttackDamage();
         attackDamage.setPowerFactor(powerFactor);
         return attackDamage;

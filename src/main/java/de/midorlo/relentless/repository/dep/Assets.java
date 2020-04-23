@@ -1,6 +1,6 @@
 package de.midorlo.relentless.repository.dep;
 
-import de.midorlo.relentless.domain.item.Gear;
+import de.midorlo.relentless.domain.gear.Gear;
 
 import java.util.HashMap;
 import java.util.Map;

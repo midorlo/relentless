@@ -1,7 +1,7 @@
 package de.midorlo.relentless.repository.dep;
 
 import de.midorlo.relentless.domain.perk.Perk;
-import de.midorlo.relentless.domain.item.Weapon;
+import de.midorlo.relentless.domain.gear.Weapon;
 
 public class WeaponRepository extends Repository<Weapon> {
 

@@ -1,4 +1,4 @@
-package de.midorlo.relentless.domain.item;
+package de.midorlo.relentless.domain.gear;
 
 @SuppressWarnings("unused")
 public enum ItemType {

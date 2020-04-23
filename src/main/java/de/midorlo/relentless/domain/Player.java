@@ -1,5 +1,6 @@
-package de.midorlo.relentless.domain.player;
+package de.midorlo.relentless.domain;
 
+import de.midorlo.relentless.domain.Loadout;
 import de.midorlo.relentless.domain.combat.WeaponAttack;
 import de.midorlo.relentless.domain.behemoth.Behemoth;
 import de.midorlo.relentless.domain.combat.Attack;

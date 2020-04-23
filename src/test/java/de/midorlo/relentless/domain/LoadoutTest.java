@@ -1,8 +1,6 @@
 package de.midorlo.relentless.domain;
 
 import de.midorlo.relentless.domain.combat.Hunt;
-import de.midorlo.relentless.domain.player.Loadout;
-import de.midorlo.relentless.domain.player.Player;
 import org.testng.annotations.Test;
 
 public class LoadoutTest {

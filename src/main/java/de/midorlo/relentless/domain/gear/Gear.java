@@ -1,5 +1,6 @@
-package de.midorlo.relentless.domain.item;
+package de.midorlo.relentless.domain.gear;
 
+import de.midorlo.relentless.domain.Element;
 import de.midorlo.relentless.domain.cell.CellSocket;
 import de.midorlo.relentless.domain.perk.Perk;
 import de.midorlo.relentless.domain.perk.PerkEffect;

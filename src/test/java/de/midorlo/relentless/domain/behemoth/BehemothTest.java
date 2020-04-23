@@ -1,6 +1,6 @@
 package de.midorlo.relentless.domain.behemoth;
 
-import de.midorlo.relentless.domain.item.Element;
+import de.midorlo.relentless.domain.Element;
 import de.midorlo.relentless.domain.MockedRepository;
 import lombok.extern.java.Log;
 import org.testng.annotations.BeforeClass;
@@ -59,8 +59,8 @@ public class BehemothTest {
     public void equalsTest() {
         assertThat(b1, equalTo(b2));
 
-        b1.setElement(Element.Neutral);
-        b2.setElement(Element.Frost);
+        b1.setElement(new Element("Neutral"));
+        b2.setElement(new Element("Frost"));
         assertThat(b1, not(equalTo(b2)));
 
         b1.setElement(b2.getElement());

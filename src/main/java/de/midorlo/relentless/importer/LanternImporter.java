@@ -2,7 +2,7 @@ package de.midorlo.relentless.importer;
 
 import de.midorlo.relentless.domain.cell.CellSocket;
 import de.midorlo.relentless.domain.combat.WeaponAttack;
-import de.midorlo.relentless.domain.item.Lantern;
+import de.midorlo.relentless.domain.gear.Lantern;
 import de.midorlo.relentless.domain.perk.Perk;
 import de.midorlo.relentless.domain.perk.PerkEffect;
 import de.midorlo.relentless.repository.dep.Repository;

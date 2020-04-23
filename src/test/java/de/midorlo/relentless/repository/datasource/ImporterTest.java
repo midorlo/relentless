@@ -4,7 +4,7 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import de.midorlo.relentless.domain.cell.Cell;
-import de.midorlo.relentless.domain.item.*;
+import de.midorlo.relentless.domain.gear.*;
 import de.midorlo.relentless.domain.perk.Perk;
 import de.midorlo.relentless.domain.perk.PerkEffect;
 import de.midorlo.relentless.importer.*;
