@@ -3,7 +3,7 @@ package de.midorlo.relentless.importer;
 import de.midorlo.relentless.domain.perk.PerkEffect;
 import de.midorlo.relentless.domain.perk.PerkEffectDescription;
 import de.midorlo.relentless.domain.perk.PerkEffectValue;
-import de.midorlo.relentless.repository.dep.Repository;
+import de.midorlo.relentless.repository.dep.YamlRepository;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
 @SuppressWarnings("rawtypes")
 public class PerkEffectImporter extends YamlFileImporter<PerkEffect> {
 
-    public PerkEffectImporter(Repository<PerkEffect> repository) {
+    public PerkEffectImporter(YamlRepository<PerkEffect> repository) {
         super(repository);
     }
 

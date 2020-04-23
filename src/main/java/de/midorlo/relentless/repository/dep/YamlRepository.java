@@ -8,10 +8,10 @@ import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 /**
- * Global Repository that is used like a Database (until I implement a real one //todo).
+ * Global YamlRepository that is used like a Database (until I implement a real one //todo).
  */
 @ToString
-public abstract class Repository<T> {
+public abstract class YamlRepository<T> {
 
     private final List<T> objects = new ArrayList<>();
 

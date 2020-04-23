@@ -1,6 +1,6 @@
 package de.midorlo.relentless.importer;
 
-import de.midorlo.relentless.repository.dep.Repository;
+import de.midorlo.relentless.repository.dep.YamlRepository;
 import de.midorlo.relentless.util.FileUtillities;
 
 import java.util.*;
@@ -9,9 +9,9 @@ import java.util.stream.Collectors;
 
 public abstract class YamlFileImporter<T> {
 
-    protected Repository<T> repository;
+    protected YamlRepository<T> repository;
 
-    public YamlFileImporter(Repository<T> repository) {
+    public YamlFileImporter(YamlRepository<T> repository) {
         this.repository = repository;
     }
 

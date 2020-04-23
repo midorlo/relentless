@@ -1,12 +1,12 @@
 package de.midorlo.relentless.domain.cell;
 
-import com.sun.istack.Nullable;
 import lombok.Data;
 
 import javax.persistence.*;
 
 /**
- * Cell Type. Currently one of: (Technique,Utility,Power,Mobility,Defence,Prismatic)
+ * The type of a Cell.
+ * Currently of (Technique,Utility,Power,Mobility,Defence,Prismatic)
  */
 @Data
 @Entity

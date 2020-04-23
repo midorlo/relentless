@@ -4,7 +4,7 @@ import de.midorlo.relentless.domain.cell.Cell;
 import de.midorlo.relentless.domain.cell.CellType;
 import de.midorlo.relentless.domain.perk.Perk;
 import de.midorlo.relentless.domain.perk.PerkEffect;
-import de.midorlo.relentless.repository.dep.Repository;
+import de.midorlo.relentless.repository.dep.YamlRepository;
 
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -14,10 +14,10 @@ import static de.midorlo.relentless.util.Constants.DIR_DAUNTLESS_BUILDER_CELLS;
 @SuppressWarnings("rawtypes")
 public class CellImporter extends YamlFileImporter<Cell> {
 
-    Repository<Perk> perkRepository;
-    Repository<PerkEffect> perkEffectRepository;
+    YamlRepository<Perk> perkRepository;
+    YamlRepository<PerkEffect> perkEffectRepository;
 
-    public CellImporter(Repository<Cell> cellRepository, Repository<Perk> perkRepository, Repository<PerkEffect> perkEffectRepository) {
+    public CellImporter(YamlRepository<Cell> cellRepository, YamlRepository<Perk> perkRepository, YamlRepository<PerkEffect> perkEffectRepository) {
         super(cellRepository);
         this.perkRepository = perkRepository;
         this.perkEffectRepository = perkEffectRepository;

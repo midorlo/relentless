@@ -1,11 +1,17 @@
 package de.midorlo.relentless;
 
+import de.midorlo.relentless.domain.cell.Cell;
+import de.midorlo.relentless.domain.gear.Armor;
+import de.midorlo.relentless.domain.gear.Lantern;
+import de.midorlo.relentless.domain.gear.Weapon;
+import de.midorlo.relentless.domain.perk.Perk;
 import de.midorlo.relentless.domain.perk.PerkEffect;
-import de.midorlo.relentless.domain.perk.PerkEffectDescription;
-import de.midorlo.relentless.domain.perk.PerkEffectValue;
+import de.midorlo.relentless.importer.*;
 import de.midorlo.relentless.importer.manual.CellTypeManualImporter;
 import de.midorlo.relentless.importer.manual.ElementImporter;
 import de.midorlo.relentless.repository.*;
+import de.midorlo.relentless.repository.dep.*;
+import de.midorlo.relentless.repository.dep.PerkYamlRepository;
 import lombok.extern.java.Log;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -27,20 +33,39 @@ public class AppJPARelentless {
             BehemothRepository behemothRepository,
             BehemothPartRepository behemothPartRepository,
             HitzoneRepository hitzoneRepository,
-            PerkEffectRepository perkEffectRepository
+            PerkEffectRepository perkEffectRepository,
+            PerkRepository perkRepository
     ) {
         return args -> {
-            log.info("Starting");
 
+            log.info("Parsing Yaml Datasource");
+            YamlRepository<PerkEffect> perkEffectYamlRepository = new PerkEffectsRepository();
+            YamlRepository<Perk> perkYamlRepository = new PerkYamlRepository(perkEffectYamlRepository);
+            YamlRepository<Cell> cellYamlRepository = new CellRepository(perkYamlRepository);
+            YamlRepository<Weapon> weaponYamlRepository = new WeaponRepository(perkYamlRepository);
+            YamlRepository<Armor> armorYamlRepository = new ArmorRepository(perkYamlRepository);
+            YamlRepository<Lantern> lanternYamlRepository = new LanternRepository(perkYamlRepository);
+            PerkImporter perkImporter = new PerkImporter(perkYamlRepository, perkEffectYamlRepository);
+            perkImporter.importGameObjects();
+            CellImporter cellImporter = new CellImporter(cellYamlRepository, perkYamlRepository, perkEffectYamlRepository);
+            cellImporter.importGameObjects();
+            WeaponImporter weaponImporter = new WeaponImporter(weaponYamlRepository, perkYamlRepository, perkEffectYamlRepository);
+            weaponImporter.importGameObjects();
+            ArmorImporter armorImporter = new ArmorImporter(armorYamlRepository, perkYamlRepository, perkEffectYamlRepository);
+            armorImporter.importGameObjects();
+            LanternImporter lanternImporter = new LanternImporter(lanternYamlRepository, perkYamlRepository, perkEffectYamlRepository);
+            lanternImporter.importGameObjects();
+
+
+            log.info("Importing manually defined Objects");
             ElementImporter.doImport(elementRepository);
             CellTypeManualImporter.doImport(cellTypeRepository);
 
-            PerkEffect perkEffect = new PerkEffect();
-            perkEffect.setName("perkEffect1");
-            perkEffect.setLevel(1);
-            perkEffect.getDescriptions().add(new PerkEffectDescription("perkEffect" + perkEffect.getLevel() + "description"));
-            perkEffect.getValues().add(new PerkEffectValue("perkEffect" + perkEffect.getLevel() + "value"));
-            perkEffectRepository.save(perkEffect);
+
+            log.info("Importing yaml Objects");
+            perkEffectYamlRepository.findAll().forEach(perkEffectRepository::save);
+            perkYamlRepository.findAll().forEach(perkRepository::save);
+
 
             log.info("Ending");
         };

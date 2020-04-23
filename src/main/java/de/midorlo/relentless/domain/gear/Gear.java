@@ -5,24 +5,35 @@ import de.midorlo.relentless.domain.cell.CellSocket;
 import de.midorlo.relentless.domain.perk.Perk;
 import de.midorlo.relentless.domain.perk.PerkEffect;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
-import lombok.extern.java.Log;
 
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
 @Data
-@ToString
-@EqualsAndHashCode
-@Log
+@Entity
 public class Gear {
+    @Id
     String name;
+
+    @Basic
     String description;
+
+    @Basic
     ItemType type;
+
+    @OneToOne
     Element element;
+
+    @Basic
     Integer level;
+
+    @OneToMany
     List<Perk> perks = new ArrayList<>();
+
+    @OneToMany
     List<CellSocket> cellSockets = new ArrayList<>();
+
+    @OneToMany
     List<PerkEffect> perkEffects = new ArrayList<>();
 }

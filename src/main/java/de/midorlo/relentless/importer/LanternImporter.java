@@ -5,7 +5,7 @@ import de.midorlo.relentless.domain.combat.WeaponAttack;
 import de.midorlo.relentless.domain.gear.Lantern;
 import de.midorlo.relentless.domain.perk.Perk;
 import de.midorlo.relentless.domain.perk.PerkEffect;
-import de.midorlo.relentless.repository.dep.Repository;
+import de.midorlo.relentless.repository.dep.YamlRepository;
 
 import java.util.Arrays;
 import java.util.LinkedHashMap;
@@ -16,10 +16,10 @@ import static de.midorlo.relentless.util.Constants.DIR_DAUNTLESS_BUILDER_LANTERN
 @SuppressWarnings("ALL")
 public class LanternImporter extends YamlFileImporter<Lantern> {
 
-    Repository<Perk> perkRepository;
-    Repository<PerkEffect> perkEffectRepository;
+    YamlRepository<Perk> perkRepository;
+    YamlRepository<PerkEffect> perkEffectRepository;
 
-    public LanternImporter(Repository<Lantern> repository, Repository<Perk> perkRepository, Repository<PerkEffect> perkEffectRepository) {
+    public LanternImporter(YamlRepository<Lantern> repository, YamlRepository<Perk> perkRepository, YamlRepository<PerkEffect> perkEffectRepository) {
         super(repository);
         this.perkRepository = perkRepository;
         this.perkEffectRepository = perkEffectRepository;

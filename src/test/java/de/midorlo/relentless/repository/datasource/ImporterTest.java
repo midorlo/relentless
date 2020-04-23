@@ -13,12 +13,12 @@ import org.testng.annotations.Test;
 
 public class ImporterTest {
 
-    Repository<PerkEffect> perkEffectRepository = new PerkEffectsRepository();
-    Repository<Perk> perkRepository = new PerkRepository(perkEffectRepository);
-    Repository<Cell> cellRepository = new CellRepository(perkRepository);
-    Repository<Weapon> weaponRepository = new WeaponRepository(perkRepository);
-    Repository<Armor> armorRepository = new ArmorRepository(perkRepository);
-    Repository<Lantern> lanternRepository = new LanternRepository(perkRepository);
+    YamlRepository<PerkEffect> perkEffectRepository = new PerkEffectsRepository();
+    YamlRepository<Perk> perkRepository = new PerkYamlRepository(perkEffectRepository);
+    YamlRepository<Cell> cellRepository = new CellRepository(perkRepository);
+    YamlRepository<Weapon> weaponRepository = new WeaponRepository(perkRepository);
+    YamlRepository<Armor> armorRepository = new ArmorRepository(perkRepository);
+    YamlRepository<Lantern> lanternRepository = new LanternRepository(perkRepository);
 
     @Test
     public void testImportGameObjects() {

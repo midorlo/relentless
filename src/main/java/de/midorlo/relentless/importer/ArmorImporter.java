@@ -7,7 +7,7 @@ import de.midorlo.relentless.domain.gear.ItemType;
 import de.midorlo.relentless.domain.perk.Perk;
 import de.midorlo.relentless.domain.perk.PerkEffect;
 import de.midorlo.relentless.repository.dep.Assets;
-import de.midorlo.relentless.repository.dep.Repository;
+import de.midorlo.relentless.repository.dep.YamlRepository;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -18,10 +18,10 @@ import static de.midorlo.relentless.util.Constants.DIR_DAUNTLESS_BUILDER_ARMOR;
 @SuppressWarnings({"rawtypes", "unchecked"})
 public class ArmorImporter extends YamlFileImporter<Armor> {
 
-    Repository<Perk> perkRepository;
-    Repository<PerkEffect> perkEffectRepository;
+    YamlRepository<Perk> perkRepository;
+    YamlRepository<PerkEffect> perkEffectRepository;
 
-    public ArmorImporter(Repository repository, Repository<Perk> perkRepository, Repository<PerkEffect> perkEffectRepository) {
+    public ArmorImporter(YamlRepository repository, YamlRepository<Perk> perkRepository, YamlRepository<PerkEffect> perkEffectRepository) {
         super(repository);
         this.perkRepository = perkRepository;
         this.perkEffectRepository = perkEffectRepository;

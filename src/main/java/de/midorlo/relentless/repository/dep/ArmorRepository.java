@@ -3,11 +3,11 @@ package de.midorlo.relentless.repository.dep;
 import de.midorlo.relentless.domain.gear.Armor;
 import de.midorlo.relentless.domain.perk.Perk;
 
-public class ArmorRepository extends Repository<Armor>{
+public class ArmorRepository extends YamlRepository<Armor> {
 
-    private final Repository<Perk> perkRepository;
+    private final YamlRepository<Perk> perkRepository;
 
-    public ArmorRepository(Repository<Perk> perkRepository) {
+    public ArmorRepository(YamlRepository<Perk> perkRepository) {
         this.perkRepository = perkRepository;
     }
 

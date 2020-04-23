@@ -3,11 +3,11 @@ package de.midorlo.relentless.repository.dep;
 import de.midorlo.relentless.domain.cell.Cell;
 import de.midorlo.relentless.domain.perk.Perk;
 
-public class CellRepository extends Repository<Cell> {
+public class CellRepository extends YamlRepository<Cell> {
 
-    private final Repository<Perk> perkRepository;
+    private final YamlRepository<Perk> perkRepository;
 
-    public CellRepository(Repository<Perk> perkRepository) {
+    public CellRepository(YamlRepository<Perk> perkRepository) {
         this.perkRepository = perkRepository;
     }
 

@@ -3,11 +3,11 @@ package de.midorlo.relentless.repository.dep;
 import de.midorlo.relentless.domain.gear.Lantern;
 import de.midorlo.relentless.domain.perk.Perk;
 
-public class LanternRepository extends Repository<Lantern> {
+public class LanternRepository extends YamlRepository<Lantern> {
 
-    private final Repository<Perk> perkRepository;
+    private final YamlRepository<Perk> perkRepository;
 
-    public LanternRepository(Repository<Perk> perkRepository) {
+    public LanternRepository(YamlRepository<Perk> perkRepository) {
         this.perkRepository = perkRepository;
     }
 
