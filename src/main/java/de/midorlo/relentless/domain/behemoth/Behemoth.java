@@ -1,9 +1,9 @@
 package de.midorlo.relentless.domain.behemoth;
 
-import de.midorlo.relentless.domain.Element;
-import de.midorlo.relentless.domain.attack.IAttackConsumer;
-import de.midorlo.relentless.domain.attack.Attack;
-import de.midorlo.relentless.domain.attack.AttackResult;
+import de.midorlo.relentless.domain.item.Element;
+import de.midorlo.relentless.domain.combat.IAttackConsumer;
+import de.midorlo.relentless.domain.combat.Attack;
+import de.midorlo.relentless.domain.combat.AttackResult;
 import lombok.Data;
 import lombok.extern.java.Log;
 

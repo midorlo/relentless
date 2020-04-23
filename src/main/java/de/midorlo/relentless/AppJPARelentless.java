@@ -1,12 +1,12 @@
 package de.midorlo.relentless;
 
-import de.midorlo.relentless.domain.Element;
+import de.midorlo.relentless.domain.item.Element;
 import de.midorlo.relentless.domain.behemoth.Behemoth;
 import de.midorlo.relentless.domain.behemoth.BehemothPart;
 import de.midorlo.relentless.domain.behemoth.Hitzone;
-import de.midorlo.relentless.repository.jpa.BehemothPartRepository;
-import de.midorlo.relentless.repository.jpa.BehemothRepository;
-import de.midorlo.relentless.repository.jpa.HitzoneRepository;
+import de.midorlo.relentless.repository.BehemothPartRepository;
+import de.midorlo.relentless.repository.BehemothRepository;
+import de.midorlo.relentless.repository.HitzoneRepository;
 import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -31,6 +31,14 @@ public class AppJPARelentless {
     public static void main(String[] args) {
         SpringApplication.run(AppJPARelentless.class);
     }
+
+
+//    @Bean
+//    public CommandLineRunner demoBehemoth(
+//            PerkEffectRepository perkEffectRepository) {
+//
+//    }
+
 
     @Bean
     public CommandLineRunner demoBehemoth() {

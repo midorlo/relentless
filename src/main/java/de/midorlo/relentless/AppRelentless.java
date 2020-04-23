@@ -1,8 +1,11 @@
 package de.midorlo.relentless;
 
-import de.midorlo.relentless.domain.items.*;
+import de.midorlo.relentless.domain.cell.Cell;
+import de.midorlo.relentless.domain.item.*;
+import de.midorlo.relentless.domain.perk.Perk;
+import de.midorlo.relentless.domain.perk.PerkEffect;
 import de.midorlo.relentless.importer.*;
-import de.midorlo.relentless.repository.*;
+import de.midorlo.relentless.repository.dep.*;
 import lombok.ToString;
 import lombok.extern.java.Log;
 

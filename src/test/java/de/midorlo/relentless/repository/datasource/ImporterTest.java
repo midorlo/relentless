@@ -3,9 +3,12 @@ package de.midorlo.relentless.repository.datasource;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-import de.midorlo.relentless.domain.items.*;
+import de.midorlo.relentless.domain.cell.Cell;
+import de.midorlo.relentless.domain.item.*;
+import de.midorlo.relentless.domain.perk.Perk;
+import de.midorlo.relentless.domain.perk.PerkEffect;
 import de.midorlo.relentless.importer.*;
-import de.midorlo.relentless.repository.*;
+import de.midorlo.relentless.repository.dep.*;
 import org.testng.annotations.Test;
 
 public class ImporterTest {

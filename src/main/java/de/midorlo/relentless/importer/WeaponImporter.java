@@ -1,10 +1,13 @@
 package de.midorlo.relentless.importer;
 
-import de.midorlo.relentless.domain.Element;
-import de.midorlo.relentless.domain.attack.AttackType;
-import de.midorlo.relentless.domain.items.*;
-import de.midorlo.relentless.repository.Assets;
-import de.midorlo.relentless.repository.Repository;
+import de.midorlo.relentless.domain.item.Element;
+import de.midorlo.relentless.domain.cell.CellSocket;
+import de.midorlo.relentless.domain.cell.CellType;
+import de.midorlo.relentless.domain.item.*;
+import de.midorlo.relentless.domain.perk.Perk;
+import de.midorlo.relentless.domain.perk.PerkEffect;
+import de.midorlo.relentless.repository.dep.Assets;
+import de.midorlo.relentless.repository.dep.Repository;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -43,12 +46,6 @@ public class WeaponImporter extends YamlFileImporter<Weapon> {
         w.setDescription((String) description);
         w.setType(ItemType.valueOf(((String) type).trim().replace(" ", "")));
         w.setElement(((elemental == null) ? Element.Neutral : Element.valueOf((String) elemental)));
-        String attackTypeString = (String) damage;
-        //Bad source data again.
-        if ("Cutting".contentEquals(attackTypeString)) {
-            attackTypeString = "Slashing";
-        }
-        w.setAttackType(AttackType.valueOf(attackTypeString));
         Assets.assetsPathMap.put(w, (String) icon);
 
         PerkImporter perkImporter = new PerkImporter(perkRepository, perkEffectRepository);

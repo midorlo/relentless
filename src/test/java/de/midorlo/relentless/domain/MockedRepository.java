@@ -1,12 +1,14 @@
 package de.midorlo.relentless.domain;
 
-import de.midorlo.relentless.domain.attack.WeaponAttack;
+import de.midorlo.relentless.domain.combat.Hunt;
+import de.midorlo.relentless.domain.combat.WeaponAttack;
 import de.midorlo.relentless.domain.behemoth.Behemoth;
 import de.midorlo.relentless.domain.behemoth.BehemothPart;
 import de.midorlo.relentless.domain.behemoth.Hitzone;
-import de.midorlo.relentless.domain.attack.AttackType;
-import de.midorlo.relentless.domain.items.Weapon;
-import de.midorlo.relentless.domain.items.ItemType;
+import de.midorlo.relentless.domain.combat.AttackType;
+import de.midorlo.relentless.domain.item.Element;
+import de.midorlo.relentless.domain.item.Weapon;
+import de.midorlo.relentless.domain.item.ItemType;
 import de.midorlo.relentless.domain.player.Loadout;
 import de.midorlo.relentless.domain.player.Player;
 
@@ -64,7 +66,6 @@ public class MockedRepository {
         weapon.setName("Mana Sword");
         weapon.setDescription("It's something");
         weapon.setType(ItemType.Sword);
-        weapon.setAttackType(AttackType.Slashing);
         weapon.setElement(Element.Radiant);
         weapon.setMoveSets(mockMovesets());
         return weapon;

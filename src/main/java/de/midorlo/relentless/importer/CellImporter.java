@@ -1,10 +1,10 @@
 package de.midorlo.relentless.importer;
 
-import de.midorlo.relentless.domain.items.Cell;
-import de.midorlo.relentless.domain.items.CellType;
-import de.midorlo.relentless.domain.items.Perk;
-import de.midorlo.relentless.domain.items.PerkEffect;
-import de.midorlo.relentless.repository.Repository;
+import de.midorlo.relentless.domain.cell.Cell;
+import de.midorlo.relentless.domain.cell.CellType;
+import de.midorlo.relentless.domain.perk.Perk;
+import de.midorlo.relentless.domain.perk.PerkEffect;
+import de.midorlo.relentless.repository.dep.Repository;
 
 import java.util.LinkedHashMap;
 import java.util.List;

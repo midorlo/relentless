@@ -1,14 +1,14 @@
 package de.midorlo.relentless.importer;
 
-import de.midorlo.relentless.domain.Element;
-import de.midorlo.relentless.domain.items.Armor;
-import de.midorlo.relentless.domain.items.CellSocket;
-import de.midorlo.relentless.domain.items.CellType;
-import de.midorlo.relentless.domain.items.ItemType;
-import de.midorlo.relentless.domain.items.Perk;
-import de.midorlo.relentless.domain.items.PerkEffect;
-import de.midorlo.relentless.repository.Assets;
-import de.midorlo.relentless.repository.Repository;
+import de.midorlo.relentless.domain.item.Element;
+import de.midorlo.relentless.domain.item.Armor;
+import de.midorlo.relentless.domain.cell.CellSocket;
+import de.midorlo.relentless.domain.cell.CellType;
+import de.midorlo.relentless.domain.item.ItemType;
+import de.midorlo.relentless.domain.perk.Perk;
+import de.midorlo.relentless.domain.perk.PerkEffect;
+import de.midorlo.relentless.repository.dep.Assets;
+import de.midorlo.relentless.repository.dep.Repository;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;

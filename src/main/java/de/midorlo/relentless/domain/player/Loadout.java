@@ -1,8 +1,8 @@
 package de.midorlo.relentless.domain.player;
 
-import de.midorlo.relentless.domain.items.Armor;
-import de.midorlo.relentless.domain.items.Weapon;
-import de.midorlo.relentless.domain.items.Gear;
+import de.midorlo.relentless.domain.item.Armor;
+import de.midorlo.relentless.domain.item.Weapon;
+import de.midorlo.relentless.domain.item.Gear;
 import lombok.Data;
 import lombok.extern.java.Log;
 
