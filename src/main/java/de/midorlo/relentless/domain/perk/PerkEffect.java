@@ -17,15 +17,19 @@ public class PerkEffect {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    /** Parent Perk. */
     @ManyToOne
     Perk perk;
 
+    @Basic
     String name;
+
+    @Basic
     Integer level;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     List<PerkEffectDescription> descriptions = new ArrayList<>();
 
-    @OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
     List<PerkEffectValue> values = new ArrayList<>();
 }

@@ -33,7 +33,6 @@ public class CellImporter extends YamlFileImporter<Cell> {
         super.importGameObjects(map);
         repository.findAll().forEach(cell -> {
             perkRepository.save(cell.getPerks());
-            cell.getPerks().forEach(perk -> perkEffectRepository.save(perk.getEffects()));
         });
     }
 

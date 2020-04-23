@@ -13,7 +13,7 @@ public class PerkRepository extends Repository<Perk> {
 
     @Override
     public void save(Perk perk) {
-        perk.getEffects().forEach(perkEffectRepository::save);
+        perk.getEffects(perk.getLevel()).forEach(perkEffectRepository::save);
         super.save(perk);
     }
 }

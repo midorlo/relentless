@@ -2,21 +2,22 @@ package de.midorlo.relentless.domain.perk;
 
 import lombok.Data;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Data
 @Entity
 public class PerkEffectValue {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    Object value;
+    @Basic
+    String value;
 
-    public PerkEffectValue(Object value) {
+    public PerkEffectValue(String value) {
         this.value = value;
     }
+
+    public PerkEffectValue() {}
 }

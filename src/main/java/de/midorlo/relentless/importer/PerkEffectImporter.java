@@ -106,6 +106,7 @@ public class PerkEffectImporter extends YamlFileImporter<PerkEffect> {
     protected static List<PerkEffectValue> parsePerkEffectValues(List<Object> parsedList) {
         return parsedList.stream()
                 .filter(Objects::nonNull)
+                .map(e -> "" + e)
                 .map(PerkEffectValue::new)
                 .collect(Collectors.toList());
     }

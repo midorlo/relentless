@@ -6,6 +6,7 @@ import lombok.extern.java.Log;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Data
 @Log
@@ -16,10 +17,20 @@ public class Perk {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-
-    String name;
-    String description;
+    private String name;
+    private String description;
+    private Integer level;
 
     @OneToMany
     List<PerkEffect> effects = new ArrayList<>();
+
+    protected List<PerkEffect> getEffects() {
+        return effects;
+    }
+
+    public List<PerkEffect> getEffects(Integer level) {
+        return effects.stream()
+                .filter(e -> e.getLevel().equals(level))
+                .collect(Collectors.toList());
+    }
 }
