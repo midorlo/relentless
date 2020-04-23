@@ -4,7 +4,7 @@ import de.midorlo.relentless.domain.cell.Cell;
 import de.midorlo.relentless.domain.cell.CellType;
 import de.midorlo.relentless.domain.perk.Perk;
 import de.midorlo.relentless.domain.perk.PerkEffect;
-import de.midorlo.relentless.repository.dep.YamlRepository;
+import de.midorlo.relentless.repository.yaml.YamlRepository;
 
 import java.util.LinkedHashMap;
 import java.util.List;

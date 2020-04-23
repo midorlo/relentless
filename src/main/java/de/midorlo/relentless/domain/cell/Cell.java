@@ -13,15 +13,13 @@ import java.util.List;
 @Entity
 public class Cell {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
-
     String name;
+
     Integer level;
 
     @OneToOne
     CellType cellType;
 
-    @OneToMany
+    @ManyToMany
     List<Perk> perks = new ArrayList<>();
 }

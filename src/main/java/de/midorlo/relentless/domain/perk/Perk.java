@@ -24,7 +24,7 @@ public class Perk {
     @OneToMany
     List<PerkEffect> effects = new ArrayList<>();
 
-    protected List<PerkEffect> getEffects() {
+    public List<PerkEffect> getEffects() {
         return effects;
     }
 

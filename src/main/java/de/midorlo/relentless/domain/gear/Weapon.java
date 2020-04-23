@@ -7,6 +7,8 @@ import lombok.EqualsAndHashCode;
 import lombok.ToString;
 import lombok.extern.java.Log;
 
+import javax.persistence.Entity;
+import javax.persistence.OneToMany;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,15 +16,10 @@ import java.util.List;
 @ToString(exclude = {"moveSets"}, callSuper = true)
 @EqualsAndHashCode(callSuper = true)
 @Log
-@SuppressWarnings("SameReturnValue")
+@Entity
 public class Weapon extends Gear implements IAttackModifier {
 
-    protected List<List<WeaponAttack>> moveSets = new ArrayList<>();
-
-    /**
-     * Disregard everything but maxxed out weapons for now.
-     * @return 550.
-     */
+    @Deprecated protected transient List<List<WeaponAttack>> moveSets = new ArrayList<>();
 
     public Integer getPower() {
         int power = 0;

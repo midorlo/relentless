@@ -8,7 +8,7 @@ import java.util.List;
 public interface PerkEffectRepository extends CrudRepository<PerkEffect, Long> {
 
     List<PerkEffect> findAllByName(String name);
-    List<PerkEffect> findAllByNameAndLevel(String name, Integer level);
     List<PerkEffect> findAllByPerkName(String name);
+    PerkEffect findByNameAndLevel(String name, Integer level);
     PerkEffect findById(long id);
 }

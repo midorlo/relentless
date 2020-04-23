@@ -5,7 +5,7 @@ import de.midorlo.relentless.domain.combat.WeaponAttack;
 import de.midorlo.relentless.domain.gear.Lantern;
 import de.midorlo.relentless.domain.perk.Perk;
 import de.midorlo.relentless.domain.perk.PerkEffect;
-import de.midorlo.relentless.repository.dep.YamlRepository;
+import de.midorlo.relentless.repository.yaml.YamlRepository;
 
 import java.util.Arrays;
 import java.util.LinkedHashMap;

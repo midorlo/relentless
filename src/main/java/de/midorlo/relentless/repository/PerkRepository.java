@@ -7,4 +7,6 @@ import java.util.List;
 
 public interface PerkRepository extends CrudRepository<Perk, Long> {
     List<Perk> findAllByName(String name);
+    Perk findByName(String name);
+    Perk findByNameAndLevel(String name, Integer level);
 }

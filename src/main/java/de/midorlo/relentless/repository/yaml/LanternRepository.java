@@ -1,4 +1,4 @@
-package de.midorlo.relentless.repository.dep;
+package de.midorlo.relentless.repository.yaml;
 
 import de.midorlo.relentless.domain.gear.Lantern;
 import de.midorlo.relentless.domain.perk.Perk;

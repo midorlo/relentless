@@ -18,7 +18,7 @@ public class PerkEffect {
     private Long id;
 
     /** Parent Perk. */
-    @ManyToOne
+    @OneToOne
     Perk perk;
 
     @Basic

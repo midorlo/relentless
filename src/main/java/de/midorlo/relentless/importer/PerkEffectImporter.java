@@ -3,7 +3,7 @@ package de.midorlo.relentless.importer;
 import de.midorlo.relentless.domain.perk.PerkEffect;
 import de.midorlo.relentless.domain.perk.PerkEffectDescription;
 import de.midorlo.relentless.domain.perk.PerkEffectValue;
-import de.midorlo.relentless.repository.dep.YamlRepository;
+import de.midorlo.relentless.repository.yaml.YamlRepository;
 
 import java.util.*;
 import java.util.stream.Collectors;

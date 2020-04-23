@@ -1,4 +1,4 @@
-package de.midorlo.relentless.repository.dep;
+package de.midorlo.relentless.repository.yaml;
 
 import lombok.ToString;
 

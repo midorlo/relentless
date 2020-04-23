@@ -21,10 +21,6 @@ public class CellSocket {
     @OneToOne
     private CellType type;
 
-    /** Parent Gear */
-    @ManyToOne
-    private Gear gear;
-
     /** Child Cell */
     @OneToOne
     private Cell cell;

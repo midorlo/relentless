@@ -5,6 +5,7 @@ import de.midorlo.relentless.domain.behemoth.Hitzone;
 import lombok.Data;
 import lombok.extern.java.Log;
 
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,16 +14,24 @@ import java.util.List;
  */
 @Data
 @Log
+@Entity
 public class WeaponAttack implements IAttackModifier {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
 
     String name;
     String description;
     Integer damage;
     Integer hits;
+
+    @OneToOne
     AttackType type;
+
     boolean isCleave;
 
-    private List<WeaponExtraAttack> weaponExtraAttacks = new ArrayList<>();
+    private transient List<WeaponExtraAttack> weaponExtraAttacks = new ArrayList<>();
 
     public static aName builder() {
         return new WeaponAttackBuilder();

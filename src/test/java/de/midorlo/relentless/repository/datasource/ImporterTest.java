@@ -8,15 +8,15 @@ import de.midorlo.relentless.domain.gear.*;
 import de.midorlo.relentless.domain.perk.Perk;
 import de.midorlo.relentless.domain.perk.PerkEffect;
 import de.midorlo.relentless.importer.*;
-import de.midorlo.relentless.repository.dep.*;
+import de.midorlo.relentless.repository.yaml.*;
 import org.testng.annotations.Test;
 
 public class ImporterTest {
 
     YamlRepository<PerkEffect> perkEffectRepository = new PerkEffectsRepository();
     YamlRepository<Perk> perkRepository = new PerkYamlRepository(perkEffectRepository);
-    YamlRepository<Cell> cellRepository = new CellRepository(perkRepository);
-    YamlRepository<Weapon> weaponRepository = new WeaponRepository(perkRepository);
+    YamlRepository<Cell> cellRepository = new CellYamlRepository(perkRepository);
+    YamlRepository<Weapon> weaponRepository = new WeaponYamlRepository(perkRepository);
     YamlRepository<Armor> armorRepository = new ArmorRepository(perkRepository);
     YamlRepository<Lantern> lanternRepository = new LanternRepository(perkRepository);
 
