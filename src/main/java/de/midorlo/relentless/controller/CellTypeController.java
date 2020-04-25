@@ -35,6 +35,11 @@ public class CellTypeController {
                 linkTo(methodOn(CellTypeController.class).all()).withSelfRel());
     }
 
+    @GetMapping("/cellTypesSimple")
+    public List<CellType> allSimple() {
+        return repository.findAll();
+    }
+
     @GetMapping("/cellTypes/{name}")
     EntityModel<CellType> one(@PathVariable String name) {
         CellType cellType = repository.findByName(name).orElseThrow(() -> new RuntimeException("unknown cell type"));
