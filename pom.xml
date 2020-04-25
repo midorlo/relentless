@@ -12,6 +12,12 @@
         </license>
     </licenses>
 
+    <scm>
+        <url>scm:git:git@github.com:midorlo/relentless.git</url>
+        <connection>scm:git:git@github.com:midorlo/relentless.git</connection>
+        <developerConnection>scm:git:git@github.com:midorlo/relentless.git</developerConnection>
+    </scm>
+
     <groupId>de.midorlo</groupId>
     <artifactId>relentless-model</artifactId>
     <version>0.0.1</version>
