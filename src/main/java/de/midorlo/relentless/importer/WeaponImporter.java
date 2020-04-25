@@ -8,6 +8,7 @@ import de.midorlo.relentless.domain.perk.Perk;
 import de.midorlo.relentless.domain.perk.PerkEffect;
 import de.midorlo.relentless.repository.yaml.Assets;
 import de.midorlo.relentless.repository.yaml.YamlRepository;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -17,6 +18,7 @@ import java.util.stream.Collectors;
 import static de.midorlo.relentless.util.Constants.DIR_DAUNTLESS_BUILDER_WEAPONS;
 
 @SuppressWarnings({"unchecked", "rawtypes"})
+@Slf4j
 public class WeaponImporter extends YamlFileImporter<Weapon> {
 
     YamlRepository<Perk> perkRepository;
@@ -45,14 +47,14 @@ public class WeaponImporter extends YamlFileImporter<Weapon> {
         w.setName((String) name);
         w.setDescription((String) description);
         w.setType(ItemType.valueOf(((String) type).trim().replace(" ", "")));
-        w.setElement(((elemental == null) ? new Element("Neutral") : new Element("elemental")));
+        w.setElement(((elemental == null) ? new Element("Neutral") : new Element(elemental.toString())));
         Assets.assetsPathMap.put(w, (String) icon);
 
         PerkImporter perkImporter = new PerkImporter(perkRepository, perkEffectRepository);
         List<Perk> perks = perkImporter.parseWeaponPerks((ArrayList<LinkedHashMap>) perksMap);
         w.getPerks().addAll(perks);
 
-        List<CellSocket> cellSockets = parseCellSockets((ArrayList<String>) cellsMap);
+        List<CellSocket> cellSockets = GearImporter.parseCellSockets((ArrayList<String>) cellsMap, w);
         w.getCellSockets().addAll(cellSockets);
 
         //todo uniques als perks parsen
@@ -74,15 +76,19 @@ public class WeaponImporter extends YamlFileImporter<Weapon> {
         repository.findAll().forEach(weapon -> perkRepository.save(weapon.getPerks()));
     }
 
-    private List<CellSocket> parseCellSockets(ArrayList<String> stringList) {
-        List<CellSocket> cellSockets = new ArrayList<>();
-        if (stringList != null) {
-            cellSockets.addAll(stringList.stream().map(e -> {
-                CellSocket cellSocket = new CellSocket();
-                cellSocket.setType(CellImporter.parseCellType(e));
-                return cellSocket;
-            }).collect(Collectors.toList()));
-        }
-        return cellSockets;
+    protected Element parseWeaponElement() {
+        return new Element();
     }
+
+//    private List<CellSocket> parseCellSockets(ArrayList<String> stringList) {
+//        List<CellSocket> cellSockets = new ArrayList<>();
+//        if (stringList != null) {
+//            cellSockets.addAll(stringList.stream().map(e -> {
+//                CellSocket cellSocket = new CellSocket();
+//                cellSocket.setType(CellImporter.parseCellType(e));
+//                return cellSocket;
+//            }).collect(Collectors.toList()));
+//        }
+//        return cellSockets;
+//    }
 }

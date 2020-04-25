@@ -13,6 +13,6 @@ import javax.persistence.Entity;
 public class Armor extends Gear {
 
     public Double getResistance() {
-        return  137.5d; //todo handle levelled armor
+        return 137.5d; //todo handle levelled armor
     }
 }

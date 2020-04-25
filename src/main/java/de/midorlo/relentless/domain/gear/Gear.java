@@ -12,8 +12,12 @@ import java.util.List;
 @Data
 @MappedSuperclass
 public class Gear {
+
     @Id
     String name;
+
+    @Transient
+    transient Integer level;
 
     @Basic
     String description;
@@ -21,11 +25,8 @@ public class Gear {
     @Basic
     ItemType type;
 
-    @OneToOne
+    @ManyToOne
     Element element;
-
-    @Transient
-    transient Integer level;
 
     @ManyToMany
     List<Perk> perks = new ArrayList<>();
