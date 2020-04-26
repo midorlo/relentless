@@ -14,12 +14,12 @@ import javax.persistence.Id;
 public class CellType {
 
     @Id
-    String name;
+    private String name;
 
     public CellType() {}
 
     public CellType(String name) {
-        this.name = name;
+        setName(name);
     }
 }
 

@@ -15,6 +15,7 @@ import java.util.List;
 @Log
 @Entity
 public class Cell {
+
     @Id
     String name;
 

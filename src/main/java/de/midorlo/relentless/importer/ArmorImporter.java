@@ -33,7 +33,7 @@ public class ArmorImporter extends YamlFileImporter<Armor> {
     }
 
     @Override
-    protected void importGameObjects(List<LinkedHashMap<Object,Object>> map) {
+    protected void importGameObjects(List<LinkedHashMap<Object, Object>> map) {
         super.importGameObjects(map);
         repository.findAll().forEach(armor -> perkRepository.save(armor.getPerks()));
     }
@@ -54,7 +54,7 @@ public class ArmorImporter extends YamlFileImporter<Armor> {
         a.setName((String) name);
         a.setDescription((String) description);
         a.setType(ItemType.valueOf(((String) type).trim().replace(" ", "")));
-        a.setElement(((strength == null) ? new Element("Neutral") : new Element("strength")));
+        a.setElement(((strength == null) ? new Element("Neutral") : new Element(strength.toString())));
 
         Assets.assetsPathMap.put(a, (String) icon);
 
@@ -62,7 +62,7 @@ public class ArmorImporter extends YamlFileImporter<Armor> {
         List<Perk> perks = perkImporter.parseWeaponPerks((ArrayList<LinkedHashMap>) perksMap);
         a.getPerks().addAll(perks);
 
-        List<CellSocket> cellSockets = parseCellSockets((String) cellsMap);
+        List<CellSocket> cellSockets = parseCellSocket((String) cellsMap, a);
         a.getCellSockets().addAll(cellSockets);
 
         //todo uniques als Perks parsen
@@ -73,11 +73,12 @@ public class ArmorImporter extends YamlFileImporter<Armor> {
         return a;
     }
 
-    private List<CellSocket> parseCellSockets(String cellSocketString) {
+    private List<CellSocket> parseCellSocket(String cellSocketString, Armor parent) {
         List<CellSocket> cellSockets = new ArrayList<>();
         if (cellSocketString != null) {
             CellSocket cellSocket = new CellSocket();
             cellSocket.setType(CellImporter.parseCellType(cellSocketString));
+            cellSocket.setId(1L + parent.hashCode() + cellSocket.getType().hashCode());
             cellSockets.add(cellSocket);
         }
         return cellSockets;
