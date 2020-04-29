@@ -8,6 +8,8 @@ import java.util.List;
 public interface HitzoneRepository extends CrudRepository<Hitzone, Long> {
 
     List<Hitzone> findAllByName(String name);
+    @Override
+    List<Hitzone> findAll();
 
     Hitzone findById(long id);
 }

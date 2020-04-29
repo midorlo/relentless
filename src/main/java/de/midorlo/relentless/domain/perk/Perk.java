@@ -2,6 +2,8 @@ package de.midorlo.relentless.domain.perk;
 
 import lombok.Data;
 import lombok.extern.java.Log;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -21,7 +23,8 @@ public class Perk {
     private String description;
     private Integer level;
 
-    @OneToMany
+    @LazyCollection(LazyCollectionOption.FALSE)
+    @OneToMany(fetch = FetchType.LAZY)
     List<PerkEffect> effects = new ArrayList<>();
 
     public List<PerkEffect> getEffects() {

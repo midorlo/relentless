@@ -18,7 +18,7 @@ import org.springframework.context.annotation.Configuration;
 
 @Slf4j
 @Configuration
-public class Database {
+public class ConfigImporter {
 
     final static YamlRepository<PerkEffect> perkEffectYamlRepository = new PerkEffectsRepository();
     final static YamlRepository<Perk> perkYamlRepository = new PerkYamlRepository(perkEffectYamlRepository);

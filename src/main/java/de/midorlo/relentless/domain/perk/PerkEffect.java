@@ -1,6 +1,8 @@
 package de.midorlo.relentless.domain.perk;
 
 import lombok.Data;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -17,19 +19,19 @@ public class PerkEffect {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    /** Parent Perk. */
-    @OneToOne
-    Perk perk;
-
     @Basic
     String name;
 
     @Basic
     Integer level;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+//    @OneToMany()
+//    @LazyCollection(LazyCollectionOption.FALSE)
+    @Transient
     List<PerkEffectDescription> descriptions = new ArrayList<>();
 
-    @OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
+//    @OneToMany
+//    @LazyCollection(LazyCollectionOption.FALSE)
+    @Transient
     List<PerkEffectValue> values = new ArrayList<>();
 }

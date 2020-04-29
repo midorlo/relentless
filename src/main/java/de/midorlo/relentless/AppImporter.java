@@ -14,7 +14,7 @@ import lombok.extern.java.Log;
 
 @Log
 @ToString
-public class AppRelentless {
+public class AppImporter {
 
     YamlRepository<PerkEffect> perkEffectRepository = new PerkEffectsRepository();
     YamlRepository<Perk> perkRepository = new PerkYamlRepository(perkEffectRepository);
@@ -23,7 +23,7 @@ public class AppRelentless {
     YamlRepository<Armor> armorRepository = new ArmorYamlRepository(perkRepository);
     YamlRepository<Lantern> lanternRepository = new LanternRepository(perkRepository);
 
-    public AppRelentless() {
+    public AppImporter() {
         importGameObjects();
     }
 
@@ -45,7 +45,7 @@ public class AppRelentless {
     }
 
     public static void main(String[] args) {
-        AppRelentless app = new AppRelentless();
+        AppImporter app = new AppImporter();
         System.out.println(app);
     }
 }

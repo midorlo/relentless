@@ -8,9 +8,7 @@ import java.util.Optional;
 
 public interface PerkRepository extends CrudRepository<Perk, Long> {
 
+    @Override
     List<Perk> findAll();
-
-    List<Perk> findAllByName(String name);
-
     Optional<Perk> findByNameAndLevel(String name, Integer level);
 }
