@@ -5,6 +5,7 @@ import de.midorlo.relentless.repository.PerkRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class PerkService {
@@ -17,5 +18,9 @@ public class PerkService {
 
     public List<Perk> findAll() {
         return repository.findAll();
+    }
+
+    public Optional<Perk> one(Long id) {
+        return repository.findById(id);
     }
 }

@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CellTypeService implements Serializable {
@@ -19,5 +20,10 @@ public class CellTypeService implements Serializable {
     public List<CellType> all() {
         return repository.findAll();
     }
+
+    public Optional<CellType> one(String name) {
+        return repository.findByName(name);
+    }
+
 }
 

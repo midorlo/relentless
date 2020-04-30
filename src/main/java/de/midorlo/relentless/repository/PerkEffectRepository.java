@@ -10,5 +10,5 @@ import java.util.Optional;
 public interface PerkEffectRepository extends CrudRepository<PerkEffect, Long> {
     @Override
     List<PerkEffect> findAll();
-    Optional<PerkEffect> getByName(String name);
+    Optional<PerkEffect> findByName(String name);
 }

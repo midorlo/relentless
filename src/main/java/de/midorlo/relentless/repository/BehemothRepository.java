@@ -8,6 +8,6 @@ import java.util.List;
 public interface BehemothRepository extends CrudRepository<Armor, String> {
 
     List<Armor> findAll();
-//    Armor getByName(String name);
+//    Armor findByName(String name);
 //    Armor getById(Long id);
 }

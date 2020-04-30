@@ -5,6 +5,7 @@ import de.midorlo.relentless.repository.PerkEffectValueRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class PerkEffectValueService {
@@ -17,5 +18,9 @@ public class PerkEffectValueService {
 
     public List<PerkEffectValue> findAll() {
         return repository.findAll();
+    }
+
+    public Optional<PerkEffectValue> one(Long id) {
+        return repository.findById(id);
     }
 }
