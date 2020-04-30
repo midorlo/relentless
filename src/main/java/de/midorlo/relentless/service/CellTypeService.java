@@ -1,6 +1,6 @@
 package de.midorlo.relentless.service;
 
-import de.midorlo.relentless.domain.cell.CellType;
+import de.midorlo.relentless.domain.CellType;
 import de.midorlo.relentless.repository.CellTypeRepository;
 import org.springframework.stereotype.Service;
 

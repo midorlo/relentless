@@ -1,7 +1,7 @@
 package de.midorlo.relentless.service;
 
 
-import de.midorlo.relentless.domain.perk.PerkEffect;
+import de.midorlo.relentless.domain.PerkEffect;
 import de.midorlo.relentless.repository.PerkEffectRepository;
 import org.springframework.stereotype.Service;
 

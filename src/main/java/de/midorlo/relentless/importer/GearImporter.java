@@ -1,13 +1,12 @@
 package de.midorlo.relentless.importer;
 
-import de.midorlo.relentless.domain.cell.CellSocket;
-import de.midorlo.relentless.domain.gear.Gear;
-import de.midorlo.relentless.repository.yaml.YamlRepository;
+import de.midorlo.relentless.domain.CellSocket;
+import de.midorlo.relentless.domain.Gear;
+import de.midorlo.relentless.importer.yaml.YamlRepository;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.stream.Collectors;
 

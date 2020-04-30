@@ -1,13 +1,13 @@
 package de.midorlo.relentless.repository.datasource;
 
-import de.midorlo.relentless.domain.cell.Cell;
-import de.midorlo.relentless.domain.gear.Armor;
-import de.midorlo.relentless.domain.gear.Lantern;
-import de.midorlo.relentless.domain.gear.Weapon;
-import de.midorlo.relentless.domain.perk.Perk;
-import de.midorlo.relentless.domain.perk.PerkEffect;
+import de.midorlo.relentless.domain.Cell;
+import de.midorlo.relentless.domain.Armor;
+import de.midorlo.relentless.domain.Lantern;
+import de.midorlo.relentless.domain.Weapon;
+import de.midorlo.relentless.domain.Perk;
+import de.midorlo.relentless.domain.PerkEffect;
 import de.midorlo.relentless.importer.*;
-import de.midorlo.relentless.repository.yaml.*;
+import de.midorlo.relentless.importer.yaml.*;
 import org.testng.annotations.Test;
 
 import static org.hamcrest.CoreMatchers.equalTo;

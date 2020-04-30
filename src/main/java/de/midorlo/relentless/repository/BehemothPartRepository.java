@@ -1,6 +1,6 @@
 package de.midorlo.relentless.repository;
 
-import de.midorlo.relentless.domain.behemoth.BehemothPart;
+import de.midorlo.relentless.domain.BehemothPart;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;

@@ -1,6 +1,6 @@
 package de.midorlo.relentless.repository;
 
-import de.midorlo.relentless.domain.cell.Cell;
+import de.midorlo.relentless.domain.Cell;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;

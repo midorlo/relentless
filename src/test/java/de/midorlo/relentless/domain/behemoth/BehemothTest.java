@@ -1,5 +1,6 @@
 package de.midorlo.relentless.domain.behemoth;
 
+import de.midorlo.relentless.domain.Behemoth;
 import de.midorlo.relentless.domain.Element;
 import de.midorlo.relentless.domain.MockedRepository;
 import lombok.extern.java.Log;

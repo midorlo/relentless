@@ -1,6 +1,6 @@
 package de.midorlo.relentless.importer.manual;
 
-import de.midorlo.relentless.domain.cell.CellType;
+import de.midorlo.relentless.domain.CellType;
 import org.springframework.data.repository.CrudRepository;
 
 public class CellTypeManualImporter {

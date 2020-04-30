@@ -1,19 +1,26 @@
 package de.midorlo.relentless.domain;
 
-import de.midorlo.relentless.domain.gear.Armor;
-import de.midorlo.relentless.domain.gear.Gear;
-import de.midorlo.relentless.domain.gear.Weapon;
 import lombok.Data;
 import lombok.extern.java.Log;
 
+import javax.persistence.*;
+
 @Data
 @Log
+@Entity
 public class Loadout {
 
-    Armor head;
-    Armor chest;
-    Armor arms;
-    Armor legs;
-    Gear lantern;
-    Weapon weapon;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    @ManyToOne
+    private Armor head;
+    @ManyToOne
+    private Armor chest;
+    @ManyToOne
+    private Armor arms;
+    @ManyToOne
+    private Armor legs;
+    @ManyToOne
+    private Weapon weapon;
 }

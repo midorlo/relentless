@@ -1,5 +1,7 @@
 package de.midorlo.relentless.domain.behemoth;
 
+import de.midorlo.relentless.domain.BehemothPart;
+import de.midorlo.relentless.domain.Hitzone;
 import org.testng.annotations.Test;
 
 import static org.hamcrest.MatcherAssert.assertThat;

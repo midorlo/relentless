@@ -10,5 +10,4 @@ public class AppVaadinRelentless extends SpringBootServletInitializer {
     public static void main(String[] args) {
         SpringApplication.run(AppVaadinRelentless.class, args);
     }
-
 }

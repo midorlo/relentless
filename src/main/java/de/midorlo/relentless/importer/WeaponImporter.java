@@ -1,19 +1,18 @@
 package de.midorlo.relentless.importer;
 
 import de.midorlo.relentless.domain.Element;
-import de.midorlo.relentless.domain.cell.CellSocket;
-import de.midorlo.relentless.domain.gear.ItemType;
-import de.midorlo.relentless.domain.gear.Weapon;
-import de.midorlo.relentless.domain.perk.Perk;
-import de.midorlo.relentless.domain.perk.PerkEffect;
-import de.midorlo.relentless.repository.yaml.Assets;
-import de.midorlo.relentless.repository.yaml.YamlRepository;
+import de.midorlo.relentless.domain.CellSocket;
+import de.midorlo.relentless.domain.ItemType;
+import de.midorlo.relentless.domain.Weapon;
+import de.midorlo.relentless.domain.Perk;
+import de.midorlo.relentless.domain.PerkEffect;
+import de.midorlo.relentless.importer.yaml.Assets;
+import de.midorlo.relentless.importer.yaml.YamlRepository;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static de.midorlo.relentless.util.Constants.DIR_DAUNTLESS_BUILDER_WEAPONS;
 

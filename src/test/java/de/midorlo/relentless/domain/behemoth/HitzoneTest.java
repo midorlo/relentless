@@ -1,5 +1,6 @@
 package de.midorlo.relentless.domain.behemoth;
 
+import de.midorlo.relentless.domain.Hitzone;
 import de.midorlo.relentless.domain.MockedRepository;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;

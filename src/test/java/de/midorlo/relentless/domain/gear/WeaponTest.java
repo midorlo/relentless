@@ -2,6 +2,7 @@ package de.midorlo.relentless.domain.gear;
 
 
 import de.midorlo.relentless.domain.MockedRepository;
+import de.midorlo.relentless.domain.Weapon;
 import de.midorlo.relentless.domain.combat.Attack;
 import org.testng.annotations.Test;
 

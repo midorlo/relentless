@@ -1,15 +1,11 @@
 package de.midorlo.relentless.view;
 
-import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.listbox.ListBox;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
-import com.vaadin.flow.data.renderer.ComponentRenderer;
-import com.vaadin.flow.data.renderer.NativeButtonRenderer;
-import com.vaadin.flow.data.renderer.TemplateRenderer;
 import com.vaadin.flow.router.Route;
-import de.midorlo.relentless.domain.perk.Perk;
-import de.midorlo.relentless.domain.perk.PerkEffect;
+import de.midorlo.relentless.domain.Perk;
+import de.midorlo.relentless.domain.PerkEffect;
 import de.midorlo.relentless.service.PerkEffectDescriptionService;
 import de.midorlo.relentless.service.PerkEffectService;
 import de.midorlo.relentless.service.PerkEffectValueService;

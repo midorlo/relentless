@@ -1,6 +1,6 @@
 package de.midorlo.relentless.importer;
 
-import de.midorlo.relentless.repository.yaml.YamlRepository;
+import de.midorlo.relentless.importer.yaml.YamlRepository;
 import de.midorlo.relentless.util.FileUtillities;
 
 import java.util.*;

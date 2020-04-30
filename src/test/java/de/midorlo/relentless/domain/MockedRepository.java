@@ -1,14 +1,6 @@
 package de.midorlo.relentless.domain;
 
-import de.midorlo.relentless.domain.behemoth.Behemoth;
-import de.midorlo.relentless.domain.behemoth.BehemothPart;
-import de.midorlo.relentless.domain.behemoth.Hitzone;
-import de.midorlo.relentless.domain.combat.AttackType;
 import de.midorlo.relentless.domain.combat.Hunt;
-import de.midorlo.relentless.domain.combat.Moveset;
-import de.midorlo.relentless.domain.combat.WeaponAttack;
-import de.midorlo.relentless.domain.gear.ItemType;
-import de.midorlo.relentless.domain.gear.Weapon;
 
 import java.util.ArrayList;
 import java.util.Arrays;

@@ -1,8 +1,11 @@
 package de.midorlo.relentless.repository;
 
-import de.midorlo.relentless.domain.gear.Armor;
+import de.midorlo.relentless.domain.Armor;
 import org.springframework.data.repository.CrudRepository;
 
-public interface ArmorRepository  extends CrudRepository<Armor, String> {
+import java.util.List;
 
+public interface ArmorRepository  extends CrudRepository<Armor, String> {
+    List<Armor> findAll();
+    Armor getByName(String name);
 }

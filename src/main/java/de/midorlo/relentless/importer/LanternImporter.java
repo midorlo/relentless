@@ -1,11 +1,11 @@
 package de.midorlo.relentless.importer;
 
-import de.midorlo.relentless.domain.cell.CellSocket;
-import de.midorlo.relentless.domain.combat.WeaponAttack;
-import de.midorlo.relentless.domain.gear.Lantern;
-import de.midorlo.relentless.domain.perk.Perk;
-import de.midorlo.relentless.domain.perk.PerkEffect;
-import de.midorlo.relentless.repository.yaml.YamlRepository;
+import de.midorlo.relentless.domain.CellSocket;
+import de.midorlo.relentless.domain.WeaponAttack;
+import de.midorlo.relentless.domain.Lantern;
+import de.midorlo.relentless.domain.Perk;
+import de.midorlo.relentless.domain.PerkEffect;
+import de.midorlo.relentless.importer.yaml.YamlRepository;
 
 import java.util.Arrays;
 import java.util.LinkedHashMap;
