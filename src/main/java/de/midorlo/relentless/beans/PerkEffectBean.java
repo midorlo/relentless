@@ -1,35 +1,16 @@
-package de.midorlo.relentless.importer;
+package de.midorlo.relentless.beans;
 
 import de.midorlo.relentless.domain.PerkEffect;
 import de.midorlo.relentless.domain.PerkEffectDescription;
 import de.midorlo.relentless.domain.PerkEffectValue;
-import de.midorlo.relentless.importer.yaml.YamlRepository;
-import de.midorlo.relentless.repository.PerkEffectRepository;
-import de.midorlo.relentless.util.FileUtillities;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.CommandLineRunner;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
-import static de.midorlo.relentless.util.Constants.DIR_DAUNTLESS_BUILDER_PERKS;
-
 @Configuration
 @SuppressWarnings("rawtypes")
-public class PerkEffectImporter {
-
-//    public CommandLineRunner importPerkEffects(@Autowired PerkEffectRepository repository) {
-//        return args -> {
-//            List<PerkEffect> parsedItems = new ArrayList<>();
-//            List<LinkedHashMap<Object, Object>> map = FileUtillities.readYamlFiles(DIR_DAUNTLESS_BUILDER_PERKS);
-//            for (LinkedHashMap<Object, Object> oMap : map) {
-//                parsedItems.add(parseGameObject(oMap));
-//            }
-//            return parsedItems;
-//        };
-//    }
+public class PerkEffectBean {
 
     protected List<PerkEffect> parseGameObjects(List<LinkedHashMap<Object, Object>> map) {
         List<PerkEffect> parsedItems = new ArrayList<>();
@@ -39,6 +20,7 @@ public class PerkEffectImporter {
         return parsedItems;
     }
 
+    @SuppressWarnings("unchecked")
     protected PerkEffect parseGameObject(LinkedHashMap<Object, Object> leveledPerkEffectMap) {
         PerkEffect effect = new PerkEffect();
 

@@ -1,4 +1,4 @@
-package de.midorlo.relentless.importer;
+package de.midorlo.relentless.beans;
 
 import de.midorlo.relentless.domain.Cell;
 import de.midorlo.relentless.repository.CellRepository;
@@ -14,12 +14,12 @@ import org.springframework.context.annotation.Configuration;
 
 import java.util.LinkedHashMap;
 
-import static de.midorlo.relentless.importer.CellTypeImporter.parseCellType;
+import static de.midorlo.relentless.beans.CellTypeBean.parseCellType;
 import static de.midorlo.relentless.util.Constants.DIR_DAUNTLESS_BUILDER_CELLS;
 
 @Configuration
 @Slf4j
-public class CellImporter {
+public class CellBean {
 
     @Bean
     public CommandLineRunner importCells(

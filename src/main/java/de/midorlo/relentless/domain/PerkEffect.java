@@ -17,9 +17,9 @@ public class PerkEffect {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Basic(optional = false)
+    @Basic(optional = false, fetch = FetchType.EAGER)
     String name;
 
-    @Basic(optional = false)
+    @Basic(optional = false, fetch = FetchType.EAGER)
     Integer level;
 }

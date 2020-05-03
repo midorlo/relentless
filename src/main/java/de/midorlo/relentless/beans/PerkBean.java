@@ -1,8 +1,7 @@
-package de.midorlo.relentless.importer;
+package de.midorlo.relentless.beans;
 
 import de.midorlo.relentless.domain.Perk;
 import de.midorlo.relentless.domain.PerkEffect;
-import de.midorlo.relentless.importer.yaml.YamlRepository;
 import de.midorlo.relentless.repository.PerkEffectRepository;
 import de.midorlo.relentless.repository.PerkRepository;
 import de.midorlo.relentless.util.FileUtillities;
@@ -15,14 +14,13 @@ import org.springframework.context.annotation.Configuration;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 import static de.midorlo.relentless.util.Constants.DIR_DAUNTLESS_BUILDER_PERKS;
 
 @Configuration
 @Slf4j
-public class PerkImporter {
+public class PerkBean {
 
     @Bean
     public CommandLineRunner importPerks(
@@ -47,12 +45,12 @@ public class PerkImporter {
         Perk perk = new Perk();
         perk.setName((String) oMap.get("name"));
         perk.setDescription((String) oMap.get("description"));
-        perk.setLevel(6);
+        perk.setLevel(3);
 
-        PerkEffectImporter perkEffectImporter = new PerkEffectImporter();
+        PerkEffectBean perkEffectBean = new PerkEffectBean();
         @SuppressWarnings("rawtypes")
         List<LinkedHashMap<Object, Object>> perkEffectsMapMap = unwrapListInMap((LinkedHashMap) oMap.get("effects"));
-        List<PerkEffect> perkEffects = perkEffectImporter.parseGameObjects(perkEffectsMapMap);
+        List<PerkEffect> perkEffects = perkEffectBean.parseGameObjects(perkEffectsMapMap);
         perk.setEffects(perkEffects);
 
         for (int i = 0; i < perkEffects.size(); i++) {
@@ -60,7 +58,6 @@ public class PerkImporter {
             effect.setLevel(i + 1);
             effect.setName(perk.getName());
         }
-
         return perk;
     }
 
@@ -95,7 +92,7 @@ public class PerkImporter {
         List<Perk> results = new ArrayList<>();
         if (mapsList != null) {
             results.addAll(mapsList.stream()
-                    .map(linkedHashMap -> PerkImporter.parseWeaponPerk(linkedHashMap, perkRepository))
+                    .map(linkedHashMap -> parseWeaponPerk(linkedHashMap, perkRepository))
                     .collect(Collectors.toList()));
         }
         return results;

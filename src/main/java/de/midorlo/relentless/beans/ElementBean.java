@@ -1,4 +1,4 @@
-package de.midorlo.relentless.importer;
+package de.midorlo.relentless.beans;
 
 import de.midorlo.relentless.domain.Element;
 import de.midorlo.relentless.repository.ElementRepository;
@@ -12,7 +12,7 @@ import java.util.stream.Stream;
 
 @Slf4j
 @Configuration
-public class ElementImporter {
+public class ElementBean {
 
     @Bean
     public CommandLineRunner importElements(

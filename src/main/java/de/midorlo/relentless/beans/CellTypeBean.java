@@ -1,4 +1,4 @@
-package de.midorlo.relentless.importer;
+package de.midorlo.relentless.beans;
 
 import de.midorlo.relentless.domain.CellType;
 import de.midorlo.relentless.repository.CellTypeRepository;
@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.stream.Stream;
 @Configuration
 @Slf4j
-public class CellTypeImporter {
+public class CellTypeBean {
 
     @Bean
     public CommandLineRunner importCellTypes(
