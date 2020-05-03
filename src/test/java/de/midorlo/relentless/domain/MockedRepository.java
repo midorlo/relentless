@@ -57,7 +57,7 @@ public class MockedRepository {
         weapon.setDescription("It's something");
         weapon.setType(ItemType.Sword);
         weapon.setElement(new Element("Radiant"));
-        weapon.setSkillSets(mockMovesets());
+//        weapon.setSkillSets(mockMovesets());
         return weapon;
     }
 

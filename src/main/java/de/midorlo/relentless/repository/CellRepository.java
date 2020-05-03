@@ -11,4 +11,6 @@ public interface CellRepository extends CrudRepository<Cell, Long> {
     List<Cell> findAll();
 
     Optional<Cell> findByName(String name);
+
+    Optional<Cell> readByNameAndLevel(String name, Integer level);
 }

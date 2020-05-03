@@ -13,6 +13,9 @@ import java.util.stream.Collectors;
 @Entity
 public class Perk {
 
+    public Perk() {
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
@@ -24,7 +27,7 @@ public class Perk {
     @Basic(optional = false)
     private Integer level;
 
-    @OneToMany(fetch = FetchType.LAZY)
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     List<PerkEffect> effects = new ArrayList<>();
 
     public List<PerkEffect> getEffects(Integer level) {

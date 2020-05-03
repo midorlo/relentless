@@ -1,36 +1,46 @@
 package de.midorlo.relentless.importer;
 
-import de.midorlo.relentless.domain.Element;
-import de.midorlo.relentless.domain.CellSocket;
-import de.midorlo.relentless.domain.ItemType;
-import de.midorlo.relentless.domain.Weapon;
-import de.midorlo.relentless.domain.Perk;
-import de.midorlo.relentless.domain.PerkEffect;
-import de.midorlo.relentless.importer.yaml.Assets;
-import de.midorlo.relentless.importer.yaml.YamlRepository;
+import de.midorlo.relentless.domain.*;
+import de.midorlo.relentless.repository.*;
+import de.midorlo.relentless.util.FileUtillities;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 
-import static de.midorlo.relentless.util.Constants.DIR_DAUNTLESS_BUILDER_WEAPONS;
+import static de.midorlo.relentless.importer.CellTypeImporter.parseCellTypes;
+import static de.midorlo.relentless.util.Constants.DIR_DAUNTLESS_BUILDER_ARMOR;
 
 @SuppressWarnings({"unchecked", "rawtypes"})
 @Slf4j
-public class WeaponImporter extends YamlFileImporter<Weapon> {
+@Configuration
+public class WeaponImporter {
 
-    YamlRepository<Perk> perkRepository;
-    YamlRepository<PerkEffect> perkEffectRepository;
+    @Bean
+    public CommandLineRunner importWeapons(
+            @Autowired WeaponRepository weaponRepository,
+            @Autowired ElementRepository elementRepository,
+            @Autowired CellRepository cellRepository,
+            @Autowired CellTypeRepository cellTypeRepository,
+            @Autowired PerkRepository perkRepository,
+            @Autowired PerkEffectRepository perkEffectRepository
+    ) {
+        return args -> {
 
-    public WeaponImporter(YamlRepository<Weapon> weaponRepository, YamlRepository<Perk> perkRepository, YamlRepository<PerkEffect> perkEffectRepository) {
-        super(weaponRepository);
-        this.perkRepository = perkRepository;
-        this.perkEffectRepository = perkEffectRepository;
+            FileUtillities.readYamlFiles(DIR_DAUNTLESS_BUILDER_ARMOR)
+                    .stream()
+                    .map(objectObjectLinkedHashMap -> parseGameObject(objectObjectLinkedHashMap, perkRepository))
+                    .forEach(weaponRepository::save);
+            log.info(String.format("importWeapons() -> imported %d Weapons.", weaponRepository.findAll().size()));
+        };
     }
 
-    @Override
-    protected Weapon parseGameObject(LinkedHashMap map) {
+    protected Weapon parseGameObject(LinkedHashMap map, PerkRepository perkRepository) {
 
         Object name = map.get("name");
         Object description = map.get("description");
@@ -47,37 +57,40 @@ public class WeaponImporter extends YamlFileImporter<Weapon> {
         w.setDescription((String) description);
         w.setType(ItemType.valueOf(((String) type).trim().replace(" ", "")));
         w.setElement(((elemental == null) ? new Element("Neutral") : new Element(elemental.toString())));
-        Assets.assetsPathMap.put(w, (String) icon);
 
-        PerkImporter perkImporter = new PerkImporter(perkRepository, perkEffectRepository);
-        List<Perk> perks = perkImporter.parseWeaponPerks((ArrayList<LinkedHashMap>) perksMap);
+        //todo parse assets
+        //Assets.assetsPathMap.put(w, (String) icon);
+
+        PerkImporter perkImporter = new PerkImporter();
+        List<Perk> perks = PerkImporter.parseWeaponPerks((ArrayList<LinkedHashMap>) perksMap, perkRepository);
         w.getPerks().addAll(perks);
 
-        List<CellSocket> cellSockets = GearImporter.parseCellSockets((ArrayList<String>) cellsMap, w);
-        w.getCellSockets().addAll(cellSockets);
+        List<CellType> cellTypes = parseCellTypes((String) cellsMap);
+        if (cellTypes.size() > 0) {
+            w.setPrimaryCellSocket(cellTypes.get(0));
+        }
+        if (cellTypes.size() > 1) {
+            w.setSecondaryCellSocket(cellTypes.get(1));
+        }
 
         //todo uniques als perks parsen
-//        PerkEffectImporter perkEffectImporter = new PerkEffectImporter(perkEffectRepository);
-//        List<PerkEffect> perkEffects = perkEffectImporter.parseGameWeaponObjects((ArrayList<LinkedHashMap>) unique_effects);
-//        w.getPerkEffects().addAll(perkEffects);
+        //PerkEffectImporter perkEffectImporter = new PerkEffectImporter(perkEffectRepository);
+        //List<PerkEffect> perkEffects = perkEffectImporter.parseGameWeaponObjects((ArrayList<LinkedHashMap>) unique_effects);
+        //w.getPerkEffects().addAll(perkEffects);
 
         return w;
     }
 
-    @Override
-    protected String getYamlsPath() {
-        return DIR_DAUNTLESS_BUILDER_WEAPONS;
-    }
 
-    @Override
-    protected void importGameObjects(List<LinkedHashMap<Object,Object>> map) {
-        super.importGameObjects(map);
-        repository.findAll().forEach(weapon -> perkRepository.save(weapon.getPerks()));
-    }
+//    @Override
+//        protected void importGameObjects(List<LinkedHashMap<Object,Object>> map) {
+//            super.importGameObjects(map);
+//            repository.findAll().forEach(weapon -> perkRepository.save(weapon.getPerks()));
+//    }
 
-    protected Element parseWeaponElement() {
-        return new Element();
-    }
+//    protected Element parseWeaponElement() {
+//        return new Element();
+//    }
 
 //    private List<CellSocket> parseCellSockets(ArrayList<String> stringList) {
 //        List<CellSocket> cellSockets = new ArrayList<>();

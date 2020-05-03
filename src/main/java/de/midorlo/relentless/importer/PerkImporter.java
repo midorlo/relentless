@@ -3,47 +3,64 @@ package de.midorlo.relentless.importer;
 import de.midorlo.relentless.domain.Perk;
 import de.midorlo.relentless.domain.PerkEffect;
 import de.midorlo.relentless.importer.yaml.YamlRepository;
+import de.midorlo.relentless.repository.PerkEffectRepository;
+import de.midorlo.relentless.repository.PerkRepository;
+import de.midorlo.relentless.util.FileUtillities;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import static de.midorlo.relentless.util.Constants.DIR_DAUNTLESS_BUILDER_PERKS;
 
-@SuppressWarnings({"rawtypes", "unchecked"})
-public class PerkImporter extends YamlFileImporter<Perk> {
+@Configuration
+@Slf4j
+public class PerkImporter {
 
-    private final YamlRepository<PerkEffect> perkEffectRepository;
-
-    public PerkImporter(YamlRepository<Perk> repository, YamlRepository<PerkEffect> perkEffectRepository) {
-        super(repository);
-        this.perkEffectRepository = perkEffectRepository;
+    @Bean
+    public CommandLineRunner importPerks(
+            @Autowired PerkRepository perkRepository,
+            @Autowired PerkEffectRepository perkEffectRepository) {
+        return args -> {
+            log.info("importPerks");
+            List<Perk> perks = new ArrayList<>();
+            List<LinkedHashMap<Object, Object>> map = FileUtillities.readYamlFiles(DIR_DAUNTLESS_BUILDER_PERKS);
+            for (LinkedHashMap<Object, Object> oMap : map) {
+                perks.add(parseGameObject(oMap));
+            }
+            perkRepository.saveAll(perks);
+            log.info(String.format("importPerks() -> imported %d Perks.", perkRepository.findAll().size()));
+        };
     }
 
-    @Override
+
+    @SuppressWarnings({"rawtypes", "unchecked"})
     protected Perk parseGameObject(LinkedHashMap oMap) {
 
         Perk perk = new Perk();
         perk.setName((String) oMap.get("name"));
         perk.setDescription((String) oMap.get("description"));
+        perk.setLevel(6);
 
-        //Only nestes source data available, so create a data source on the fly while parsing Perks.
-        PerkEffectImporter perkEffectImporter = new PerkEffectImporter(perkEffectRepository);
-        List<LinkedHashMap<Object,Object>> perkEffectsDataSource = unwrapListInMap((LinkedHashMap) oMap.get("effects"));
-        List<PerkEffect> effects = perkEffectImporter.parseGameObjects(perkEffectsDataSource);
+        PerkEffectImporter perkEffectImporter = new PerkEffectImporter();
+        @SuppressWarnings("rawtypes")
+        List<LinkedHashMap<Object, Object>> perkEffectsMapMap = unwrapListInMap((LinkedHashMap) oMap.get("effects"));
+        List<PerkEffect> perkEffects = perkEffectImporter.parseGameObjects(perkEffectsMapMap);
+        perk.setEffects(perkEffects);
 
-        //Source Data lacks fields for name and level.
-        //It will be created from perk.name and effects.indexOf(effect)
-        for (int i = 0; i < effects.size(); i++) {
-            PerkEffect effect = effects.get(i);
+        for (int i = 0; i < perkEffects.size(); i++) {
+            PerkEffect effect = perkEffects.get(i);
             effect.setLevel(i + 1);
             effect.setName(perk.getName());
-            if (!perkEffectRepository.contains(effect)) {
-                perkEffectRepository.save(effect);
-            }
         }
-        perk.setEffects(effects);
+
         return perk;
     }
 
@@ -52,27 +69,35 @@ public class PerkImporter extends YamlFileImporter<Perk> {
      *
      * @return existing Perk.
      */
-    protected Perk parseWeaponPerk(LinkedHashMap map) {
-        List<Perk> searchResults = super.repository.findBy(e -> e.getName().contentEquals((String) map.get("name")));
-        if (searchResults.isEmpty()) {
-            throw new RuntimeException("Import Perks first!");
-        }
-        return searchResults.get(0);
+    @SuppressWarnings("rawtypes")
+    protected static Perk parseWeaponPerk(LinkedHashMap map, PerkRepository perkRepository) {
+        return perkRepository.findByNameAndLevel((String) map.get("name"), 3)
+                .orElseThrow(() -> new RuntimeException("Perk not found!"));
     }
 
-    protected List<Perk> parseWeaponPerks(ArrayList<LinkedHashMap> mapList) {
+    /**
+     * Utillity Method. Converts a Map(k,v) to an ArrayList, sorted by ((int)k)
+     *
+     * @param map the map.
+     * @return the list.
+     */
+    @SuppressWarnings("unchecked")
+    protected static List<LinkedHashMap<Object, Object>> unwrapListInMap(LinkedHashMap<Object, Object> map) {
+        List<LinkedHashMap<Object, Object>> list = new ArrayList<>();
+        int index = 1;
+        while (map.get("" + index) != null) {
+            list.add((LinkedHashMap<Object, Object>) map.get("" + (index++)));
+        }
+        return list;
+    }
+
+    protected static List<Perk> parseWeaponPerks(@SuppressWarnings("rawtypes") ArrayList<LinkedHashMap> mapsList, PerkRepository perkRepository) {
         List<Perk> results = new ArrayList<>();
-        if (mapList != null) {
-            results.addAll(mapList.stream()
-                    .map(this::parseWeaponPerk)
+        if (mapsList != null) {
+            results.addAll(mapsList.stream()
+                    .map(linkedHashMap -> PerkImporter.parseWeaponPerk(linkedHashMap, perkRepository))
                     .collect(Collectors.toList()));
-            results = distinct(results);
         }
         return results;
-    }
-
-    @Override
-    protected String getYamlsPath() {
-        return DIR_DAUNTLESS_BUILDER_PERKS;
     }
 }

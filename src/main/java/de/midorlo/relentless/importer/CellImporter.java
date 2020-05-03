@@ -1,40 +1,43 @@
 package de.midorlo.relentless.importer;
 
 import de.midorlo.relentless.domain.Cell;
-import de.midorlo.relentless.domain.CellType;
-import de.midorlo.relentless.domain.Perk;
-import de.midorlo.relentless.domain.PerkEffect;
-import de.midorlo.relentless.importer.yaml.YamlRepository;
+import de.midorlo.relentless.repository.CellRepository;
+import de.midorlo.relentless.repository.CellTypeRepository;
+import de.midorlo.relentless.repository.PerkEffectRepository;
+import de.midorlo.relentless.repository.PerkRepository;
+import de.midorlo.relentless.util.FileUtillities;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
 import java.util.LinkedHashMap;
-import java.util.List;
 
+import static de.midorlo.relentless.importer.CellTypeImporter.parseCellType;
 import static de.midorlo.relentless.util.Constants.DIR_DAUNTLESS_BUILDER_CELLS;
 
-@SuppressWarnings("rawtypes")
-public class CellImporter extends YamlFileImporter<Cell> {
+@Configuration
+@Slf4j
+public class CellImporter {
 
-    YamlRepository<Perk> perkRepository;
-    YamlRepository<PerkEffect> perkEffectRepository;
-
-    public CellImporter(YamlRepository<Cell> cellRepository, YamlRepository<Perk> perkRepository, YamlRepository<PerkEffect> perkEffectRepository) {
-        super(cellRepository);
-        this.perkRepository = perkRepository;
-        this.perkEffectRepository = perkEffectRepository;
+    @Bean
+    public CommandLineRunner importCells(
+            @Autowired CellRepository cellRepository,
+            @Autowired CellTypeRepository cellTypeRepository,
+            @Autowired PerkRepository perkRepository,
+            @Autowired PerkEffectRepository perkEffectRepository
+    ) {
+        return args -> {
+            FileUtillities.readYamlFiles(DIR_DAUNTLESS_BUILDER_CELLS)
+                    .stream()
+                    .map(this::parseGameObject)
+                    .forEach(cellRepository::save);
+            log.info(String.format("importCells() -> imported %d Cells.", cellRepository.findAll().size()));
+        };
     }
 
-    @Override
-    protected String getYamlsPath() {
-        return DIR_DAUNTLESS_BUILDER_CELLS;
-    }
-
-    @Override
-    protected void importGameObjects(List<LinkedHashMap<Object,Object>> map) {
-        super.importGameObjects(map);
-        repository.findAll().forEach(cell -> perkRepository.save(cell.getPerks()));
-    }
-
-    @Override
+    @SuppressWarnings("rawtypes")
     protected Cell parseGameObject(LinkedHashMap map) {
         String name = (String) map.get("name");
         Object slot = map.get("slot");
@@ -42,11 +45,7 @@ public class CellImporter extends YamlFileImporter<Cell> {
         cell.setName(name);
         cell.setCellType(parseCellType(map.get("slot")));
         cell.setLevel(3);
-        cell.getPerks().addAll(perkRepository.findBy(e -> name.contains(e.getName())));
+//        cell.getPerks().addAll(perkRepository.findBy(e -> name.contains(e.getName())));
         return cell;
-    }
-
-    protected static CellType parseCellType(Object mapValue) {
-        return new CellType(((String)mapValue));
     }
 }

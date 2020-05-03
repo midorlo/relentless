@@ -4,41 +4,46 @@ import de.midorlo.relentless.domain.PerkEffect;
 import de.midorlo.relentless.domain.PerkEffectDescription;
 import de.midorlo.relentless.domain.PerkEffectValue;
 import de.midorlo.relentless.importer.yaml.YamlRepository;
+import de.midorlo.relentless.repository.PerkEffectRepository;
+import de.midorlo.relentless.util.FileUtillities;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
+import static de.midorlo.relentless.util.Constants.DIR_DAUNTLESS_BUILDER_PERKS;
+
+@Configuration
 @SuppressWarnings("rawtypes")
-public class PerkEffectImporter extends YamlFileImporter<PerkEffect> {
+public class PerkEffectImporter {
 
-    public PerkEffectImporter(YamlRepository<PerkEffect> repository) {
-        super(repository);
+//    public CommandLineRunner importPerkEffects(@Autowired PerkEffectRepository repository) {
+//        return args -> {
+//            List<PerkEffect> parsedItems = new ArrayList<>();
+//            List<LinkedHashMap<Object, Object>> map = FileUtillities.readYamlFiles(DIR_DAUNTLESS_BUILDER_PERKS);
+//            for (LinkedHashMap<Object, Object> oMap : map) {
+//                parsedItems.add(parseGameObject(oMap));
+//            }
+//            return parsedItems;
+//        };
+//    }
+
+    protected List<PerkEffect> parseGameObjects(List<LinkedHashMap<Object, Object>> map) {
+        List<PerkEffect> parsedItems = new ArrayList<>();
+        for (LinkedHashMap<Object, Object> oMap : map) {
+            parsedItems.add(parseGameObject(oMap));
+        }
+        return parsedItems;
     }
 
-    /**
-     * There are no source yaml files present for perk effects. Those are created indirectly
-     * while parsing Perks.
-     */
-    @Override
-    public void importGameObjects() {
-    }
-
-    /**
-     * Dummy.
-     * @return null.
-     */
-    @Override
-    protected String getYamlsPath() {
-        return null;
-    }
-
-    @SuppressWarnings("unchecked")
-    @Override
-    protected PerkEffect parseGameObject(LinkedHashMap<Object,Object> leveledPerkEffectMap) {
+    protected PerkEffect parseGameObject(LinkedHashMap<Object, Object> leveledPerkEffectMap) {
         PerkEffect effect = new PerkEffect();
 
         Object descriptions = leveledPerkEffectMap.get("description");
-        Object values       = leveledPerkEffectMap.get("value");
+        Object values = leveledPerkEffectMap.get("value");
 
         List<String> descriptionsList = (descriptions instanceof String)
                 ? Collections.singletonList(((String) descriptions))
@@ -86,9 +91,7 @@ public class PerkEffectImporter extends YamlFileImporter<PerkEffect> {
 
         PerkEffect effect = new PerkEffect();
         effect.setName(name);
-//        effect.getDescriptions().add(description);
         effect.setLevel(level);
-//        effect.getValues().add(""+value);
         return effect;
     }
 
@@ -105,6 +108,24 @@ public class PerkEffectImporter extends YamlFileImporter<PerkEffect> {
                 .map(e -> "" + e)
                 .map(PerkEffectValue::new)
                 .collect(Collectors.toList());
+    }
+
+    /**
+     * Utillity Method. Asserts an Integer/Double/null as Double at compile time.
+     *
+     * @param o Numeric..
+     * @return double
+     */
+    protected static Double parseMixedNumerics(Object o) {
+        double d = 0d;
+        if (o instanceof Integer) {
+            d += ((Integer) o);
+        } else if (o instanceof Double) {
+            d += ((Double) o);
+        } else {
+            d = -1d; //todo warn
+        }
+        return d;
     }
 
 }
