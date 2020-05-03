@@ -1,12 +1,12 @@
 package de.midorlo.relentless.domain;
 
-import de.midorlo.relentless.domain.combat.*;
+import de.midorlo.relentless.domain.combat.Attack;
+import de.midorlo.relentless.domain.combat.AttackDamage;
+import de.midorlo.relentless.domain.combat.IAttackModifier;
 import lombok.Data;
 import lombok.extern.java.Log;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * A Weapon's Attack.
@@ -14,7 +14,7 @@ import java.util.List;
 @Data
 @Log
 @Entity
-public class WeaponAttack implements IAttackModifier {
+public class Skill implements IAttackModifier {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -23,14 +23,11 @@ public class WeaponAttack implements IAttackModifier {
     String name;
     String description;
     Integer damage;
-    Integer hits;
 
-    @OneToOne
+    @ManyToOne
     AttackType type;
 
     boolean isCleave;
-
-    private transient List<WeaponExtraAttack> weaponExtraAttacks = new ArrayList<>();
 
     public static aName builder() {
         return new WeaponAttackBuilder();
@@ -135,11 +132,11 @@ public class WeaponAttack implements IAttackModifier {
 
         aRdy cleave(boolean isCleave);
 
-        WeaponAttack build();
+        Skill build();
     }
 
     static class WeaponAttackBuilder implements aType, aDamage, aName, aRdy {
-        WeaponAttack move = new WeaponAttack();
+        Skill move = new Skill();
 
         private WeaponAttackBuilder() {
         }
@@ -164,7 +161,6 @@ public class WeaponAttack implements IAttackModifier {
 
         @Override
         public aRdy bonusAttacks(Integer bonusAttacks) {
-            move.setHits(bonusAttacks);
             return this;
         }
 
@@ -175,10 +171,7 @@ public class WeaponAttack implements IAttackModifier {
         }
 
         @Override
-        public WeaponAttack build() {
-            for (int i = 0; i < move.hits; i++) {
-                move.getWeaponExtraAttacks().add(new WeaponExtraAttack(move));
-            }
+        public Skill build() {
             return move;
         }
     }

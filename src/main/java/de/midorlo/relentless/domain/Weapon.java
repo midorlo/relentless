@@ -7,6 +7,7 @@ import lombok.ToString;
 import lombok.extern.java.Log;
 
 import javax.persistence.Entity;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,11 +19,11 @@ import java.util.List;
 @Entity
 public class Weapon extends Gear implements IAttackModifier {
 
-    @OneToMany
-    private List<Moveset> movesets = new ArrayList<>();
+    @ManyToMany
+    private List<SkillSet> skillSets = new ArrayList<>();
 
     public Weapon() {
-        setLevel(15);
+
     }
 
     public Integer getPower() {

@@ -1,6 +1,6 @@
 package de.midorlo.relentless.service;
 
-import de.midorlo.relentless.domain.Moveset;
+import de.midorlo.relentless.domain.SkillSet;
 import de.midorlo.relentless.repository.MovesetRepository;
 import org.springframework.stereotype.Service;
 
@@ -17,11 +17,11 @@ public class MovesetService implements Serializable {
         this.repository = repository;
     }
 
-    public List<Moveset> all() {
+    public List<SkillSet> all() {
         return repository.findAll();
     }
 
-    public Optional<Moveset> one(Long id) {
+    public Optional<SkillSet> one(Long id) {
         return repository.findById(id);
     }
 }

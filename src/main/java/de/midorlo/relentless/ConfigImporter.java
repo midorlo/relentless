@@ -15,12 +15,13 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class ConfigImporter {
 
+    public static ElementRepository elementRepository;
+
     final static YamlRepository<PerkEffect> PERK_EFFECT_YAML_REPOSITORY = new PerkEffectsRepository();
     final static YamlRepository<Perk> PERK_YAML_REPOSITORY = new PerkYamlRepository(PERK_EFFECT_YAML_REPOSITORY);
     final static YamlRepository<Cell> CELL_YAML_REPOSITORY = new CellYamlRepository(PERK_YAML_REPOSITORY);
     final static YamlRepository<Weapon> WEAPON_YAML_REPOSITORY = new WeaponYamlRepository(PERK_YAML_REPOSITORY);
     final static YamlRepository<Armor> ARMOR_YAML_REPOSITORY = new ArmorYamlRepository(PERK_YAML_REPOSITORY);
-    final static YamlRepository<Lantern> LANTERN_YAML_REPOSITORY = new LanternRepository(PERK_YAML_REPOSITORY);
 
     static {
         importYamlFiles();
@@ -32,11 +33,11 @@ public class ConfigImporter {
         new CellImporter(CELL_YAML_REPOSITORY, PERK_YAML_REPOSITORY, PERK_EFFECT_YAML_REPOSITORY).importGameObjects();
         new WeaponImporter(WEAPON_YAML_REPOSITORY, PERK_YAML_REPOSITORY, PERK_EFFECT_YAML_REPOSITORY).importGameObjects();
         new ArmorImporter(ARMOR_YAML_REPOSITORY, PERK_YAML_REPOSITORY, PERK_EFFECT_YAML_REPOSITORY).importGameObjects();
-        new LanternImporter(LANTERN_YAML_REPOSITORY, PERK_YAML_REPOSITORY, PERK_EFFECT_YAML_REPOSITORY).importGameObjects();
     }
 
     @Bean
     public CommandLineRunner importElements(ElementRepository elementRepository) {
+        ConfigImporter.elementRepository = elementRepository;
         log.info("importElements");
         return args -> ElementImporter.doImport(elementRepository);
     }

@@ -22,7 +22,7 @@ public class ElementService implements Serializable {
     }
     public Optional<Element> one(String name) { return repository.findByName(name);}
 
-//    public Optional<WeaponAttack> one(Long id    ) { return repository.findById(id);}
-//    public Optional<WeaponAttack> one(String name) { return repository.findByName(name);}
+//    public Optional<Skill> one(Long id    ) { return repository.findById(id);}
+//    public Optional<Skill> one(String name) { return repository.findByName(name);}
 }
 

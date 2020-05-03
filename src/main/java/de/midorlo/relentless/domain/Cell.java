@@ -3,10 +3,7 @@ package de.midorlo.relentless.domain;
 import lombok.Data;
 import lombok.extern.java.Log;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.ManyToMany;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,11 +15,12 @@ public class Cell {
     @Id
     String name;
 
+    @Basic
     Integer level;
 
-    @OneToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     CellType cellType;
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL)
     List<Perk> perks = new ArrayList<>();
 }

@@ -13,7 +13,7 @@ import lombok.extern.java.Log;
 public class Attack {
 
     Player player;
-    WeaponAttack weaponAttack;
+    Skill skill;
     Behemoth behemoth;
     BehemothPart behemothPart;
     AttackDamage attackDamage;
@@ -48,7 +48,7 @@ public class Attack {
     }
 
     public interface bMove {
-        bFin attackMove(WeaponAttack weaponAttack);
+        bFin attackMove(Skill skill);
     }
 
     public interface bFin {
@@ -87,8 +87,8 @@ public class Attack {
         }
 
         @Override
-        public bFin attackMove(WeaponAttack weaponAttack) {
-            attack.setWeaponAttack(weaponAttack);
+        public bFin attackMove(Skill skill) {
+            attack.setSkill(skill);
             return this;
         }
 
@@ -97,7 +97,7 @@ public class Attack {
             attack.setAttackDamage(new AttackDamage());
             return attack
                     .consume(attack.getPlayer().getLoadout().getWeapon())
-                    .consume(attack.getWeaponAttack())
+                    .consume(attack.getSkill())
                     .consume(attack.getBehemoth());
         }
     }

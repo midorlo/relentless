@@ -8,22 +8,15 @@ import java.util.List;
 
 @Data
 @Entity
-public class Moveset {
+public class SkillSet {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     /**
-     * Parent Weapon.
-     */
-    @ManyToOne
-    Weapon weapon;
-
-
-    /**
      * Attacks.
      */
     @OneToMany
-    List<WeaponAttack> attacks = new ArrayList<>();
+    List<Skill> attacks = new ArrayList<>();
 }

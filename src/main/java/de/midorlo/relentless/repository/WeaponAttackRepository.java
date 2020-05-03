@@ -1,17 +1,17 @@
 package de.midorlo.relentless.repository;
 
-import de.midorlo.relentless.domain.WeaponAttack;
+import de.midorlo.relentless.domain.Skill;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;
 import java.util.Optional;
 
-public interface WeaponAttackRepository extends CrudRepository<WeaponAttack, Long> {
+public interface WeaponAttackRepository extends CrudRepository<Skill, Long> {
 
-    WeaponAttack findByName(String name);
+    Skill findByName(String name);
 
     @Override
-    List<WeaponAttack> findAll();
+    List<Skill> findAll();
     @Override
-    Optional<WeaponAttack> findById(Long id);
+    Optional<Skill> findById(Long id);
 }

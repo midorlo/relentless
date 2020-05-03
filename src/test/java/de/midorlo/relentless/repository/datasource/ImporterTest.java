@@ -2,7 +2,6 @@ package de.midorlo.relentless.repository.datasource;
 
 import de.midorlo.relentless.domain.Cell;
 import de.midorlo.relentless.domain.Armor;
-import de.midorlo.relentless.domain.Lantern;
 import de.midorlo.relentless.domain.Weapon;
 import de.midorlo.relentless.domain.Perk;
 import de.midorlo.relentless.domain.PerkEffect;
@@ -20,7 +19,6 @@ public class ImporterTest {
     YamlRepository<Cell> cellRepository = new CellYamlRepository(perkRepository);
     YamlRepository<Weapon> weaponRepository = new WeaponYamlRepository(perkRepository);
     YamlRepository<Armor> armorRepository = new ArmorYamlRepository(perkRepository);
-    YamlRepository<Lantern> lanternRepository = new LanternRepository(perkRepository);
 
     @Test
     public void testImportGameObjects() {
@@ -32,8 +30,6 @@ public class ImporterTest {
         weaponImporter.importGameObjects();
         ArmorImporter armorImporter = new ArmorImporter(armorRepository, perkRepository, perkEffectRepository);
         armorImporter.importGameObjects();
-        LanternImporter lanternImporter = new LanternImporter(lanternRepository, perkRepository, perkEffectRepository);
-        lanternImporter.importGameObjects();
 
         assertThat(perkRepository.findAll().size(), equalTo(56));
         assertThat(cellRepository.findAll().size(), equalTo(56));

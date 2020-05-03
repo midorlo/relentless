@@ -57,27 +57,27 @@ public class MockedRepository {
         weapon.setDescription("It's something");
         weapon.setType(ItemType.Sword);
         weapon.setElement(new Element("Radiant"));
-        weapon.setMovesets(mockMovesets());
+        weapon.setSkillSets(mockMovesets());
         return weapon;
     }
 
-    public static List<Moveset> mockMovesets() {
-        ArrayList<Moveset> movesets = new ArrayList<>();
-        movesets.add(mockMoveset());
-        return movesets;
+    public static List<SkillSet> mockMovesets() {
+        ArrayList<SkillSet> skillSets = new ArrayList<>();
+        skillSets.add(mockMoveset());
+        return skillSets;
     }
 
-    public static Moveset mockMoveset() {
-        Moveset moveset = new Moveset();
-        WeaponAttack weaponAttack = WeaponAttack.builder()
+    public static SkillSet mockMoveset() {
+        SkillSet skillSet = new SkillSet();
+        Skill skill = Skill.builder()
                 .name("Bladed 1(L)")
                 .type(new AttackType("Slashing"))
                 .damage(60)
                 .cleave(false)
                 .bonusAttacks(3)
                 .build();
-        moveset.getAttacks().add(weaponAttack);
-        return moveset;
+        skillSet.getAttacks().add(skill);
+        return skillSet;
     }
 }
 

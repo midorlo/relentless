@@ -17,14 +17,14 @@ public class HuntTest {
         Behemoth behemoth = hunt.getBehemoths().get(0);
         behemoth.setThread(5);
         behemoth.getBehemothParts().get(0).setHitzone(Hitzone.body);
-        WeaponAttack weaponAttack = player.getLoadout().getWeapon().getMovesets().get(0).getAttacks().get(0);
-        weaponAttack.setDamage(80);
-        weaponAttack.setType(new AttackType("Blunt"));
+        Skill skill = player.getLoadout().getWeapon().getSkillSets().get(0).getAttacks().get(0);
+        skill.setDamage(80);
+        skill.setType(new AttackType("Blunt"));
 
 
 
         while (behemoth.getHealth() > 0) {
-            AttackResult attackResult = player.attack(weaponAttack, behemoth);
+            AttackResult attackResult = player.attack(skill, behemoth);
             log.info(attackResult.toString());
             hunt.saveResult(attackResult);
         }

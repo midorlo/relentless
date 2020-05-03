@@ -1,6 +1,6 @@
 package de.midorlo.relentless.service;
 
-import de.midorlo.relentless.domain.WeaponAttack;
+import de.midorlo.relentless.domain.Skill;
 import de.midorlo.relentless.repository.WeaponAttackRepository;
 import org.springframework.stereotype.Service;
 
@@ -17,9 +17,9 @@ public class WeaponAttackService implements Serializable {
         this.repository = repository;
     }
 
-    public List<WeaponAttack> all() {
+    public List<Skill> all() {
         return repository.findAll();
     }
-    public Optional<WeaponAttack> one(Long id    ) { return repository.findById(id);}
+    public Optional<Skill> one(Long id    ) { return repository.findById(id);}
 }
 

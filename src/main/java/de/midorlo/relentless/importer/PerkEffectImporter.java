@@ -47,10 +47,6 @@ public class PerkEffectImporter extends YamlFileImporter<PerkEffect> {
         List<Object> valuesList = (values instanceof ArrayList)
                 ? (List<Object>) values
                 : Collections.singletonList(values);
-
-        effect.getDescriptions().addAll(parsePerkEffectDescriptions(descriptionsList));
-        effect.getValues().addAll(parsePerkEffectValues(valuesList));
-
         return effect;
     }
 

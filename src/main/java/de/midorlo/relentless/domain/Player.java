@@ -27,12 +27,12 @@ public class Player {
      *
      * @param behemoth the Behemoth
      */
-    public AttackResult attack(WeaponAttack weaponAttack, Behemoth behemoth) {
+    public AttackResult attack(Skill skill, Behemoth behemoth) {
         return Attack.builder()
                 .player(this)
                 .behemoth(behemoth)
                 .targetPart(behemoth.getBehemothParts().get(0).getHitzone())
-                .attackMove(weaponAttack)
+                .attackMove(skill)
                 .build()
                 .doAttack();
     }

@@ -13,14 +13,14 @@ public class Loadout {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     private Armor head;
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     private Armor chest;
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     private Armor arms;
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     private Armor legs;
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     private Weapon weapon;
 }

@@ -17,15 +17,9 @@ public class PerkEffect {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Basic
+    @Basic(optional = false)
     String name;
 
-    @Basic
+    @Basic(optional = false)
     Integer level;
-
-    @Transient
-    List<PerkEffectDescription> descriptions = new ArrayList<>();
-
-    @Transient
-    List<PerkEffectValue> values = new ArrayList<>();
 }
