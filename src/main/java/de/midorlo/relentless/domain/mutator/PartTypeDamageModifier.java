@@ -1,6 +1,6 @@
 package de.midorlo.relentless.domain.mutator;
 
-import de.midorlo.relentless.domain.behemoth.Hitzone;
+import de.midorlo.relentless.domain.Hitzone;
 import de.midorlo.relentless.domain.combat.Attack;
 import de.midorlo.relentless.domain.combat.AttackDamage;
 

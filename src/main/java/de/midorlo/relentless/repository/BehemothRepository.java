@@ -1,7 +1,13 @@
 package de.midorlo.relentless.repository;
 
-import de.midorlo.relentless.domain.behemoth.Behemoth;
+import de.midorlo.relentless.domain.Armor;
 import org.springframework.data.repository.CrudRepository;
 
-public interface BehemothRepository extends CrudRepository<Behemoth, Long> {
+import java.util.List;
+
+public interface BehemothRepository extends CrudRepository<Armor, String> {
+
+    List<Armor> findAll();
+//    Armor findByName(String name);
+//    Armor getById(Long id);
 }

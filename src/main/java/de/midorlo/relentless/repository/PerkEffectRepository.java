@@ -1,14 +1,14 @@
 package de.midorlo.relentless.repository;
 
-import de.midorlo.relentless.domain.perk.PerkEffect;
+import de.midorlo.relentless.domain.PerkEffect;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;
+import java.util.Optional;
+
 
 public interface PerkEffectRepository extends CrudRepository<PerkEffect, Long> {
-
-    List<PerkEffect> findAllByName(String name);
-    List<PerkEffect> findAllByPerkName(String name);
-    PerkEffect findByNameAndLevel(String name, Integer level);
-    PerkEffect findById(long id);
+    @Override
+    List<PerkEffect> findAll();
+    Optional<PerkEffect> findByName(String name);
 }
