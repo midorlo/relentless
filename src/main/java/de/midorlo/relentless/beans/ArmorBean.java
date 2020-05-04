@@ -1,5 +1,6 @@
-package de.midorlo.relentless.importer;
+package de.midorlo.relentless.beans;
 
+import de.midorlo.relentless.beans.CellTypeBean;
 import de.midorlo.relentless.domain.Armor;
 import de.midorlo.relentless.domain.CellType;
 import de.midorlo.relentless.domain.Element;
@@ -12,15 +13,15 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 
-import static de.midorlo.relentless.importer.CellTypeImporter.parseCellTypes;
 import static de.midorlo.relentless.util.Constants.DIR_DAUNTLESS_BUILDER_ARMOR;
 
 @Configuration
 @Slf4j
-public class ArmorImporter {
+public class ArmorBean {
 
     @Bean
     public CommandLineRunner importArmors(
@@ -67,7 +68,7 @@ public class ArmorImporter {
 //        a.getPerks().addAll(perks);
 
 
-        List<CellType> cellTypes = parseCellTypes((String) cellsMap);
+        List<CellType> cellTypes = parseCellType((String) cellsMap);
         if (cellTypes.size() > 0) {
             a.setPrimaryCellSocket(cellTypes.get(0));
         }
@@ -79,17 +80,14 @@ public class ArmorImporter {
 
         return a;
     }
-//    private List<CellType> parseCellType(String cellSocketString, Armor parent) {
-//        List<CellType> cellSockets = new ArrayList<>();
-//        if (cellSocketString != null) {
+
+    private List<CellType> parseCellType(String cellSocketString) {
+        List<CellType> cellSockets = new ArrayList<>();
+        if (cellSocketString != null) {
 //            CellType cellSocket = new CellType();
-//            CellType.par(cellSocketString);
-//            cellSocket.setName();
-//            cellSocket.setId(1L + parent.hashCode() + cellSocket.getType().hashCode());
+//            CellType cellType = CellTypeBean.parseCellTypes(cellSocketString);
 //            cellSockets.add(cellSocket);
-//        }
-//        return cellSockets;
-//    }
-
-
+        }
+        return cellSockets;
+    }
 }

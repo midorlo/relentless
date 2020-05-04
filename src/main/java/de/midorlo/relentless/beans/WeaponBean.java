@@ -1,5 +1,6 @@
-package de.midorlo.relentless.importer;
+package de.midorlo.relentless.beans;
 
+import de.midorlo.relentless.beans.PerkBean;
 import de.midorlo.relentless.domain.*;
 import de.midorlo.relentless.repository.*;
 import de.midorlo.relentless.util.FileUtillities;
@@ -13,13 +14,13 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 
-import static de.midorlo.relentless.importer.CellTypeImporter.parseCellTypes;
+import static de.midorlo.relentless.beans.CellTypeBean.parseCellTypes;
 import static de.midorlo.relentless.util.Constants.DIR_DAUNTLESS_BUILDER_ARMOR;
 
 @SuppressWarnings({"unchecked", "rawtypes"})
 @Slf4j
 @Configuration
-public class WeaponImporter {
+public class WeaponBean {
 
     @Bean
     public CommandLineRunner importWeapons(
@@ -61,17 +62,16 @@ public class WeaponImporter {
         //todo parse assets
         //Assets.assetsPathMap.put(w, (String) icon);
 
-        PerkImporter perkImporter = new PerkImporter();
-        List<Perk> perks = PerkImporter.parseWeaponPerks((ArrayList<LinkedHashMap>) perksMap, perkRepository);
-        w.getPerks().addAll(perks);
-
-        List<CellType> cellTypes = parseCellTypes((String) cellsMap);
-        if (cellTypes.size() > 0) {
-            w.setPrimaryCellSocket(cellTypes.get(0));
-        }
-        if (cellTypes.size() > 1) {
-            w.setSecondaryCellSocket(cellTypes.get(1));
-        }
+//        List<Perk> perks = PerkBean.parseWeaponPerks((ArrayList<LinkedHashMap>) perksMap, perkRepository);
+//        w.getPerks().addAll(perks);
+//
+//        List<CellType> cellTypes = parseCellTypes((String) cellsMap);
+//        if (cellTypes.size() > 0) {
+//            w.setPrimaryCellSocket(cellTypes.get(0));
+//        }
+//        if (cellTypes.size() > 1) {
+//            w.setSecondaryCellSocket(cellTypes.get(1));
+//        }
 
         //todo uniques als perks parsen
         //PerkEffectImporter perkEffectImporter = new PerkEffectImporter(perkEffectRepository);
