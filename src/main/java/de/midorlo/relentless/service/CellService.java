@@ -25,7 +25,7 @@ public class CellService implements Serializable {
         return repository.findById(id);
     }
 
-    public Optional<Cell> one(String name) {
+    public Cell one(String name) {
         return repository.findByName(name);
     }
 }

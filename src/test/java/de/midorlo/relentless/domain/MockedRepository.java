@@ -29,9 +29,9 @@ public class MockedRepository {
 
     public static List<BehemothPart> mockBehemothParts() {
         return Arrays.asList(
-                new BehemothPart(Hitzone.head, 1000),
-                new BehemothPart(Hitzone.head, 1000),
-                new BehemothPart(Hitzone.body, 1000));
+                new BehemothPart(Hitzone.of("head"), 1000),
+                new BehemothPart(Hitzone.of("head"), 1000),
+                new BehemothPart(Hitzone.of("body"), 1000));
     }
 
     public static Hitzone mockHitzone() {

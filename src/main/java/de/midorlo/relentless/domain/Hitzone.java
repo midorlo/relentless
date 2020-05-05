@@ -1,5 +1,6 @@
 package de.midorlo.relentless.domain;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -11,21 +12,15 @@ import javax.persistence.Id;
 
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
 @Entity
-@EqualsAndHashCode(exclude = "id")
 public class Hitzone {
 
-    public static Hitzone head = new Hitzone("Head");
-    public static Hitzone horn = new Hitzone("Horn");
-    public static Hitzone body = new Hitzone("Body");
-
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
-    private Long id;
-
     String name;
 
-    public Hitzone(String name) {
-        this.name = name;
+    public  static Hitzone of(String name) {
+        return new Hitzone(name);
     }
+
 }

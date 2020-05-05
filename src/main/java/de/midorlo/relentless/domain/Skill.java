@@ -106,7 +106,7 @@ public class Skill implements IAttackModifier {
             }
         }
         if (attackType.getName().contentEquals("Piercing")
-                && (part.getHitzone().equals(Hitzone.head) || part.getHitzone().equals(Hitzone.horn))) {
+                && (part.getHitzone().equals(Hitzone.of("head")) || part.getHitzone().equals(Hitzone.of("horn")))) {
             attackDamage.setPartDamageFactor(attackDamage.getPartDamageFactor() + 0.25);
         }
         attack.getAttackDamage().add(attackDamage);

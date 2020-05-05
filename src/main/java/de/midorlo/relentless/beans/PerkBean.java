@@ -45,13 +45,10 @@ public class PerkBean {
         Perk perk = new Perk();
         perk.setName((String) oMap.get("name"));
         perk.setDescription((String) oMap.get("description"));
-        perk.setLevel(3);
-
         PerkEffectBean perkEffectBean = new PerkEffectBean();
         @SuppressWarnings("rawtypes")
         List<LinkedHashMap<Object, Object>> perkEffectsMapMap = unwrapListInMap((LinkedHashMap) oMap.get("effects"));
         List<PerkEffect> perkEffects = perkEffectBean.parseGameObjects(perkEffectsMapMap);
-        perk.setEffects(perkEffects);
 
         for (int i = 0; i < perkEffects.size(); i++) {
             PerkEffect effect = perkEffects.get(i);
@@ -68,8 +65,7 @@ public class PerkBean {
      */
     @SuppressWarnings("rawtypes")
     protected static Perk parseWeaponPerk(LinkedHashMap map, PerkRepository perkRepository) {
-        return perkRepository.findByNameAndLevel((String) map.get("name"), 3)
-                .orElseThrow(() -> new RuntimeException("Perk not found!"));
+        return perkRepository.findByName((String) map.get("name"));
     }
 
     /**

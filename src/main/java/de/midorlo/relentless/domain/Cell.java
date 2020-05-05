@@ -15,9 +15,6 @@ public class Cell {
     @Id
     String name;
 
-    @Basic
-    Integer level;
-
     @ManyToOne(cascade = CascadeType.ALL)
     CellType cellType;
 

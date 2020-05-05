@@ -44,7 +44,6 @@ public class CellBean {
         Cell cell = new Cell();
         cell.setName(name);
         cell.setCellType(parseCellType(map.get("slot")));
-        cell.setLevel(3);
 //        cell.getPerks().addAll(perkRepository.findBy(e -> name.contains(e.getName())));
         return cell;
     }

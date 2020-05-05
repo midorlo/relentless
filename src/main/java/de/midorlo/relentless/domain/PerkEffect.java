@@ -14,12 +14,8 @@ import java.util.List;
 public class PerkEffect {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
-
-    @Basic(optional = false, fetch = FetchType.EAGER)
     String name;
 
-    @Basic(optional = false, fetch = FetchType.EAGER)
+    @Basic
     Integer level;
 }

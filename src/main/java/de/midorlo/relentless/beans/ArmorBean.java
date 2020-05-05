@@ -56,7 +56,6 @@ public class ArmorBean {
 
         Armor a = new Armor();
         a.setName((String) name);
-        a.setLevel(15);
         a.setDescription((String) description);
         a.setType(ItemType.valueOf(((String) type).trim().replace(" ", "")));
         a.setElement(((strength == null) ? new Element("Neutral") : new Element(strength.toString())));

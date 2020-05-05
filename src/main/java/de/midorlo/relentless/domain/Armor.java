@@ -16,9 +16,6 @@ public class Armor {
     String name;
 
     @Basic(optional = false)
-    Integer level;
-
-    @Basic(optional = false)
     String description;
 
     @Basic(optional = false)

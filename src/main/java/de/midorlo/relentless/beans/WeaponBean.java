@@ -22,7 +22,7 @@ import static de.midorlo.relentless.util.Constants.DIR_DAUNTLESS_BUILDER_ARMOR;
 @Configuration
 public class WeaponBean {
 
-    @Bean
+//    @Bean
     public CommandLineRunner importWeapons(
             @Autowired WeaponRepository weaponRepository,
             @Autowired ElementRepository elementRepository,
